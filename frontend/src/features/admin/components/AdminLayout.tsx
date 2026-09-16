@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -13,36 +13,116 @@ import {
   Menu,
   X,
   ShieldCheck,
+  Pin,
+  PinOff,
 } from 'lucide-react';
 import { useAuth } from '../../../auth/AuthProvider';
 
 export const AdminLayout: React.FC = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  // Sliding drawer open/close state
+  const [navOpen, setNavOpen] = useState(false);
+
+  // Desktop pinned mode preference (persisted in localStorage)
+  const [isPinned, setIsPinned] = useState(() => {
+    try {
+      return localStorage.getItem('gmp_admin_nav_pinned') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  // Track viewport width for desktop pinned mode (>= 1024px)
+  const [isDesktop, setIsDesktop] = useState(() => {
+    return typeof window !== 'undefined' ? window.innerWidth >= 1024 : true;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isCurrentlyPinned = isPinned && isDesktop;
 
   const handleLogout = () => {
     logout();
     navigate('/admin/login');
   };
 
-  React.useEffect(() => {
+  const handleToggleNav = () => {
+    if (isCurrentlyPinned) {
+      // If pinned on desktop, clicking the toggle unpins and closes
+      setIsPinned(false);
+      try {
+        localStorage.setItem('gmp_admin_nav_pinned', 'false');
+      } catch {
+        // ignore
+      }
+      setNavOpen(false);
+    } else {
+      setNavOpen((prev) => !prev);
+    }
+  };
+
+  const handleCloseSidebar = () => {
+    if (isCurrentlyPinned) {
+      setIsPinned(false);
+      try {
+        localStorage.setItem('gmp_admin_nav_pinned', 'false');
+      } catch {
+        // ignore
+      }
+    }
+    setNavOpen(false);
+  };
+
+  const handleTogglePin = () => {
+    setIsPinned((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('gmp_admin_nav_pinned', String(next));
+      } catch {
+        // ignore
+      }
+      if (next) {
+        setNavOpen(true);
+      }
+      return next;
+    });
+  };
+
+  // Close sliding navigation on Escape key or backdrop click
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && mobileNavOpen) {
-        setMobileNavOpen(false);
+      if (e.key === 'Escape' && navOpen && !isCurrentlyPinned) {
+        setNavOpen(false);
       }
     };
-    if (mobileNavOpen) {
+
+    if (navOpen && !isCurrentlyPinned) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
     } else {
       document.body.style.overflow = '';
     }
+
     return () => {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [mobileNavOpen]);
+  }, [navOpen, isCurrentlyPinned]);
+
+  // When clicking a navigation link, auto-close the drawer in sliding mode
+  const handleNavLinkClick = () => {
+    if (!isCurrentlyPinned) {
+      setNavOpen(false);
+    }
+  };
 
   const navItems = [
     { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -55,82 +135,97 @@ export const AdminLayout: React.FC = () => {
   ];
 
   return (
-    <div className="admin-layout-root">
-      {/* Mobile Backdrop */}
-      {mobileNavOpen && (
-        <div
-          onClick={() => setMobileNavOpen(false)}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(5, 28, 66, 0.5)',
-            backdropFilter: 'blur(4px)',
-            zIndex: 90,
-          }}
-          aria-label="Close navigation overlay"
-        />
-      )}
+    <div className={`admin-layout-root ${isCurrentlyPinned ? 'admin-nav-pinned' : ''}`}>
+      {/* Sliding Navigation Backdrop Overlay */}
+      <div
+        className={`admin-nav-backdrop ${navOpen && !isCurrentlyPinned ? 'admin-nav-backdrop-visible' : ''}`}
+        onClick={handleCloseSidebar}
+        aria-label="Close navigation overlay"
+      />
 
-      {/* Sidebar */}
+      {/* Sliding Navigation Sidebar */}
       <aside
-        className={`admin-sidebar ${mobileNavOpen ? 'admin-sidebar-open' : ''}`}
+        className={`admin-sidebar ${navOpen || isCurrentlyPinned ? 'admin-sidebar-open' : ''}`}
+        aria-label="Admin Navigation Sidebar"
       >
-        {/* Brand Header */}
+        {/* Brand Header with Close and Pin Actions */}
         <div
           style={{
-            padding: '1.25rem 1.5rem',
+            padding: '1.15rem 1.25rem',
             borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            gap: '0.5rem',
           }}
         >
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
+          <Link
+            to="/"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', minWidth: 0 }}
+          >
             <img
               src="/logo.png"
               alt="GMP VISION"
               style={{
-                height: '36px',
+                height: '34px',
                 width: 'auto',
                 backgroundColor: '#FFFFFF',
                 padding: '3px',
                 borderRadius: '4px',
+                flexShrink: 0,
               }}
               onError={(e) => {
-                // Fallback to text if image unavailable
+                // Fallback if image unavailable
                 (e.target as HTMLElement).style.display = 'none';
               }}
             />
-            <div>
-              <div style={{ fontSize: '1rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>
+            <div style={{ minWidth: 0, overflow: 'hidden' }}>
+              <div
+                style={{
+                  fontSize: '0.95rem',
+                  fontWeight: 800,
+                  color: '#FFFFFF',
+                  letterSpacing: '-0.02em',
+                  whiteSpace: 'nowrap',
+                }}
+              >
                 GMP VISION
               </div>
-              <div style={{ fontSize: '0.68rem', color: '#3DAE2B', fontWeight: 700, letterSpacing: '0.05em' }}>
+              <div style={{ fontSize: '0.65rem', color: '#3DAE2B', fontWeight: 700, letterSpacing: '0.05em' }}>
                 CONTROL PORTAL
               </div>
             </div>
           </Link>
-          <button
-            onClick={() => setMobileNavOpen(false)}
-            style={{
-              display: 'none',
-              background: 'transparent',
-              border: 'none',
-              color: '#94A3B8',
-              cursor: 'pointer',
-              padding: '6px',
-            }}
-            className="mobile-close-btn"
-            aria-label="Close navigation menu"
-          >
-            <X size={20} />
-          </button>
+
+          {/* Action buttons: Pin/Unpin (desktop) and Close */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+            <button
+              onClick={handleTogglePin}
+              className={`admin-sidebar-action-btn admin-pin-btn ${isCurrentlyPinned ? 'active' : ''}`}
+              title={
+                isCurrentlyPinned
+                  ? 'Unpin Sidebar (Switch to Sliding Mode)'
+                  : 'Pin Sidebar (Keep Docked on Desktop)'
+              }
+              aria-label={isCurrentlyPinned ? 'Unpin Sidebar' : 'Pin Sidebar'}
+            >
+              {isCurrentlyPinned ? <PinOff size={16} /> : <Pin size={16} />}
+            </button>
+            <button
+              onClick={handleCloseSidebar}
+              className="admin-sidebar-action-btn"
+              title="Close Navigation Drawer (Esc)"
+              aria-label="Close navigation menu"
+            >
+              <X size={18} />
+            </button>
+          </div>
         </div>
 
         {/* User Status Bar */}
         <div
           style={{
-            padding: '1rem 1.5rem',
+            padding: '1rem 1.25rem',
             backgroundColor: 'rgba(255, 255, 255, 0.04)',
             borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
             display: 'flex',
@@ -151,9 +246,10 @@ export const AdminLayout: React.FC = () => {
               fontWeight: 700,
               fontSize: '0.85rem',
               color: '#FFFFFF',
+              flexShrink: 0,
             }}
           >
-            {user?.name?.charAt(0) || 'P'}
+            {user?.name?.charAt(0) || 'A'}
           </div>
           <div style={{ overflow: 'hidden' }}>
             <div
@@ -196,7 +292,7 @@ export const AdminLayout: React.FC = () => {
                   key={item.to}
                   to={item.to}
                   end={item.end}
-                  onClick={() => setMobileNavOpen(false)}
+                  onClick={handleNavLinkClick}
                   style={({ isActive }) => ({
                     display: 'flex',
                     alignItems: 'center',
@@ -249,7 +345,15 @@ export const AdminLayout: React.FC = () => {
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <ExternalLink size={14} /> View Live Portal
             </span>
-            <span style={{ fontSize: '0.65rem', background: '#3DAE2B', color: '#FFF', padding: '1px 5px', borderRadius: '3px' }}>
+            <span
+              style={{
+                fontSize: '0.65rem',
+                background: '#3DAE2B',
+                color: '#FFF',
+                padding: '1px 5px',
+                borderRadius: '3px',
+              }}
+            >
               PROD
             </span>
           </Link>
@@ -281,21 +385,19 @@ export const AdminLayout: React.FC = () => {
         {/* Top Navbar */}
         <header className="admin-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', minWidth: 0 }}>
+            {/* Sliding Navigation Toggle Button */}
             <button
-              onClick={() => setMobileNavOpen(true)}
-              style={{
-                display: 'none',
-                background: 'none',
-                border: 'none',
-                color: '#051C42',
-                cursor: 'pointer',
-                padding: '4px',
-              }}
-              className="mobile-menu-trigger"
-              aria-label="Open Admin Menu"
+              onClick={handleToggleNav}
+              className={`admin-nav-toggle-btn ${navOpen || isCurrentlyPinned ? 'admin-nav-toggle-active' : ''}`}
+              aria-label={navOpen ? 'Close Navigation' : 'Open Navigation'}
+              title={isCurrentlyPinned ? 'Click to Unpin Sidebar' : 'Toggle Sliding Navigation'}
             >
-              <Menu size={22} />
+              <Menu size={18} />
+              <span className="admin-nav-toggle-text">
+                {isCurrentlyPinned ? 'Sidebar Docked' : 'Navigation'}
+              </span>
             </button>
+
             <div style={{ minWidth: 0, overflow: 'hidden' }}>
               <div
                 style={{
