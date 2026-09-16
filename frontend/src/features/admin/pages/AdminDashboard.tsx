@@ -133,7 +133,7 @@ export const AdminDashboard: React.FC = () => {
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <Button variant="outline" size="sm" onClick={exportCSV} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Download size={15} /> Export Leads CSV
           </Button>
@@ -149,7 +149,7 @@ export const AdminDashboard: React.FC = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
           gap: '1.25rem',
         }}
       >
@@ -402,8 +402,8 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Leads Table */}
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
+        <div className="admin-table-container">
+          <table style={{ width: '100%', minWidth: '680px', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
             <thead>
               <tr style={{ backgroundColor: '#F8FAFC', borderBottom: '1px solid #E2E8F0', color: '#475569' }}>
                 <th style={{ padding: '0.75rem 1.5rem', fontWeight: 600 }}>Client / Company</th>
@@ -474,7 +474,7 @@ export const AdminDashboard: React.FC = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
           gap: '1.5rem',
         }}
       >

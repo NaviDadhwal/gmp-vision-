@@ -85,7 +85,7 @@ export const SettingsAdminPage: React.FC = () => {
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <Button variant="outline" size="sm" onClick={handleResetDefaults} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <RotateCcw size={14} /> Reset Defaults
           </Button>
@@ -116,7 +116,7 @@ export const SettingsAdminPage: React.FC = () => {
       )}
 
       {/* Main Settings Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1.5rem' }}>
         {/* Left Column: Hero & Brand Text */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           {/* Hero Content Section */}
@@ -211,13 +211,13 @@ export const SettingsAdminPage: React.FC = () => {
               ))}
             </div>
 
-            <form onSubmit={handleAddMetric} style={{ display: 'flex', gap: '0.5rem' }}>
+            <form onSubmit={handleAddMetric} style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
               <input
                 type="text"
                 value={newMetricLabel}
                 onChange={(e) => setNewMetricLabel(e.target.value)}
                 placeholder="e.g. 100% USFDA & WHO-GMP Audit Readiness"
-                style={{ flex: 1, padding: '0.45rem 0.65rem', borderRadius: '4px', border: '1px solid #CBD5E1', fontSize: '0.82rem' }}
+                style={{ flex: '1 1 180px', minWidth: '140px', padding: '0.45rem 0.65rem', borderRadius: '4px', border: '1px solid #CBD5E1', fontSize: '0.82rem' }}
               />
               <Button type="submit" variant="outline" size="sm">
                 <Plus size={14} /> Add Metric
@@ -242,7 +242,7 @@ export const SettingsAdminPage: React.FC = () => {
             </h2>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className="admin-grid-2">
                 <div>
                   <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
                     Primary Phone *
@@ -278,7 +278,7 @@ export const SettingsAdminPage: React.FC = () => {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className="admin-grid-2">
                 <div>
                   <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
                     WhatsApp Broadcast Number (Digits only)

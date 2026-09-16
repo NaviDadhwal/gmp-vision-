@@ -132,16 +132,8 @@ export const ClientsAdminPage: React.FC = () => {
         items={clientsList}
         onReorder={(reordered) => saveClientsToStorage(reordered)}
         renderItem={(item) => (
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '1rem',
-              width: '100%',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, minWidth: 0 }}>
+          <div className="admin-item-row">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, minWidth: 0, width: '100%' }}>
               <div
                 style={{
                   width: '42px',
@@ -158,7 +150,7 @@ export const ClientsAdminPage: React.FC = () => {
                 <Building2 size={20} />
               </div>
               <div style={{ minWidth: 0, overflow: 'hidden' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                   <div style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--color-navy, #051C42)' }}>
                     {item.name}
                   </div>
@@ -168,7 +160,7 @@ export const ClientsAdminPage: React.FC = () => {
                     </span>
                   )}
                 </div>
-                <div style={{ display: 'flex', gap: '12px', fontSize: '0.75rem', color: '#64748B', marginTop: '2px' }}>
+                <div style={{ display: 'flex', gap: '12px', fontSize: '0.75rem', color: '#64748B', marginTop: '2px', flexWrap: 'wrap' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
                     <MapPin size={12} /> {item.location}
                   </span>
@@ -177,7 +169,7 @@ export const ClientsAdminPage: React.FC = () => {
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+            <div className="admin-item-actions">
               <button
                 type="button"
                 onClick={() => handleOpenEdit(item)}
@@ -244,7 +236,7 @@ export const ClientsAdminPage: React.FC = () => {
               />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+            <div className="admin-grid-2">
               <div>
                 <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
                   Industry Sector
@@ -294,6 +286,7 @@ export const ClientsAdminPage: React.FC = () => {
                 display: 'flex',
                 justifyContent: 'flex-end',
                 gap: '0.75rem',
+                flexWrap: 'wrap',
                 paddingTop: '1rem',
                 borderTop: '1px solid #E2E8F0',
               }}

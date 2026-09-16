@@ -37,7 +37,7 @@ export const AdminLayout: React.FC = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#F4F7FB' }}>
+    <div className="admin-layout-root">
       {/* Mobile Backdrop */}
       {mobileNavOpen && (
         <div
@@ -49,27 +49,13 @@ export const AdminLayout: React.FC = () => {
             backdropFilter: 'blur(4px)',
             zIndex: 90,
           }}
+          aria-label="Close navigation overlay"
         />
       )}
 
       {/* Sidebar */}
       <aside
-        style={{
-          width: '260px',
-          backgroundColor: '#051C42',
-          color: '#F8FAFC',
-          display: 'flex',
-          flexDirection: 'column',
-          position: 'fixed',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          zIndex: 100,
-          transform: mobileNavOpen ? 'translateX(0)' : undefined,
-          transition: 'transform 0.25s ease',
-          boxShadow: '4px 0 20px rgba(0, 0, 0, 0.15)',
-        }}
-        className="admin-sidebar"
+        className={`admin-sidebar ${mobileNavOpen ? 'admin-sidebar-open' : ''}`}
       >
         {/* Brand Header */}
         <div
@@ -114,8 +100,10 @@ export const AdminLayout: React.FC = () => {
               border: 'none',
               color: '#94A3B8',
               cursor: 'pointer',
+              padding: '6px',
             }}
             className="mobile-close-btn"
+            aria-label="Close navigation menu"
           >
             <X size={20} />
           </button>
@@ -271,23 +259,10 @@ export const AdminLayout: React.FC = () => {
       </aside>
 
       {/* Main Content Area */}
-      <div style={{ flex: 1, marginLeft: '260px', display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+      <div className="admin-main-wrapper">
         {/* Top Navbar */}
-        <header
-          style={{
-            height: '64px',
-            backgroundColor: '#FFFFFF',
-            borderBottom: '1px solid #E2E8F0',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '0 2rem',
-            position: 'sticky',
-            top: 0,
-            zIndex: 40,
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <header className="admin-header">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', minWidth: 0 }}>
             <button
               onClick={() => setMobileNavOpen(true)}
               style={{
@@ -296,24 +271,45 @@ export const AdminLayout: React.FC = () => {
                 border: 'none',
                 color: '#051C42',
                 cursor: 'pointer',
+                padding: '4px',
               }}
               className="mobile-menu-trigger"
               aria-label="Open Admin Menu"
             >
               <Menu size={22} />
             </button>
-            <div>
-              <div style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: 600, textTransform: 'uppercase' }}>
+            <div style={{ minWidth: 0, overflow: 'hidden' }}>
+              <div
+                style={{
+                  fontSize: '0.68rem',
+                  color: '#64748B',
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
+                }}
+              >
                 Cleanroom Facility Management
               </div>
-              <div style={{ fontSize: '1rem', fontWeight: 700, color: '#051C42' }}>
+              <div
+                style={{
+                  fontSize: '0.95rem',
+                  fontWeight: 700,
+                  color: '#051C42',
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
+                }}
+              >
                 Administrative Control Deck
               </div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
             <span
+              className="admin-header-badge"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -325,6 +321,7 @@ export const AdminLayout: React.FC = () => {
                 borderRadius: '9999px',
                 fontWeight: 600,
               }}
+              title="System Online (Standalone Mode)"
             >
               <span
                 style={{
@@ -333,39 +330,19 @@ export const AdminLayout: React.FC = () => {
                   borderRadius: '50%',
                   backgroundColor: '#3DAE2B',
                   boxShadow: '0 0 8px #3DAE2B',
+                  flexShrink: 0,
                 }}
               />
-              System Online (Standalone Mode)
+              <span className="admin-header-badge-text">System Online</span>
             </span>
           </div>
         </header>
 
         {/* Content Body */}
-        <main style={{ flex: 1, padding: '2rem', overflowY: 'auto' }}>
+        <main className="admin-content">
           <Outlet />
         </main>
       </div>
-
-      {/* Responsive styles */}
-      <style>{`
-        @media (max-width: 900px) {
-          .admin-sidebar {
-            transform: translateX(-100%) !important;
-          }
-          .admin-sidebar[style*="transform: translateX(0)"] {
-            transform: translateX(0) !important;
-          }
-          .mobile-menu-trigger {
-            display: block !important;
-          }
-          .mobile-close-btn {
-            display: block !important;
-          }
-          div[style*="marginLeft: '260px'"] {
-            margin-left: 0 !important;
-          }
-        }
-      `}</style>
     </div>
   );
 };

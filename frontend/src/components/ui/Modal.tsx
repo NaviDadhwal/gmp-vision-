@@ -34,6 +34,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
+      className="modal-backdrop-container"
       style={{
         position: 'fixed',
         inset: 0,
@@ -43,17 +44,17 @@ export const Modal: React.FC<ModalProps> = ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '1.5rem',
       }}
       onClick={onClose}
     >
       <div
+        className="modal-dialog-box"
         style={{
           backgroundColor: '#FFFFFF',
           borderRadius: '12px',
           width: '100%',
           maxWidth,
-          maxHeight: '90vh',
+          maxHeight: '92vh',
           display: 'flex',
           flexDirection: 'column',
           boxShadow: '0 20px 25px -5px rgba(5, 28, 66, 0.3)',
@@ -64,25 +65,40 @@ export const Modal: React.FC<ModalProps> = ({
       >
         {/* Modal Header */}
         <div
+          className="modal-header-box"
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '1.25rem 1.5rem',
+            padding: '1rem 1.25rem',
             borderBottom: '1px solid #E2E8F0',
             backgroundColor: '#051C42',
             color: '#FFFFFF',
+            gap: '0.75rem',
           }}
         >
-          <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#FFFFFF' }}>{title}</h3>
+          <h3
+            style={{
+              margin: 0,
+              fontSize: '1.1rem',
+              fontWeight: 700,
+              color: '#FFFFFF',
+              lineHeight: 1.3,
+            }}
+          >
+            {title}
+          </h3>
           <button
             onClick={onClose}
             style={{
               color: '#FFFFFF',
               opacity: 0.8,
-              padding: '0.25rem',
+              padding: '0.35rem',
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '4px',
+              flexShrink: 0,
             }}
             aria-label="Close modal"
           >
@@ -91,10 +107,27 @@ export const Modal: React.FC<ModalProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div style={{ padding: '1.5rem', overflowY: 'auto' }}>
+        <div className="modal-body-box" style={{ padding: '1.25rem', overflowY: 'auto' }}>
           {children}
         </div>
       </div>
+
+      <style>{`
+        .modal-backdrop-container {
+          padding: 1.5rem;
+        }
+        @media (max-width: 640px) {
+          .modal-backdrop-container {
+            padding: 0.5rem !important;
+          }
+          .modal-header-box {
+            padding: 0.75rem 1rem !important;
+          }
+          .modal-body-box {
+            padding: 1rem 0.85rem !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };

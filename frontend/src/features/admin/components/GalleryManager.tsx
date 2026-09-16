@@ -49,7 +49,9 @@ const SortableGalleryCard: React.FC<SortableGalleryCardProps> = ({
     opacity: isDragging ? 0.5 : 1,
     zIndex: isDragging ? 50 : 1,
     position: 'relative',
-    width: '180px',
+    flex: '1 1 140px',
+    maxWidth: '220px',
+    minWidth: '130px',
     backgroundColor: '#FFFFFF',
     borderRadius: '8px',
     border: item.isCover ? '2px solid var(--color-green, #3DAE2B)' : '1px solid #E2E8F0',
@@ -246,12 +248,12 @@ export const GalleryManager: React.FC<GalleryManagerProps> = ({
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
         <label style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--color-navy, #051C42)' }}>
           Project Gallery & Visual Proof ({images.length}/{maxImages})
         </label>
         <span style={{ fontSize: '0.75rem', color: '#64748B' }}>
-          Drag items to reorder. First item or tagged item acts as primary cover.
+          Drag items to reorder. First item acts as cover.
         </span>
       </div>
 
@@ -309,13 +311,14 @@ export const GalleryManager: React.FC<GalleryManagerProps> = ({
             display: 'flex',
             gap: '0.5rem',
             alignItems: 'flex-end',
+            flexWrap: 'wrap',
             backgroundColor: '#FFFFFF',
             padding: '0.75rem',
             borderRadius: '6px',
             border: '1px solid #E2E8F0',
           }}
         >
-          <div style={{ flex: 2 }}>
+          <div style={{ flex: '2 1 200px', minWidth: '160px' }}>
             <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '4px' }}>
               Image URL / CDN Path
             </label>
@@ -335,7 +338,7 @@ export const GalleryManager: React.FC<GalleryManagerProps> = ({
             />
           </div>
 
-          <div style={{ flex: 2 }}>
+          <div style={{ flex: '2 1 200px', minWidth: '160px' }}>
             <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '4px' }}>
               Caption / Descriptive Alt
             </label>
@@ -354,7 +357,7 @@ export const GalleryManager: React.FC<GalleryManagerProps> = ({
             />
           </div>
 
-          <Button type="submit" variant="outline" size="sm" style={{ height: '36px' }}>
+          <Button type="submit" variant="outline" size="sm" style={{ height: '36px', minWidth: '100px' }}>
             <Plus size={16} /> Add Image
           </Button>
         </form>

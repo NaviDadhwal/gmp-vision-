@@ -168,17 +168,9 @@ export const ProjectsAdminPage: React.FC = () => {
         items={projectsList}
         onReorder={(reordered) => saveProjectsToStorage(reordered)}
         renderItem={(item) => (
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '1rem',
-              width: '100%',
-            }}
-          >
+          <div className="admin-item-row">
             {/* Project Info */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, minWidth: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, minWidth: 0, width: '100%' }}>
               <img
                 src={item.image}
                 alt={item.clientName}
@@ -189,7 +181,7 @@ export const ProjectsAdminPage: React.FC = () => {
                 }}
               />
               <div style={{ minWidth: 0, overflow: 'hidden' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                   <div style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--color-navy, #051C42)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                     {item.clientName}
                   </div>
@@ -202,7 +194,7 @@ export const ProjectsAdminPage: React.FC = () => {
                 <div style={{ fontSize: '0.78rem', color: '#475569', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                   {item.scope}
                 </div>
-                <div style={{ display: 'flex', gap: '12px', fontSize: '0.72rem', color: '#64748B', marginTop: '2px' }}>
+                <div style={{ display: 'flex', gap: '12px', fontSize: '0.72rem', color: '#64748B', marginTop: '2px', flexWrap: 'wrap' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
                     <MapPin size={11} /> {item.location}
                   </span>
@@ -215,7 +207,7 @@ export const ProjectsAdminPage: React.FC = () => {
             </div>
 
             {/* Action Buttons */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+            <div className="admin-item-actions">
               <button
                 type="button"
                 onClick={() => handleOpenEdit(item)}
@@ -269,7 +261,7 @@ export const ProjectsAdminPage: React.FC = () => {
         >
           <form onSubmit={handleSaveModal} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             {/* Grid 1: Basic Info */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+            <div className="admin-grid-2">
               <div>
                 <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
                   Client / Enterprise Name *
@@ -300,7 +292,7 @@ export const ProjectsAdminPage: React.FC = () => {
             </div>
 
             {/* Grid 2: Location, Sector, Year */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+            <div className="admin-grid-3">
               <div>
                 <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
                   Site Location *
@@ -400,6 +392,7 @@ export const ProjectsAdminPage: React.FC = () => {
                 display: 'flex',
                 justifyContent: 'flex-end',
                 gap: '0.75rem',
+                flexWrap: 'wrap',
                 paddingTop: '1rem',
                 borderTop: '1px solid #E2E8F0',
               }}

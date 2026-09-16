@@ -199,7 +199,7 @@ export const LeadsPage: React.FC = () => {
         style={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: '1rem',
+          gap: '0.75rem',
           alignItems: 'center',
           backgroundColor: '#FFFFFF',
           padding: '1rem 1.25rem',
@@ -208,7 +208,7 @@ export const LeadsPage: React.FC = () => {
         }}
       >
         {/* Search */}
-        <div style={{ flex: '1 1 280px', position: 'relative' }}>
+        <div style={{ flex: '1 1 240px', minWidth: '200px', position: 'relative' }}>
           <Search size={16} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} />
           <input
             type="text"
@@ -268,7 +268,7 @@ export const LeadsPage: React.FC = () => {
           <option value="contact">Contact Form</option>
         </select>
 
-        <div style={{ marginLeft: 'auto', fontSize: '0.8rem', color: '#64748B' }}>
+        <div style={{ marginLeft: 'auto', fontSize: '0.8rem', color: '#64748B', whiteSpace: 'nowrap' }}>
           Showing <strong>{filteredLeads.length}</strong> of <strong>{leads.length}</strong> leads
         </div>
       </div>
@@ -282,8 +282,8 @@ export const LeadsPage: React.FC = () => {
           overflow: 'hidden',
         }}
       >
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
+        <div className="admin-table-container">
+          <table style={{ width: '100%', minWidth: '780px', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
             <thead>
               <tr style={{ backgroundColor: '#F8FAFC', borderBottom: '1px solid #E2E8F0', color: '#475569' }}>
                 <th style={{ padding: '0.75rem 1.25rem', fontWeight: 600 }}>Client & Facility</th>
@@ -471,6 +471,9 @@ export const LeadsPage: React.FC = () => {
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                flexWrap: 'wrap',
+                gap: '0.75rem',
                 backgroundColor: '#F8FAFC',
                 padding: '1rem',
                 borderRadius: '8px',
@@ -486,8 +489,8 @@ export const LeadsPage: React.FC = () => {
                   {selectedLead.contactName} ({selectedLead.phone} | {selectedLead.email})
                 </div>
               </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '0.75rem', color: '#64748B' }}>Status</div>
+              <div>
+                <div style={{ fontSize: '0.75rem', color: '#64748B', marginBottom: '2px' }}>Status</div>
                 <Badge
                   variant={
                     selectedLead.status === 'new'
@@ -503,7 +506,7 @@ export const LeadsPage: React.FC = () => {
             </div>
 
             {/* Cleanroom Specs */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+            <div className="admin-grid-2">
               <div style={{ padding: '0.75rem', border: '1px solid #E2E8F0', borderRadius: '6px' }}>
                 <div style={{ fontSize: '0.72rem', color: '#64748B', textTransform: 'uppercase' }}>Classification</div>
                 <div style={{ fontSize: '0.92rem', fontWeight: 700, color: '#0A3B85' }}>
@@ -551,7 +554,7 @@ export const LeadsPage: React.FC = () => {
                 <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.4rem' }}>
                   Design Atmospheric & Environmental Parameters:
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', fontSize: '0.8rem' }}>
+                <div className="admin-grid-3" style={{ fontSize: '0.8rem', gap: '0.5rem' }}>
                   <div>
                     <span style={{ color: '#64748B' }}>Temp: </span>
                     <strong>{selectedLead.designConditions.temp || 'Standard'}</strong>
@@ -596,11 +599,13 @@ export const LeadsPage: React.FC = () => {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '0.75rem',
                 paddingTop: '1rem',
                 borderTop: '1px solid #E2E8F0',
               }}
             >
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <Button
                   variant="success"
                   size="sm"

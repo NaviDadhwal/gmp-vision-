@@ -199,17 +199,9 @@ export const ProductsAdminPage: React.FC = () => {
         items={productsList}
         onReorder={(reordered) => saveProductsToStorage(reordered)}
         renderItem={(item) => (
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '1rem',
-              width: '100%',
-            }}
-          >
+          <div className="admin-item-row">
             {/* Info */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, minWidth: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, minWidth: 0, width: '100%' }}>
               <img
                 src={item.images[0]}
                 alt={item.name}
@@ -220,7 +212,7 @@ export const ProductsAdminPage: React.FC = () => {
                 }}
               />
               <div style={{ minWidth: 0, overflow: 'hidden' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                   <div style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--color-navy, #051C42)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                     {item.name}
                   </div>
@@ -231,7 +223,7 @@ export const ProductsAdminPage: React.FC = () => {
                   )}
                 </div>
                 <div style={{ fontSize: '0.78rem', color: '#0A3B85', fontWeight: 600 }}>{item.tagline}</div>
-                <div style={{ display: 'flex', gap: '12px', fontSize: '0.72rem', color: '#64748B', marginTop: '2px' }}>
+                <div style={{ display: 'flex', gap: '12px', fontSize: '0.72rem', color: '#64748B', marginTop: '2px', flexWrap: 'wrap' }}>
                   <span style={{ color: '#475569', fontWeight: 500 }}>Category: {item.category}</span>
                   <span>{item.specifications?.length || 0} Engineering Specs</span>
                 </div>
@@ -239,7 +231,7 @@ export const ProductsAdminPage: React.FC = () => {
             </div>
 
             {/* Actions */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+            <div className="admin-item-actions">
               <button
                 type="button"
                 onClick={() => handleOpenEdit(item)}
@@ -293,7 +285,7 @@ export const ProductsAdminPage: React.FC = () => {
         >
           <form onSubmit={handleSaveModal} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             {/* Grid 1: Name, Tagline */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+            <div className="admin-grid-2">
               <div>
                 <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
                   Equipment / Product Name *
@@ -324,7 +316,7 @@ export const ProductsAdminPage: React.FC = () => {
             </div>
 
             {/* Grid 2: Category, Division, Slug */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+            <div className="admin-grid-3">
               <div>
                 <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
                   Category
@@ -384,7 +376,7 @@ export const ProductsAdminPage: React.FC = () => {
 
             {/* Dynamic Key-Value Specifications Builder */}
             <div style={{ backgroundColor: '#F8FAFC', padding: '1rem', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                 <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy, #051C42)' }}>
                   Technical Specifications Table
                 </label>
@@ -395,25 +387,25 @@ export const ProductsAdminPage: React.FC = () => {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {specs.map((spec, index) => (
-                  <div key={index} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                  <div key={index} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
                     <input
                       type="text"
                       value={spec.key}
                       onChange={(e) => handleUpdateSpec(index, 'key', e.target.value)}
                       placeholder="e.g. Airflow Capacity"
-                      style={{ flex: 1, padding: '0.45rem', fontSize: '0.82rem', borderRadius: '4px', border: '1px solid #CBD5E1' }}
+                      style={{ flex: '1 1 120px', minWidth: '100px', padding: '0.45rem', fontSize: '0.82rem', borderRadius: '4px', border: '1px solid #CBD5E1' }}
                     />
                     <input
                       type="text"
                       value={spec.value}
                       onChange={(e) => handleUpdateSpec(index, 'value', e.target.value)}
                       placeholder="e.g. 1,000 to 40,000 CFM"
-                      style={{ flex: 2, padding: '0.45rem', fontSize: '0.82rem', borderRadius: '4px', border: '1px solid #CBD5E1' }}
+                      style={{ flex: '2 1 150px', minWidth: '120px', padding: '0.45rem', fontSize: '0.82rem', borderRadius: '4px', border: '1px solid #CBD5E1' }}
                     />
                     <button
                       type="button"
                       onClick={() => handleRemoveSpec(index)}
-                      style={{ background: 'none', border: 'none', color: '#EF4444', cursor: 'pointer', padding: '4px' }}
+                      style={{ background: 'none', border: 'none', color: '#EF4444', cursor: 'pointer', padding: '4px', flexShrink: 0 }}
                       title="Remove row"
                     >
                       <MinusCircle size={18} />

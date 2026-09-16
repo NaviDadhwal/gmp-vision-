@@ -44,13 +44,14 @@ export const AdminLoginPage: React.FC = () => {
 
   return (
     <div
+      className="admin-login-wrapper"
       style={{
         minHeight: '100vh',
         backgroundColor: '#051C42',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '1.5rem',
+        padding: '1rem',
         backgroundImage: 'radial-gradient(circle at 50% 20%, rgba(10, 59, 133, 0.4) 0%, transparent 60%)',
       }}
     >
@@ -60,6 +61,7 @@ export const AdminLoginPage: React.FC = () => {
       />
 
       <div
+        className="admin-login-card"
         style={{
           width: '100%',
           maxWidth: '440px',
@@ -73,7 +75,7 @@ export const AdminLoginPage: React.FC = () => {
         <div
           style={{
             backgroundColor: '#0A3B85',
-            padding: '2rem 2rem 1.75rem',
+            padding: '1.75rem 1.5rem 1.5rem',
             textAlign: 'center',
             borderBottom: '4px solid #3DAE2B',
           }}
@@ -82,27 +84,27 @@ export const AdminLoginPage: React.FC = () => {
             src="/logo.png"
             alt="GMP VISION Logo"
             style={{
-              height: '48px',
+              height: '44px',
               width: 'auto',
               backgroundColor: '#FFFFFF',
               padding: '4px 10px',
               borderRadius: '6px',
-              marginBottom: '1rem',
+              marginBottom: '0.85rem',
             }}
             onError={(e) => {
               (e.target as HTMLElement).style.display = 'none';
             }}
           />
-          <h1 style={{ color: '#FFFFFF', fontSize: '1.25rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em' }}>
+          <h1 style={{ color: '#FFFFFF', fontSize: '1.2rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em' }}>
             GMP VISION CONTROL DECK
           </h1>
-          <p style={{ color: '#94A3B8', fontSize: '0.8rem', marginTop: '0.35rem', marginBottom: 0 }}>
+          <p style={{ color: '#94A3B8', fontSize: '0.78rem', marginTop: '0.35rem', marginBottom: 0 }}>
             Authorized Turnkey Engineering Personnel Only
           </p>
         </div>
 
         {/* Form Body */}
-        <div style={{ padding: '2rem' }}>
+        <div style={{ padding: '1.5rem 1.5rem 2rem' }}>
           {error && (
             <div
               style={{

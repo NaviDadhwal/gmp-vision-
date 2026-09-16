@@ -207,16 +207,8 @@ export const FiltrationAdminPage: React.FC = () => {
             items={filtersList}
             onReorder={(reordered) => saveFiltersToStorage(reordered)}
             renderItem={(filter) => (
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '1rem',
-                  width: '100%',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, minWidth: 0 }}>
+              <div className="admin-item-row">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, minWidth: 0, width: '100%' }}>
                   <img
                     src={filter.image}
                     alt={filter.name}
@@ -239,7 +231,7 @@ export const FiltrationAdminPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+                <div className="admin-item-actions">
                   <button
                     type="button"
                     onClick={() => handleOpenEditFilter(filter)}
@@ -290,37 +282,39 @@ export const FiltrationAdminPage: React.FC = () => {
           {hardwareList.map((item) => (
             <div
               key={item.id}
+              className="admin-item-row"
               style={{
                 backgroundColor: '#FFFFFF',
                 borderRadius: '8px',
                 border: '1px solid #E2E8F0',
                 padding: '1rem',
-                display: 'flex',
-                gap: '1.25rem',
-                alignItems: 'center',
               }}
             >
-              <img
-                src={item.image}
-                alt={item.name}
-                style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '4px', flexShrink: 0 }}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src =
-                    'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=400&q=80';
-                }}
-              />
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--color-navy, #051C42)' }}>
-                  {item.name}
-                </div>
-                <div style={{ fontSize: '0.8rem', color: '#475569', marginTop: '2px' }}>{item.description}</div>
-                <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-                  <span style={{ fontSize: '0.72rem', background: '#F1F5F9', padding: '2px 8px', borderRadius: '4px', color: '#0A3B85', fontWeight: 600 }}>
-                    Material: {item.material}
-                  </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, minWidth: 0, width: '100%' }}>
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '4px', flexShrink: 0 }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=400&q=80';
+                  }}
+                />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--color-navy, #051C42)' }}>
+                    {item.name}
+                  </div>
+                  <div style={{ fontSize: '0.8rem', color: '#475569', marginTop: '2px' }}>{item.description}</div>
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '6px', flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: '0.72rem', background: '#F1F5F9', padding: '2px 8px', borderRadius: '4px', color: '#0A3B85', fontWeight: 600 }}>
+                      Material: {item.material}
+                    </span>
+                  </div>
                 </div>
               </div>
-              <Badge variant="primary">{item.type.replace('-', ' ').toUpperCase()}</Badge>
+              <div className="admin-item-actions">
+                <Badge variant="primary">{item.type.replace('-', ' ').toUpperCase()}</Badge>
+              </div>
             </div>
           ))}
         </div>
@@ -335,7 +329,7 @@ export const FiltrationAdminPage: React.FC = () => {
           maxWidth="750px"
         >
           <form onSubmit={handleSaveFilter} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+            <div className="admin-grid-2">
               <div>
                 <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
                   Filter Name *
@@ -371,7 +365,7 @@ export const FiltrationAdminPage: React.FC = () => {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+            <div className="admin-grid-2">
               <div>
                 <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
                   Micron Rating *
