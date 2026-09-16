@@ -91,6 +91,8 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -99,6 +101,19 @@ body {
   background-color: var(--color-light-fog);
   line-height: 1.6;
   overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+}
+
+#root {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+}
+
+img, picture, svg, video {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Headings */
@@ -144,6 +159,20 @@ button {
   padding-right: 1.5rem;
 }
 
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
 .section-padding {
   padding-top: 5rem;
   padding-bottom: 5rem;
@@ -151,8 +180,15 @@ button {
 
 @media (max-width: 768px) {
   .section-padding {
-    padding-top: 3.5rem;
-    padding-bottom: 3.5rem;
+    padding-top: 3.25rem;
+    padding-bottom: 3.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-padding {
+    padding-top: 2.75rem;
+    padding-bottom: 2.75rem;
   }
 }
 
@@ -175,17 +211,27 @@ button {
 
 @media (max-width: 1024px) {
   .lg-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lg-grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 860px) {
   .lg-grid-cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 768px) {
   .md-grid-cols-1 { grid-template-columns: 1fr; }
+  .md-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 540px) {
+  .sm-grid-cols-1 { grid-template-columns: 1fr; }
+  .sm-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* Stencil Number */
 .stencil-number {
   font-family: var(--font-display);
-  font-size: 3.5rem;
+  font-size: clamp(2.4rem, 6vw, 3.5rem);
   font-weight: 800;
   line-height: 1;
   color: rgba(10, 59, 133, 0.08);
@@ -227,6 +273,19 @@ button {
   transition: all var(--transition-fast);
   text-align: center;
   white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .btn {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.35;
+  }
+
+  .btn-lg {
+    padding: 0.75rem 1.25rem !important;
+    font-size: 0.95rem !important;
+  }
 }
 
 /* Primary Green Button (CTA Accent) */
@@ -588,17 +647,128 @@ button {
 }
 
 /* ==========================================================================
-   ADMIN PORTAL RESPONSIVE UTILITIES
+   HOMEPAGE RESPONSIVE UTILITIES
    ========================================================================== */
-.admin-layout-root {
+.hero-cta-group {
   display: flex;
-  min-height: 100vh;
-  background-color: #F4F7FB;
-  position: relative;
-  overflow-x: hidden;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
+@media (max-width: 640px) {
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
 
+  .hero-cta-group .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.hero-trust-strip {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  margin-top: 3rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  color: #94A3B8;
+}
+
+@media (max-width: 640px) {
+  .hero-trust-strip {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    gap: 0.85rem;
+    font-size: 0.82rem;
+  }
+}
+
+.division-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+  position: relative;
+}
+
+@media (max-width: 640px) {
+  .division-card {
+    padding: 1.35rem 1.15rem;
+  }
+}
+
+.filter-spec-card {
+  padding: 2rem;
+  background-color: #FFFFFF;
+}
+
+@media (max-width: 640px) {
+  .filter-spec-card {
+    padding: 1.25rem 1rem;
+  }
+}
+
+.filter-action-group {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .filter-action-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .filter-action-group .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.rfq-box-card {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2.5rem;
+  background-color: #FFFFFF;
+  border-top: 5px solid #0A3B85;
+}
+
+@media (max-width: 640px) {
+  .rfq-box-card {
+    padding: 1.75rem 1.15rem;
+  }
+}
+
+.rfq-action-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .rfq-action-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .rfq-action-group .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   ADMIN PORTAL RESPONSIVE UTILITIES
+   ========================================================================== */
 .admin-layout-root {
   display: flex;
   min-height: 100vh;

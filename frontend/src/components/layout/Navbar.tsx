@@ -52,7 +52,7 @@ export const Navbar: React.FC = () => {
           }}
         >
           {/* Left: Direct Contacts */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.6rem, 2vw, 1.25rem)', flexWrap: 'wrap', fontSize: 'clamp(0.72rem, 2vw, 0.8rem)' }}>
             <a
               href={`tel:${SITE_SETTINGS.contact.primaryPhone}`}
               style={{
@@ -64,7 +64,7 @@ export const Navbar: React.FC = () => {
                 fontWeight: 500,
               }}
             >
-              <Phone size={13} color="#3DAE2B" />
+              <Phone size={13} color="#3DAE2B" style={{ flexShrink: 0 }} />
               <span>{SITE_SETTINGS.contact.primaryPhone}</span>
             </a>
 
@@ -79,7 +79,7 @@ export const Navbar: React.FC = () => {
                 fontWeight: 500,
               }}
             >
-              <Mail size={13} color="#3DAE2B" />
+              <Mail size={13} color="#3DAE2B" style={{ flexShrink: 0 }} />
               <span>{SITE_SETTINGS.contact.primaryEmail}</span>
             </a>
 
@@ -96,7 +96,7 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Right: Quick Actions */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.5rem, 2vw, 1rem)' }}>
             <button
               type="button"
               onClick={handleWhatsApp}
@@ -109,12 +109,12 @@ export const Navbar: React.FC = () => {
                 alignItems: 'center',
                 gap: '0.35rem',
                 color: '#3DAE2B',
-                fontSize: '0.8rem',
+                fontSize: 'clamp(0.74rem, 2vw, 0.8rem)',
                 fontWeight: 700,
                 fontFamily: 'inherit',
               }}
             >
-              <MessageCircle size={14} color="#3DAE2B" />
+              <MessageCircle size={14} color="#3DAE2B" style={{ flexShrink: 0 }} />
               <span>WhatsApp Direct</span>
             </button>
 
@@ -165,15 +165,15 @@ export const Navbar: React.FC = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.85rem',
+              gap: 'clamp(0.5rem, 2vw, 0.85rem)',
               textDecoration: 'none',
               flexShrink: 0,
             }}
           >
             <div
               style={{
-                height: '50px',
-                width: '50px',
+                height: 'clamp(40px, 9vw, 50px)',
+                width: 'clamp(40px, 9vw, 50px)',
                 backgroundColor: '#FFFFFF',
                 borderRadius: '8px',
                 padding: '3px',
@@ -201,7 +201,7 @@ export const Navbar: React.FC = () => {
                   style={{
                     fontFamily: 'var(--font-display)',
                     fontWeight: 800,
-                    fontSize: '1.45rem',
+                    fontSize: 'clamp(1.15rem, 4vw, 1.45rem)',
                     color: '#FFFFFF',
                     letterSpacing: '-0.02em',
                   }}
@@ -212,7 +212,7 @@ export const Navbar: React.FC = () => {
                   style={{
                     fontFamily: 'var(--font-display)',
                     fontWeight: 800,
-                    fontSize: '1.45rem',
+                    fontSize: 'clamp(1.15rem, 4vw, 1.45rem)',
                     color: '#3DAE2B',
                     letterSpacing: '-0.02em',
                   }}
@@ -222,13 +222,14 @@ export const Navbar: React.FC = () => {
               </div>
               <span
                 style={{
-                  fontSize: '0.66rem',
+                  fontSize: 'clamp(0.58rem, 1.8vw, 0.66rem)',
                   fontWeight: 700,
                   textTransform: 'uppercase',
-                  letterSpacing: '0.09em',
+                  letterSpacing: '0.08em',
                   color: '#94A3B8',
                   marginTop: '2px',
                   lineHeight: 1,
+                  whiteSpace: 'nowrap',
                 }}
               >
                 All Solutions in One Project

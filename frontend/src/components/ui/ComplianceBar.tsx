@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Award, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export const ComplianceBar: React.FC = () => {
   const standards = [
@@ -22,9 +22,17 @@ export const ComplianceBar: React.FC = () => {
     >
       <div className="container">
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <ShieldCheck size={18} color="#3DAE2B" />
-            <span style={{ fontSize: '0.85rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#0A3B85' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textAlign: 'center' }}>
+            <ShieldCheck size={18} color="#3DAE2B" style={{ flexShrink: 0 }} />
+            <span
+              style={{
+                fontSize: 'clamp(0.75rem, 2.4vw, 0.85rem)',
+                fontWeight: 600,
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+                color: '#0A3B85',
+              }}
+            >
               Certified Regulatory Compliance Standards
             </span>
           </div>
@@ -35,25 +43,26 @@ export const ComplianceBar: React.FC = () => {
               flexWrap: 'wrap',
               justifyContent: 'center',
               alignItems: 'center',
-              gap: '1.5rem',
+              gap: '0.65rem',
             }}
           >
             {standards.map((s, idx) => (
               <div
                 key={idx}
                 style={{
-                  display: 'flex',
+                  display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.4rem',
-                  padding: '0.35rem 0.85rem',
+                  padding: '0.35rem 0.75rem',
                   backgroundColor: '#F4F7FB',
                   borderRadius: '6px',
                   border: '1px solid #E2E8F0',
+                  fontSize: '0.84rem',
                 }}
                 title={s.desc}
               >
-                <CheckCircle2 size={14} color="#3DAE2B" />
-                <span style={{ fontSize: '0.875rem', fontWeight: 700, color: '#051C42' }}>{s.code}</span>
+                <CheckCircle2 size={13} color="#3DAE2B" style={{ flexShrink: 0 }} />
+                <span style={{ fontWeight: 700, color: '#051C42' }}>{s.code}</span>
               </div>
             ))}
           </div>

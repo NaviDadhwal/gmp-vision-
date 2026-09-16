@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, FileText, ArrowRight, ShieldCheck, HardHat, Handshake, Lightbulb } from 'lucide-react';
+import { MapPin, FileText, ShieldCheck, HardHat, Handshake, Lightbulb } from 'lucide-react';
 import { SITE_SETTINGS } from '../../data/settings';
 import { initiateWhatsAppInquiry } from '../../lib/whatsapp';
 
@@ -12,23 +12,23 @@ export const Footer: React.FC = () => {
   return (
     <footer style={{ backgroundColor: '#04122E', color: '#CBD5E1', borderTop: '4px solid #3DAE2B' }}>
       {/* Brand Values Banner */}
-      <div style={{ backgroundColor: '#051C42', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', padding: '1.25rem 0' }}>
+      <div style={{ backgroundColor: '#051C42', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', padding: '1rem 0' }}>
         <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <ShieldCheck size={22} color="#3DAE2B" />
+          <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', gap: 'clamp(0.75rem, 2vw, 1.5rem)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: 'clamp(0.78rem, 2.2vw, 0.92rem)' }}>
+              <ShieldCheck size={18} color="#3DAE2B" style={{ flexShrink: 0 }} />
               <span style={{ fontWeight: 700, color: '#FFFFFF', letterSpacing: '0.04em' }}>QUALITY ASSURED</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <HardHat size={22} color="#3DAE2B" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: 'clamp(0.78rem, 2.2vw, 0.92rem)' }}>
+              <HardHat size={18} color="#3DAE2B" style={{ flexShrink: 0 }} />
               <span style={{ fontWeight: 700, color: '#FFFFFF', letterSpacing: '0.04em' }}>SITE SAFETY FIRST</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <Handshake size={22} color="#3DAE2B" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: 'clamp(0.78rem, 2.2vw, 0.92rem)' }}>
+              <Handshake size={18} color="#3DAE2B" style={{ flexShrink: 0 }} />
               <span style={{ fontWeight: 700, color: '#FFFFFF', letterSpacing: '0.04em' }}>TRANSPARENT INTEGRITY</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <Lightbulb size={22} color="#3DAE2B" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: 'clamp(0.78rem, 2.2vw, 0.92rem)' }}>
+              <Lightbulb size={18} color="#3DAE2B" style={{ flexShrink: 0 }} />
               <span style={{ fontWeight: 700, color: '#FFFFFF', letterSpacing: '0.04em' }}>ENGINEERING INNOVATION</span>
             </div>
           </div>
