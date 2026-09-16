@@ -1,24 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Phone, Mail, ChevronDown, Menu, X, ArrowRight, MessageCircle } from 'lucide-react';
+import {
+  Phone,
+  Mail,
+  ChevronDown,
+  ChevronRight,
+  Menu,
+  X,
+  ArrowRight,
+  MessageCircle,
+  ShieldCheck,
+  Layers,
+  Wind,
+  Droplets,
+  Activity,
+  Zap,
+  Cpu,
+  Briefcase,
+  Building2,
+  Info,
+  Sparkles,
+  Home,
+} from 'lucide-react';
 import { MegaMenu } from './MegaMenu';
 import { SITE_SETTINGS } from '../../data/settings';
+import { DIVISIONS_DATA } from '../../data/divisions';
 import { initiateWhatsAppInquiry } from '../../lib/whatsapp';
+
+const DIVISION_ICONS: Record<string, React.ReactNode> = {
+  Layers: <Layers size={16} />,
+  Wind: <Wind size={16} />,
+  ShieldCheck: <ShieldCheck size={16} />,
+  Activity: <Activity size={16} />,
+  Droplets: <Droplets size={16} />,
+  Zap: <Zap size={16} />,
+  Cpu: <Cpu size={16} />,
+};
 
 export const Navbar: React.FC = () => {
   const [isMegaOpen, setIsMegaOpen] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [slidingNavOpen, setSlidingNavOpen] = useState(false);
+  const [divisionsExpanded, setDivisionsExpanded] = useState(true);
   const location = useLocation();
 
   const handleWhatsApp = () => {
     initiateWhatsAppInquiry({ topic: 'Direct Inquiry via Website Header' });
   };
 
+  // Keyboard accessibility and body scroll lock
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && slidingNavOpen) {
+        setSlidingNavOpen(false);
+      }
+    };
+
+    if (slidingNavOpen) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [slidingNavOpen]);
+
+  // Auto-close on route change
+  useEffect(() => {
+    setSlidingNavOpen(false);
+    setIsMegaOpen(false);
+  }, [location.pathname]);
+
   const navLinks = [
-    { label: 'Products', path: '/products' },
-    { label: 'Projects & Clients', path: '/projects' },
-    { label: 'About Us', path: '/about' },
-    { label: 'Contact', path: '/contact' },
+    { label: 'Products', path: '/products', icon: Layers },
+    { label: 'Projects & Clients', path: '/projects', icon: Briefcase },
+    { label: 'About Us', path: '/about', icon: Info },
+    { label: 'Contact', path: '/contact', icon: Building2 },
   ];
 
   return (
@@ -52,7 +112,15 @@ export const Navbar: React.FC = () => {
           }}
         >
           {/* Left: Direct Contacts */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.6rem, 2vw, 1.25rem)', flexWrap: 'wrap', fontSize: 'clamp(0.72rem, 2vw, 0.8rem)' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'clamp(0.6rem, 2vw, 1.25rem)',
+              flexWrap: 'wrap',
+              fontSize: 'clamp(0.72rem, 2vw, 0.8rem)',
+            }}
+          >
             <a
               href={`tel:${SITE_SETTINGS.contact.primaryPhone}`}
               style={{
@@ -242,7 +310,7 @@ export const Navbar: React.FC = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '1.75rem',
+              gap: '1.5rem',
               height: '100%',
             }}
             className="desktop-nav"
@@ -327,7 +395,6 @@ export const Navbar: React.FC = () => {
                 fontSize: '0.86rem',
                 fontWeight: 700,
                 textDecoration: 'none',
-                marginLeft: '0.5rem',
                 borderRadius: '6px',
                 boxShadow: '0 2px 8px rgba(61, 174, 43, 0.35)',
               }}
@@ -335,12 +402,24 @@ export const Navbar: React.FC = () => {
               <span>Request Quote</span>
               <ArrowRight size={15} />
             </Link>
+
+            {/* Desktop Sliding Navigation Bar Trigger */}
+            <button
+              type="button"
+              onClick={() => setSlidingNavOpen(true)}
+              className="site-menu-trigger-btn"
+              title="Open Navigation Menu Drawer"
+              aria-label="Open Navigation Drawer"
+            >
+              <Menu size={16} />
+              <span>Menu</span>
+            </button>
           </div>
 
           {/* Mobile Menu Toggle Button */}
           <button
             type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => setSlidingNavOpen(true)}
             style={{
               background: 'none',
               border: 'none',
@@ -354,68 +433,290 @@ export const Navbar: React.FC = () => {
             className="mobile-toggle"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+            <Menu size={26} />
           </button>
         </div>
 
-        {/* 7-Division Mega Menu (Desktop Drawer) */}
+        {/* 7-Division Mega Menu (Desktop Hover Drawer) */}
         <MegaMenu isOpen={isMegaOpen} onClose={() => setIsMegaOpen(false)} />
+      </nav>
 
-        {/* Mobile Dropdown Menu */}
-        {mobileMenuOpen && (
+      {/* ================================================================
+          PUBLIC SITE SLIDING NAVIGATION BAR DRAWER (Slide-out Off-Canvas)
+          ================================================================ */}
+      {/* Frosted Glass Backdrop Overlay */}
+      <div
+        className={`site-sliding-nav-backdrop ${slidingNavOpen ? 'open' : ''}`}
+        onClick={() => setSlidingNavOpen(false)}
+        aria-label="Close navigation overlay"
+      />
+
+      {/* Sliding Navigation Drawer */}
+      <aside
+        className={`site-sliding-nav-drawer ${slidingNavOpen ? 'open' : ''}`}
+        aria-label="Public Site Navigation Drawer"
+      >
+        {/* Drawer Brand Header */}
+        <div className="site-sliding-nav-header">
+          <Link
+            to="/"
+            onClick={() => setSlidingNavOpen(false)}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none', minWidth: 0 }}
+          >
+            <img
+              src="/logo.png"
+              alt="GMP VISION"
+              style={{
+                height: '34px',
+                width: 'auto',
+                backgroundColor: '#FFFFFF',
+                padding: '2px',
+                borderRadius: '6px',
+                flexShrink: 0,
+              }}
+            />
+            <div style={{ minWidth: 0, overflow: 'hidden' }}>
+              <div style={{ fontSize: '1rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
+                GMP <span style={{ color: '#3DAE2B' }}>VISION</span>
+              </div>
+              <div style={{ fontSize: '0.62rem', color: '#94A3B8', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                Turnkey Engineering
+              </div>
+            </div>
+          </Link>
+
+          <button
+            onClick={() => setSlidingNavOpen(false)}
+            className="site-sliding-nav-close-btn"
+            title="Close Menu (Esc)"
+            aria-label="Close navigation drawer"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Drawer Scrollable Body */}
+        <div className="site-sliding-nav-body">
+          {/* Quick RFQ Highlight Banner */}
           <div
             style={{
-              backgroundColor: '#051C42',
-              borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-              padding: '1.25rem 1.5rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1rem',
+              padding: '1rem',
+              borderRadius: '10px',
+              background: 'linear-gradient(135deg, rgba(10, 59, 133, 0.4) 0%, rgba(61, 174, 43, 0.18) 100%)',
+              border: '1px solid rgba(61, 174, 43, 0.35)',
             }}
           >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#48BE34', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <Sparkles size={14} /> Single-Source Turnkey MEP
+            </div>
+            <div style={{ color: '#FFFFFF', fontSize: '0.92rem', fontWeight: 700, margin: '0.35rem 0 0.75rem' }}>
+              Cleanroom, HVAC & Process Utilities
+            </div>
             <Link
-              to="/solutions"
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ color: '#3DAE2B', fontSize: '1rem', fontWeight: 700, textDecoration: 'none' }}
+              to="/rfq"
+              onClick={() => setSlidingNavOpen(false)}
+              className="btn btn-primary btn-sm"
+              style={{ width: '100%', justifyContent: 'center', gap: '0.4rem' }}
             >
-              All 7 Solutions & Divisions →
+              <span>Instant 5-Step Quote Builder</span>
+              <ArrowRight size={14} />
             </Link>
-            {navLinks.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => setMobileMenuOpen(false)}
+          </div>
+
+          {/* Core Navigation Items */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#64748B', fontWeight: 700, padding: '0 0.5rem' }}>
+              Navigation Menu
+            </div>
+
+            {/* Home Link */}
+            <Link
+              to="/"
+              onClick={() => setSlidingNavOpen(false)}
+              className={`site-sliding-nav-link ${location.pathname === '/' ? 'active' : ''}`}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                <Home size={17} color="#3DAE2B" />
+                <span>Home</span>
+              </span>
+              <ChevronRight size={15} color="#94A3B8" />
+            </Link>
+
+            {/* 7 Turnkey Divisions Accordion */}
+            <div>
+              <button
+                type="button"
+                onClick={() => setDivisionsExpanded(!divisionsExpanded)}
+                className="site-sliding-nav-accordion-btn"
+              >
+                <span style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                  <Layers size={17} color="#3DAE2B" />
+                  <span>7 Turnkey Divisions</span>
+                </span>
+                <ChevronDown
+                  size={16}
+                  color="#94A3B8"
+                  style={{
+                    transform: divisionsExpanded ? 'rotate(180deg)' : 'none',
+                    transition: 'transform 0.2s ease',
+                  }}
+                />
+              </button>
+
+              {divisionsExpanded && (
+                <div
+                  style={{
+                    marginTop: '0.35rem',
+                    paddingLeft: '0.75rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.25rem',
+                    borderLeft: '2px solid rgba(61, 174, 43, 0.3)',
+                    marginLeft: '0.5rem',
+                  }}
+                >
+                  <Link
+                    to="/solutions"
+                    onClick={() => setSlidingNavOpen(false)}
+                    style={{
+                      padding: '0.45rem 0.75rem',
+                      borderRadius: '6px',
+                      color: '#48BE34',
+                      fontSize: '0.82rem',
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                    }}
+                  >
+                    <span>View All 7 Divisions Scope →</span>
+                  </Link>
+                  {DIVISIONS_DATA.map((div) => (
+                    <Link
+                      key={div.id}
+                      to={`/solutions/${div.slug}`}
+                      onClick={() => setSlidingNavOpen(false)}
+                      style={{
+                        padding: '0.45rem 0.75rem',
+                        borderRadius: '6px',
+                        color: location.pathname === `/solutions/${div.slug}` ? '#FFFFFF' : '#CBD5E1',
+                        backgroundColor: location.pathname === `/solutions/${div.slug}` ? 'rgba(10, 59, 133, 0.4)' : 'transparent',
+                        fontSize: '0.82rem',
+                        fontWeight: 500,
+                        textDecoration: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        transition: 'all 0.15s ease',
+                      }}
+                    >
+                      <span style={{ color: '#3DAE2B', display: 'flex', alignItems: 'center' }}>
+                        {DIVISION_ICONS[div.iconName] || <Layers size={14} />}
+                      </span>
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        0{div.number}. {div.title}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Other Main Links */}
+            {navLinks.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setSlidingNavOpen(false)}
+                  className={`site-sliding-nav-link ${isActive ? 'active' : ''}`}
+                >
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                    <Icon size={17} color="#3DAE2B" />
+                    <span>{item.label}</span>
+                  </span>
+                  <ChevronRight size={15} color="#94A3B8" />
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Quick Direct Support Buttons */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#64748B', fontWeight: 700, padding: '0 0.5rem' }}>
+              Direct Engineering Support
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
+              <a
+                href={`tel:${SITE_SETTINGS.contact.primaryPhone}`}
                 style={{
-                  color: location.pathname === item.path ? '#3DAE2B' : '#CBD5E1',
-                  fontSize: '0.95rem',
-                  fontWeight: 500,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.4rem',
+                  padding: '0.65rem',
+                  borderRadius: '6px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  color: '#E2E8F0',
+                  fontSize: '0.78rem',
+                  fontWeight: 600,
                   textDecoration: 'none',
                 }}
               >
-                {item.label}
-              </Link>
-            ))}
+                <Phone size={14} color="#3DAE2B" />
+                <span>Call Us</span>
+              </a>
+              <button
+                type="button"
+                onClick={handleWhatsApp}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.4rem',
+                  padding: '0.65rem',
+                  borderRadius: '6px',
+                  backgroundColor: 'rgba(37, 211, 102, 0.15)',
+                  border: '1px solid rgba(37, 211, 102, 0.3)',
+                  color: '#25D366',
+                  fontSize: '0.78rem',
+                  fontWeight: 600,
+                }}
+              >
+                <MessageCircle size={14} />
+                <span>WhatsApp</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Drawer Footer */}
+        <div className="site-sliding-nav-footer">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.72rem', color: '#94A3B8' }}>
+            <ShieldCheck size={14} color="#3DAE2B" />
+            <span>ISO 14644-1, cGMP & USFDA 21 CFR Part 11 Validated</span>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+            <span style={{ fontSize: '0.72rem', color: '#64748B' }}>
+              © {new Date().getFullYear()} GMP VISION
+            </span>
             <Link
-              to="/rfq"
-              onClick={() => setMobileMenuOpen(false)}
-              className="btn btn-primary"
-              style={{
-                width: '100%',
-                marginTop: '0.5rem',
-                textAlign: 'center',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.5rem',
-              }}
+              to="/admin/login"
+              onClick={() => setSlidingNavOpen(false)}
+              style={{ fontSize: '0.72rem', color: '#94A3B8', textDecoration: 'underline' }}
             >
-              Request a Technical Quote <ArrowRight size={16} />
+              Admin Portal
             </Link>
           </div>
-        )}
-      </nav>
+        </div>
+      </aside>
 
-      {/* Responsive media queries */}
+      {/* Responsive media query overrides */}
       <style>{`
         @media (max-width: 992px) {
           .desktop-nav { display: none !important; }
