@@ -142,21 +142,9 @@ export const ProductsAdminPage: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {/* Top Banner */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          backgroundColor: '#FFFFFF',
-          padding: '1.5rem',
-          borderRadius: '10px',
-          border: '1px solid #E2E8F0',
-        }}
-      >
+      <div className="admin-page-banner">
         <div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-navy, #051C42)', margin: 0 }}>
+          <h1 style={{ fontSize: 'clamp(1.2rem, 3.5vw, 1.5rem)', fontWeight: 800, color: 'var(--color-navy, #051C42)', margin: 0 }}>
             Turnkey Cleanroom & HVAC Equipment Catalog
           </h1>
           <p style={{ fontSize: '0.85rem', color: '#64748B', margin: '0.25rem 0 0 0' }}>
@@ -164,30 +152,20 @@ export const ProductsAdminPage: React.FC = () => {
           </p>
         </div>
 
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={handleOpenCreate}
-          style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
-        >
-          <Plus size={16} /> Add Equipment Item
-        </Button>
+        <div className="admin-page-actions">
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={handleOpenCreate}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            <Plus size={16} /> Add Equipment Item
+          </Button>
+        </div>
       </div>
 
       {/* Reorder Header */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0.75rem 1rem',
-          backgroundColor: '#F8FAFC',
-          borderRadius: '8px',
-          border: '1px solid #E2E8F0',
-          fontSize: '0.8rem',
-          color: '#475569',
-        }}
-      >
+      <div className="admin-instruction-bar">
         <span>
           💡 <strong>Drag handle on left</strong> to arrange display priority across the turnkey product catalog.
         </span>
@@ -421,7 +399,7 @@ export const ProductsAdminPage: React.FC = () => {
             </div>
 
             {/* Tags & Featured */}
-            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', alignItems: 'center' }}>
+            <div className="admin-grid-2" style={{ alignItems: 'center' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
                   Search Tags (comma-separated)
@@ -431,11 +409,11 @@ export const ProductsAdminPage: React.FC = () => {
                   value={tagsInput}
                   onChange={(e) => setTagsInput(e.target.value)}
                   placeholder="e.g. AHU, cGMP, HVAC, Plug Fan"
-                  style={{ width: '100%', padding: '0.5rem', borderRadius: '6px', border: '1px solid #CBD5E1', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.5rem', borderRadius: '6px', border: '1px solid #CBD5E1', fontSize: '0.85rem', boxSizing: 'border-box' }}
                 />
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', paddingTop: '1.25rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', paddingTop: '0.5rem' }}>
                 <input
                   type="checkbox"
                   id="prodFeatured"
@@ -455,6 +433,7 @@ export const ProductsAdminPage: React.FC = () => {
                 display: 'flex',
                 justifyContent: 'flex-end',
                 gap: '0.75rem',
+                flexWrap: 'wrap',
                 paddingTop: '1rem',
                 borderTop: '1px solid #E2E8F0',
               }}

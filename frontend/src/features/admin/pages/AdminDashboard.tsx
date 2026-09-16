@@ -110,22 +110,9 @@ export const AdminDashboard: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       {/* Top Banner */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          backgroundColor: '#FFFFFF',
-          padding: '1.5rem',
-          borderRadius: '10px',
-          border: '1px solid #E2E8F0',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
-        }}
-      >
+      <div className="admin-page-banner">
         <div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-navy, #051C42)', margin: 0 }}>
+          <h1 style={{ fontSize: 'clamp(1.2rem, 3.5vw, 1.5rem)', fontWeight: 800, color: 'var(--color-navy, #051C42)', margin: 0 }}>
             Executive Dashboard
           </h1>
           <p style={{ fontSize: '0.85rem', color: '#64748B', margin: '0.25rem 0 0 0' }}>
@@ -133,7 +120,7 @@ export const AdminDashboard: React.FC = () => {
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+        <div className="admin-page-actions">
           <Button variant="outline" size="sm" onClick={exportCSV} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Download size={15} /> Export Leads CSV
           </Button>
@@ -384,6 +371,8 @@ export const AdminDashboard: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '0.75rem',
           }}
         >
           <div>
@@ -549,19 +538,19 @@ export const AdminDashboard: React.FC = () => {
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '1.25rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '0.35rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '4px', fontSize: '0.78rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '0.35rem' }}>
                 <span style={{ color: '#94A3B8' }}>Authentication Closure:</span>
                 <span style={{ color: '#3DAE2B', fontWeight: 600 }}>Encapsulated (tokenStore)</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '0.35rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '4px', fontSize: '0.78rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '0.35rem' }}>
                 <span style={{ color: '#94A3B8' }}>RFQ Draft Session:</span>
                 <span style={{ color: '#3DAE2B', fontWeight: 600 }}>24-Hour TTL SessionStorage</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '0.35rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '4px', fontSize: '0.78rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '0.35rem' }}>
                 <span style={{ color: '#94A3B8' }}>WhatsApp Lead Beacon:</span>
                 <span style={{ color: '#3DAE2B', fontWeight: 600 }}>navigator.sendBeacon Active</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '4px', fontSize: '0.78rem' }}>
                 <span style={{ color: '#94A3B8' }}>Primary Facility:</span>
                 <span style={{ color: '#F8FAFC' }}>Una & Nalagarh (Baddi Corridor)</span>
               </div>
@@ -570,7 +559,7 @@ export const AdminDashboard: React.FC = () => {
 
           <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
             <div style={{ fontSize: '0.72rem', color: '#94A3B8' }}>Corporate Helpline:</div>
-            <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#3DAE2B' }}>+91-9817343117 / +91-9816043117</div>
+            <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#3DAE2B', wordBreak: 'break-word' }}>+91-9817343117 / +91-9816043117</div>
           </div>
         </div>
       </div>

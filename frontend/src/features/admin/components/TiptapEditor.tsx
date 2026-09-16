@@ -93,7 +93,7 @@ export const TiptapEditor: React.FC<TiptapEditorProps> = ({ content, onChange })
           <UnderlineIcon size={16} />
         </button>
 
-        <div style={{ width: '1px', backgroundColor: '#CBD5E1', margin: '0 0.25rem' }} />
+        <div className="tiptap-divider" style={{ width: '1px', backgroundColor: '#CBD5E1', margin: '0 0.25rem' }} />
 
         <button
           type="button"
@@ -123,7 +123,7 @@ export const TiptapEditor: React.FC<TiptapEditorProps> = ({ content, onChange })
           <Heading3 size={16} />
         </button>
 
-        <div style={{ width: '1px', backgroundColor: '#CBD5E1', margin: '0 0.25rem' }} />
+        <div className="tiptap-divider" style={{ width: '1px', backgroundColor: '#CBD5E1', margin: '0 0.25rem' }} />
 
         <button
           type="button"
@@ -182,16 +182,16 @@ export const TiptapEditor: React.FC<TiptapEditorProps> = ({ content, onChange })
       </div>
 
       {/* Editor Content Area */}
-      <div style={{ padding: '1rem', minHeight: '160px', color: '#1E293B' }}>
+      <div style={{ padding: '0.85rem 1rem', minHeight: '140px', color: '#1E293B', maxWidth: '100%', boxSizing: 'border-box' }}>
         <EditorContent editor={editor} />
       </div>
 
       <style>{`
-        .ProseMirror { outline: none; min-height: 140px; }
+        .ProseMirror { outline: none; min-height: 120px; word-break: break-word; overflow-wrap: break-word; max-width: 100%; }
         .ProseMirror p { margin-bottom: 0.5rem; }
-        .ProseMirror h2 { font-size: 1.3rem; margin: 0.8rem 0 0.4rem; color: #051C42; }
-        .ProseMirror h3 { font-size: 1.15rem; margin: 0.6rem 0 0.3rem; color: #051C42; }
-        .ProseMirror ul, .ProseMirror ol { padding-left: 1.5rem; margin-bottom: 0.5rem; }
+        .ProseMirror h2 { font-size: 1.25rem; margin: 0.8rem 0 0.4rem; color: #051C42; }
+        .ProseMirror h3 { font-size: 1.1rem; margin: 0.6rem 0 0.3rem; color: #051C42; }
+        .ProseMirror ul, .ProseMirror ol { padding-left: 1.25rem; margin-bottom: 0.5rem; }
         .ProseMirror blockquote { border-left: 3px solid #3DAE2B; padding-left: 0.75rem; color: #475569; font-style: italic; }
       `}</style>
     </div>

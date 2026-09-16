@@ -111,21 +111,9 @@ export const ProjectsAdminPage: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {/* Top Banner */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          backgroundColor: '#FFFFFF',
-          padding: '1.5rem',
-          borderRadius: '10px',
-          border: '1px solid #E2E8F0',
-        }}
-      >
+      <div className="admin-page-banner">
         <div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-navy, #051C42)', margin: 0 }}>
+          <h1 style={{ fontSize: 'clamp(1.2rem, 3.5vw, 1.5rem)', fontWeight: 800, color: 'var(--color-navy, #051C42)', margin: 0 }}>
             Turnkey Cleanroom Projects & Case Studies
           </h1>
           <p style={{ fontSize: '0.85rem', color: '#64748B', margin: '0.25rem 0 0 0' }}>
@@ -133,30 +121,20 @@ export const ProjectsAdminPage: React.FC = () => {
           </p>
         </div>
 
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={handleOpenCreate}
-          style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
-        >
-          <Plus size={16} /> Add Cleanroom Project
-        </Button>
+        <div className="admin-page-actions">
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={handleOpenCreate}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            <Plus size={16} /> Add Cleanroom Project
+          </Button>
+        </div>
       </div>
 
       {/* Sortable List Instructions */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0.75rem 1rem',
-          backgroundColor: '#F8FAFC',
-          borderRadius: '8px',
-          border: '1px solid #E2E8F0',
-          fontSize: '0.8rem',
-          color: '#475569',
-        }}
-      >
+      <div className="admin-instruction-bar">
         <span>
           💡 <strong>Drag handle on the left</strong> to change display sequence on the live website. Changes persist immediately.
         </span>

@@ -40,6 +40,9 @@ export const SortableItem: React.FC<SortableItemProps> = ({ id, children }) => {
     border: '1px solid #E2E8F0',
     marginBottom: '0.5rem',
     boxShadow: isDragging ? '0 10px 15px -3px rgba(0,0,0,0.1)' : 'none',
+    boxSizing: 'border-box',
+    width: '100%',
+    maxWidth: '100%',
   };
 
   return (
@@ -53,13 +56,15 @@ export const SortableItem: React.FC<SortableItemProps> = ({ id, children }) => {
           color: '#94A3B8',
           display: 'flex',
           alignItems: 'center',
-          padding: '0.2rem',
+          padding: '0.25rem',
+          touchAction: 'none',
+          flexShrink: 0,
         }}
         aria-label="Drag to reorder"
       >
         <GripVertical size={18} />
       </button>
-      <div style={{ flex: 1 }}>{children}</div>
+      <div style={{ flex: 1, minWidth: 0 }}>{children}</div>
     </div>
   );
 };

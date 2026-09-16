@@ -49,14 +49,15 @@ const SortableGalleryCard: React.FC<SortableGalleryCardProps> = ({
     opacity: isDragging ? 0.5 : 1,
     zIndex: isDragging ? 50 : 1,
     position: 'relative',
-    flex: '1 1 140px',
-    maxWidth: '220px',
-    minWidth: '130px',
+    flex: '1 1 130px',
+    maxWidth: '100%',
+    minWidth: '110px',
     backgroundColor: '#FFFFFF',
     borderRadius: '8px',
     border: item.isCover ? '2px solid var(--color-green, #3DAE2B)' : '1px solid #E2E8F0',
     overflow: 'hidden',
     boxShadow: item.isCover ? '0 0 0 2px rgba(61, 174, 43, 0.15)' : 'none',
+    boxSizing: 'border-box',
   };
 
   return (
@@ -109,6 +110,7 @@ const SortableGalleryCard: React.FC<SortableGalleryCardProps> = ({
             padding: '3px',
             display: 'flex',
             alignItems: 'center',
+            touchAction: 'none',
           }}
         >
           <GripVertical size={14} />
@@ -357,7 +359,7 @@ export const GalleryManager: React.FC<GalleryManagerProps> = ({
             />
           </div>
 
-          <Button type="submit" variant="outline" size="sm" style={{ height: '36px', minWidth: '100px' }}>
+          <Button type="submit" variant="outline" size="sm" style={{ height: '36px', minWidth: '100px', flex: '1 1 auto' }}>
             <Plus size={16} /> Add Image
           </Button>
         </form>

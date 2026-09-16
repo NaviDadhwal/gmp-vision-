@@ -115,16 +115,25 @@ export const Modal: React.FC<ModalProps> = ({
       <style>{`
         .modal-backdrop-container {
           padding: 1.5rem;
+          box-sizing: border-box;
         }
         @media (max-width: 640px) {
           .modal-backdrop-container {
             padding: 0.5rem !important;
           }
+          .modal-dialog-box {
+            max-height: 96vh !important;
+            max-height: calc(100dvh - 1rem) !important;
+            border-radius: 8px !important;
+          }
           .modal-header-box {
             padding: 0.75rem 1rem !important;
           }
+          .modal-header-box h3 {
+            font-size: 0.98rem !important;
+          }
           .modal-body-box {
-            padding: 1rem 0.85rem !important;
+            padding: 1rem 0.75rem !important;
           }
         }
       `}</style>

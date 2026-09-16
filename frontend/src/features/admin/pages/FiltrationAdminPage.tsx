@@ -113,21 +113,9 @@ export const FiltrationAdminPage: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {/* Top Banner */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          backgroundColor: '#FFFFFF',
-          padding: '1.5rem',
-          borderRadius: '10px',
-          border: '1px solid #E2E8F0',
-        }}
-      >
+      <div className="admin-page-banner">
         <div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-navy, #051C42)', margin: 0 }}>
+          <h1 style={{ fontSize: 'clamp(1.2rem, 3.5vw, 1.5rem)', fontWeight: 800, color: 'var(--color-navy, #051C42)', margin: 0 }}>
             Cleanroom Filtration & Air Distribution Catalog
           </h1>
           <p style={{ fontSize: '0.85rem', color: '#64748B', margin: '0.25rem 0 0 0' }}>
@@ -135,18 +123,20 @@ export const FiltrationAdminPage: React.FC = () => {
           </p>
         </div>
 
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={handleOpenCreateFilter}
-          style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
-        >
-          <Plus size={16} /> Add Air Filter Specification
-        </Button>
+        <div className="admin-page-actions">
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={handleOpenCreateFilter}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            <Plus size={16} /> Add Air Filter Specification
+          </Button>
+        </div>
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid #E2E8F0' }}>
+      <div className="admin-tabs-nav">
         <button
           type="button"
           onClick={() => setActiveTab('filters')}
@@ -159,6 +149,7 @@ export const FiltrationAdminPage: React.FC = () => {
             cursor: 'pointer',
             borderBottom: activeTab === 'filters' ? '3px solid #0A3B85' : '3px solid transparent',
             color: activeTab === 'filters' ? '#0A3B85' : '#64748B',
+            whiteSpace: 'nowrap',
           }}
         >
           Primary & HEPA Filters ({filtersList.length})
@@ -176,6 +167,7 @@ export const FiltrationAdminPage: React.FC = () => {
             cursor: 'pointer',
             borderBottom: activeTab === 'hardware' ? '3px solid #0A3B85' : '3px solid transparent',
             color: activeTab === 'hardware' ? '#0A3B85' : '#64748B',
+            whiteSpace: 'nowrap',
           }}
         >
           Air Distribution Hardware ({hardwareList.length})
@@ -184,19 +176,7 @@ export const FiltrationAdminPage: React.FC = () => {
 
       {activeTab === 'filters' && (
         <>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '0.75rem 1rem',
-              backgroundColor: '#F8FAFC',
-              borderRadius: '8px',
-              border: '1px solid #E2E8F0',
-              fontSize: '0.8rem',
-              color: '#475569',
-            }}
-          >
+          <div className="admin-instruction-bar">
             <span>
               💡 <strong>Drag handle on left</strong> to arrange display order on the public Filtration Catalog page.
             </span>

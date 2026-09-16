@@ -167,21 +167,9 @@ export const LeadsPage: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {/* Top Header */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          backgroundColor: '#FFFFFF',
-          padding: '1.5rem',
-          borderRadius: '10px',
-          border: '1px solid #E2E8F0',
-        }}
-      >
+      <div className="admin-page-banner">
         <div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-navy, #051C42)', margin: 0 }}>
+          <h1 style={{ fontSize: 'clamp(1.2rem, 3.5vw, 1.5rem)', fontWeight: 800, color: 'var(--color-navy, #051C42)', margin: 0 }}>
             Commercial Leads & RFQ Intake Queue
           </h1>
           <p style={{ fontSize: '0.85rem', color: '#64748B', margin: '0.25rem 0 0 0' }}>
@@ -189,26 +177,17 @@ export const LeadsPage: React.FC = () => {
           </p>
         </div>
 
-        <Button variant="outline" size="sm" onClick={exportCSV} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <Download size={15} /> Export Cleanroom Pipeline CSV
-        </Button>
+        <div className="admin-page-actions">
+          <Button variant="outline" size="sm" onClick={exportCSV} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Download size={15} /> Export Cleanroom Pipeline CSV
+          </Button>
+        </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '0.75rem',
-          alignItems: 'center',
-          backgroundColor: '#FFFFFF',
-          padding: '1rem 1.25rem',
-          borderRadius: '8px',
-          border: '1px solid #E2E8F0',
-        }}
-      >
+      <div className="admin-filter-bar">
         {/* Search */}
-        <div style={{ flex: '1 1 240px', minWidth: '200px', position: 'relative' }}>
+        <div style={{ flex: '1 1 240px', minWidth: '180px', position: 'relative' }}>
           <Search size={16} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} />
           <input
             type="text"
@@ -222,17 +201,19 @@ export const LeadsPage: React.FC = () => {
               border: '1px solid #CBD5E1',
               fontSize: '0.85rem',
               outline: 'none',
+              boxSizing: 'border-box',
             }}
           />
         </div>
 
         {/* Status Filter */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <Filter size={15} color="#64748B" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: '1 1 140px' }}>
+          <Filter size={15} color="#64748B" style={{ flexShrink: 0 }} />
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             style={{
+              width: '100%',
               padding: '0.5rem 0.75rem',
               borderRadius: '6px',
               border: '1px solid #CBD5E1',
@@ -255,6 +236,7 @@ export const LeadsPage: React.FC = () => {
           value={sourceFilter}
           onChange={(e) => setSourceFilter(e.target.value)}
           style={{
+            flex: '1 1 140px',
             padding: '0.5rem 0.75rem',
             borderRadius: '6px',
             border: '1px solid #CBD5E1',
@@ -268,7 +250,7 @@ export const LeadsPage: React.FC = () => {
           <option value="contact">Contact Form</option>
         </select>
 
-        <div style={{ marginLeft: 'auto', fontSize: '0.8rem', color: '#64748B', whiteSpace: 'nowrap' }}>
+        <div className="admin-filter-counter" style={{ marginLeft: 'auto', fontSize: '0.8rem', color: '#64748B', whiteSpace: 'nowrap' }}>
           Showing <strong>{filteredLeads.length}</strong> of <strong>{leads.length}</strong> leads
         </div>
       </div>

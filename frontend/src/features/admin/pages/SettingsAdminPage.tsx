@@ -63,21 +63,9 @@ export const SettingsAdminPage: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {/* Top Header */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          backgroundColor: '#FFFFFF',
-          padding: '1.5rem',
-          borderRadius: '10px',
-          border: '1px solid #E2E8F0',
-        }}
-      >
+      <div className="admin-page-banner">
         <div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-navy, #051C42)', margin: 0 }}>
+          <h1 style={{ fontSize: 'clamp(1.2rem, 3.5vw, 1.5rem)', fontWeight: 800, color: 'var(--color-navy, #051C42)', margin: 0 }}>
             Global Brand & Operational Settings
           </h1>
           <p style={{ fontSize: '0.85rem', color: '#64748B', margin: '0.25rem 0 0 0' }}>
@@ -85,7 +73,7 @@ export const SettingsAdminPage: React.FC = () => {
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+        <div className="admin-page-actions">
           <Button variant="outline" size="sm" onClick={handleResetDefaults} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <RotateCcw size={14} /> Reset Defaults
           </Button>
@@ -217,9 +205,9 @@ export const SettingsAdminPage: React.FC = () => {
                 value={newMetricLabel}
                 onChange={(e) => setNewMetricLabel(e.target.value)}
                 placeholder="e.g. 100% USFDA & WHO-GMP Audit Readiness"
-                style={{ flex: '1 1 180px', minWidth: '140px', padding: '0.45rem 0.65rem', borderRadius: '4px', border: '1px solid #CBD5E1', fontSize: '0.82rem' }}
+                style={{ flex: '1 1 180px', minWidth: '140px', padding: '0.45rem 0.65rem', borderRadius: '4px', border: '1px solid #CBD5E1', fontSize: '0.82rem', boxSizing: 'border-box' }}
               />
-              <Button type="submit" variant="outline" size="sm">
+              <Button type="submit" variant="outline" size="sm" style={{ flex: '1 1 auto' }}>
                 <Plus size={14} /> Add Metric
               </Button>
             </form>
