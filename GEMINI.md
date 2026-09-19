@@ -28,3 +28,10 @@ When starting any new feature, milestone, or task in this project or any project
 - **Ship**: Finalize PRs and reviews using `/gsd-ship`.
 - **Durable Context**: Always maintain `.planning/` (`STATE.md`, `ROADMAP.md`, `PROJECT.md`) as the single source of truth to avoid context rot.
 
+## Mandatory Ralph PRD & Autonomous Loop Rule
+
+When planning or building features in this project or any project:
+- **PRD Specification**: Before implementing features, generate a structured PRD using the `/prd` skill (saved to `tasks/prd-[feature-name].md`).
+- **Story Decomposition (`prd.json`)**: Convert the PRD with `/ralph` into `prd.json`. Every story must be scoped to fit within a single context window with explicit verification criteria.
+- **Persistent Memory Across Iterations**: Track progress in `progress.txt`, update story status in `prd.json`, and record newly learned conventions and gotchas into `AGENTS.md` / `GEMINI.md`.
+
