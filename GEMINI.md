@@ -35,3 +35,11 @@ When planning or building features in this project or any project:
 - **Story Decomposition (`prd.json`)**: Convert the PRD with `/ralph` into `prd.json`. Every story must be scoped to fit within a single context window with explicit verification criteria.
 - **Persistent Memory Across Iterations**: Track progress in `progress.txt`, update story status in `prd.json`, and record newly learned conventions and gotchas into `AGENTS.md` / `GEMINI.md`.
 
+## Mandatory CodeRabbit Review Rule
+
+Before completing any feature, phase, or merge in this project or any project:
+- **Automated Code Review**: Run a CodeRabbit review using `coderabbit review --agent` or the `/code-review` skill to detect potential bugs, security issues, and anti-patterns.
+- **Triage Findings**: Resolve critical and major findings before shipping. Use `/autofix` to review and apply validated review fixes.
+- **Quality Gate**: Pair CodeRabbit reviews with project builds (`npm run build`) to ensure 0 compile and quality regressions.
+
+
