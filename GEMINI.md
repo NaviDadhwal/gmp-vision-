@@ -17,3 +17,14 @@ After every task, feature update, bug fix, or codebase change in this project:
 
 4. **Confirm in Response**:
    - Provide the commit hash, commit message, and confirmation of the GitHub push status to the user.
+
+## Mandatory GSD (Git. Ship. Done.) Workflow Rule
+
+When starting any new feature, milestone, or task in this project or any project:
+- **Initialize & Scope**: Always use `/gsd-new-project` or `/gsd-progress` to establish project structure and context under `.planning/`.
+- **Plan**: Decompose work into verifiable phases with `/gsd-plan-phase <N>`.
+- **Execute**: Execute with wave-based parallelism and test-backed commits via `/gsd-execute-phase <N>`.
+- **Verify**: Validate built work through conversational UAT with `/gsd-verify-work`.
+- **Ship**: Finalize PRs and reviews using `/gsd-ship`.
+- **Durable Context**: Always maintain `.planning/` (`STATE.md`, `ROADMAP.md`, `PROJECT.md`) as the single source of truth to avoid context rot.
+
