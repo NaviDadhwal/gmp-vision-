@@ -1,0 +1,10 @@
+workspace:
+  id: 4769222a-ce9a-45ed-87bb-6183b956279e
+localResources:
+  collections:
+    - ../backend/postman/collection.json
+  environments:
+    - ../backend/postman/environment.json
+cloudResources:
+  environments:
+    ../backend/postman/environment.json: 58740906-d2d2d64c-5938-4697-8b6e-690af7f3fd55
