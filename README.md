@@ -61,5 +61,25 @@ npm run build
 
 ---
 
+## 📁 Repository Structure & Use Cases
+
+```
+gmp-vision/
+├── frontend/                  # React 19 + TypeScript + Vite Single-Page Application
+│   ├── public/                # Static assets (logo, icons, Broucher.pdf)
+│   └── src/                   # Pages, features (RFQ, admin, filtration), components, data
+├── backend/                   # Node.js + Express + TypeScript API Server (Scaffolded)
+│   ├── src/                   # Modular architecture (auth, leads, divisions, products, etc.)
+│   └── postman/               # API collection & environment specifications
+├── docs/                      # Project Specifications & Reference Materials
+│   ├── GMP_VISION_PRD.md      # Master Product Requirements Document (PRD v2.0)
+│   ├── WEBSITE_SERVICES_AND_CATALOG.md # Master Services Catalog & Scope
+│   ├── catalogs/              # Client brochures, specs, and Word documents
+│   └── reference-media/       # Brand cards, design mockups, and client site photos
+└── .planning/                 # GSD tracking, roadmap, and project state
+```
+
+---
+
 ## 📄 License
 Private & Confidential — GMP VISION.
