@@ -17,11 +17,16 @@
 - [ ] Connect TanStack Query hooks to API client with mock/API toggle
 - [ ] Final visual regression check and responsive layout audit
 
-### Phase 3: Backend Foundation & Security Middleware (PLANNED)
+### Phase 3: Backend Foundation, MongoDB Schemas, REST API & Postman (PLANNED & READY)
 - [ ] Initialize Express + TypeScript server in `backend/`
 - [ ] Zod environment validation (`src/config/env.ts`)
 - [ ] Security stack (Helmet CSP, CORS, express-mongo-sanitize, rate limiters)
 - [ ] Database connection lifecycle with Mongoose (`src/config/db.ts`)
+- [ ] Implement Mongoose models (admins, leads, divisions, products, filters, projects, clients, settings)
+- [ ] Implement dual pagination (offset & cursor) and batch reordering (`PATCH /:resource/reorder`)
+- [ ] Implement Cloudinary upload and media management
+- [ ] Database seeder script (`src/scripts/seed.ts`)
+- [ ] Comprehensive Postman test collection & environment (`backend/postman/`)
 
 ### Phase 4: Authentication, Admin Management & Cloudinary Media (PLANNED)
 - [ ] Admin model, JWT access/refresh lifecycle, HttpOnly cookie rotation
