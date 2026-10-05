@@ -1,0 +1,30 @@
+$kind: http-request
+name: POST /leads (Submit RFQ / WhatsApp)
+url: "{{baseUrl}}/leads"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "companyName": "Cadila Healthcare Sample",
+      "contactName": "Vikram Sharma",
+      "phone": "+919876543210",
+      "email": "vikram@cadila.example.com",
+      "location": "Ahmedabad, Gujarat",
+      "projectType": ["Turnkey Cleanroom & HVAC"],
+      "divisions": ["Cleanroom Infrastructure & Modular Panels", "HVAC Systems, AHUs & Dehumidifiers"],
+      "roomDimensions": "20m x 15m x 3.5m",
+      "cfm": 18000,
+      "message": "Requesting technical audit and BOQ cost estimate for Class B sterile vial filling suite.",
+      "source": "rfq_form"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 201', () => pm.response.to.have.status(201));
+      pm.test('Lead created', () => pm.expect(pm.response.json().data.id).to.exist);
+      pm.environment.set('leadId', pm.response.json().data.id);
+    language: text/javascript
+order: 1000

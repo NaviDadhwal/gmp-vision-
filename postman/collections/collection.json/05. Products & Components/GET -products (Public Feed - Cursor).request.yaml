@@ -1,0 +1,15 @@
+$kind: http-request
+name: GET /products (Public Feed - Cursor)
+url: "{{baseUrl}}/products?limit=6"
+method: GET
+queryParams:
+  limit: "6"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', () => pm.response.to.have.status(200));
+      pm.test('Cursor envelope valid', () => {
+        pm.expect(pm.response.json().pagination).to.have.property('hasMore');
+      });
+    language: text/javascript
+order: 1000

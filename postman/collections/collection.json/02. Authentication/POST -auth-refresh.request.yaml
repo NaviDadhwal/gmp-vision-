@@ -1,0 +1,15 @@
+$kind: http-request
+name: POST /auth/refresh
+url: "{{baseUrl}}/auth/refresh"
+method: POST
+headers:
+  Content-Type: application/json
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200 or 401', () => pm.expect(pm.response.code).to.be.oneOf([200, 401]));
+      if (pm.response.code === 200) {
+        pm.environment.set('accessToken', pm.response.json().data.accessToken);
+      }
+    language: text/javascript
+order: 2000
