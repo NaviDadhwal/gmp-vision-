@@ -33,7 +33,6 @@ export const DivisionSchema = new Schema<IDivision>(
   { timestamps: true }
 );
 
-DivisionSchema.index({ slug: 1 }, { unique: true });
 DivisionSchema.index({ isActive: 1, order: 1 });
 
 export const DivisionModel = model<IDivision>('Division', DivisionSchema);

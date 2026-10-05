@@ -16,6 +16,5 @@ export const SettingSchema = new Schema<ISetting>(
   { timestamps: true }
 );
 
-SettingSchema.index({ key: 1 }, { unique: true });
-
+// Note: Unique index on key is automatically created by unique: true
 export const SettingModel = model<ISetting>('Setting', SettingSchema);

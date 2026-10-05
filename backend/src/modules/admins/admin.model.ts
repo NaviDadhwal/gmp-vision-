@@ -57,6 +57,5 @@ export const AdminSchema = new Schema<IAdmin>(
   }
 );
 
-AdminSchema.index({ email: 1 }, { unique: true });
-
+// Note: Unique index on email is automatically created by unique: true
 export const AdminModel = model<IAdmin>('Admin', AdminSchema);

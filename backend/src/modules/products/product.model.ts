@@ -93,7 +93,6 @@ export const ProductSchema = new Schema<IProduct>(
   { timestamps: true }
 );
 
-ProductSchema.index({ slug: 1 }, { unique: true });
 ProductSchema.index({ divisionId: 1, isActive: 1, order: 1 });
 ProductSchema.index({ name: 'text', description: 'text', tags: 'text' });
 

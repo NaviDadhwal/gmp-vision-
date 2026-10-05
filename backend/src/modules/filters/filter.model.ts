@@ -41,7 +41,6 @@ export const FilterSchema = new Schema<IFilter>(
         'semi-hepa',
         'wire-mesh',
       ],
-      index: true,
     },
     name: { type: String, required: true, trim: true },
     micronRating: { type: String, required: true },
@@ -52,7 +51,7 @@ export const FilterSchema = new Schema<IFilter>(
     images: { type: [String], default: [] },
     specSheetUrl: { type: String, default: '' },
     order: { type: Number, default: 0 },
-    isActive: { type: Boolean, default: true, index: true },
+    isActive: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

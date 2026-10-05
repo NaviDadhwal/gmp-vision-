@@ -80,8 +80,19 @@ app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
 
-// 6. NoSQL Operator Injection Sanitization
-app.use(mongoSanitize());
+// 6. NoSQL Operator Injection Sanitization (Express 5 Safe)
+app.use((req, _res, next) => {
+  if (req.body) {
+    mongoSanitize.sanitize(req.body);
+  }
+  if (req.params) {
+    mongoSanitize.sanitize(req.params);
+  }
+  if (req.query) {
+    mongoSanitize.sanitize(req.query);
+  }
+  next();
+});
 
 // 7. HTTP Request Logging (Development Only)
 if (env.NODE_ENV === 'development') {
