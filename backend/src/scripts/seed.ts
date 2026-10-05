@@ -107,7 +107,7 @@ async function seed() {
     for (const div of divisionsData) {
       const doc = await DivisionModel.findOneAndUpdate({ slug: div.slug }, div, {
         upsert: true,
-        new: true,
+        returnDocument: 'after',
       });
       divisionMap[div.slug] = doc._id;
     }
