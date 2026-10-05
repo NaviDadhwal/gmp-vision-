@@ -17,30 +17,29 @@
 - [ ] Connect TanStack Query hooks to API client with mock/API toggle
 - [ ] Final visual regression check and responsive layout audit
 
-### Phase 3: Backend Foundation, MongoDB Schemas, REST API & Postman (PLANNED & READY)
-- [ ] Initialize Express + TypeScript server in `backend/`
-- [ ] Zod environment validation (`src/config/env.ts`)
-- [ ] Security stack (Helmet CSP, CORS, express-mongo-sanitize, rate limiters)
-- [ ] Database connection lifecycle with Mongoose (`src/config/db.ts`)
-- [ ] Implement Mongoose models (admins, leads, divisions, products, filters, projects, clients, settings)
-- [ ] Implement dual pagination (offset & cursor) and batch reordering (`PATCH /:resource/reorder`)
-- [ ] Implement Cloudinary upload and media management
-- [ ] Database seeder script (`src/scripts/seed.ts`)
-- [ ] Comprehensive Postman test collection & environment (`backend/postman/`)
+### Phase 3: Backend Foundation, MongoDB Schemas, REST API & Postman (COMPLETED)
+- [x] Initialize Express + TypeScript server in `backend/`
+- [x] Zod environment validation (`src/config/env.ts`)
+- [x] Security stack (Helmet CSP, CORS, express-mongo-sanitize, rate limiters)
+- [x] Database connection lifecycle with Mongoose (`src/config/db.ts`)
+- [x] Implement Mongoose models (admins, leads, divisions, products, filters, projects, clients, settings)
+- [x] Implement dual pagination (offset & cursor) and batch reordering (`PATCH /:resource/reorder`)
+- [x] Implement Cloudinary upload and media management
+- [x] Database seeder script (`src/scripts/seed.ts`)
+- [x] Comprehensive Postman test collection & environment (`backend/postman/`)
+- [x] Implement full module controller suite: Auth (JWT rotation + lockout), Admins, Divisions, Products, Filters, Projects, Clients, Settings, Leads (CSV export + email notifications), Media
+- [x] Cron service (daily 08:00 AM IST lead digest) and Nodemailer transporter
+- [x] Health and readiness probes (`/health`, `/ready`)
 
-### Phase 4: Authentication, Admin Management & Cloudinary Media (PLANNED)
-- [ ] Admin model, JWT access/refresh lifecycle, HttpOnly cookie rotation
-- [ ] Route guards (`requireAuth.ts`, `roleGuard.ts`)
-- [ ] Admin account provisioning endpoints (`/api/v1/admins`)
-- [ ] Cloudinary media upload & deletion endpoints (`/api/v1/media`)
+### Phase 4: Frontend API Integration & Admin Panel Wire-up (NEXT)
+- [ ] Implement `frontend/src/lib/api/client.ts` with Axios, `withCredentials: true`, and queued single-flight refresh
+- [ ] Connect `AdminLoginPage.tsx` to `POST /api/v1/auth/login` and Auth context
+- [ ] Connect Admin CMS tables & forms (Products, Filters, Projects, Clients, Settings, Leads) to backend endpoints
+- [ ] Wire `@dnd-kit` drag-and-drop sortable list reordering to `PATCH /api/v1/:resource/reorder`
+- [ ] Wire `GalleryManager.tsx` media uploader to `POST /api/v1/media/upload`
+- [ ] Connect public division, product, filter, project, and lead inquiry forms to API endpoints with mock fallback option
 
-### Phase 5: Business Models, CRUD & Dual Pagination Endpoints (PLANNED)
-- [ ] Mongoose schemas for Divisions, Products, Filters, Projects, Clients, Settings, Leads
-- [ ] Public read endpoints with cursor-based pagination
-- [ ] Admin CRUD endpoints with offset pagination and batch reordering (`PATCH /:resource/reorder`)
-- [ ] Leads ingestion with email alerting & WhatsApp beacon tracking
-
-### Phase 6: Full Integration, Seed Data & Production Verification (PLANNED)
+### Phase 5: Production Verification, Full Seed & Deployment (PLANNED)
 - [ ] Seed database with default 7 divisions, filtration items, and sample projects
-- [ ] Wire frontend API client (`client.ts`) to backend endpoints
+- [ ] Run end-to-end UAT and Postman collection against local/staging server
 - [ ] Verification, UAT, and production deployment configuration
