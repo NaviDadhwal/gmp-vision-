@@ -8,3 +8,7 @@ localResources:
 cloudResources:
   environments:
     ../backend/postman/environment.json: 58740906-d2d2d64c-5938-4697-8b6e-690af7f3fd55
+  collections:
+    ../backend/postman/collection.json: 58740906-f811d132-e5cd-42dc-8053-f324eaedbe9d
+  globals:
+    ../postman/globals/workspace.globals.yaml: fe976f76-598a-462c-817d-1a450d07b845

@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
-import { Router } from 'express';
+import { Request, Response, NextFunction, Router } from 'express';
+import { Types } from 'mongoose';
 import { DivisionModel } from './division.model';
 import { ProductModel } from '../products/product.model';
 import { AppError } from '../../middleware/errorHandler';
@@ -57,7 +57,9 @@ export class DivisionController {
 
   static async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const division = await DivisionModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      const idOrSlug = req.params.id as string;
+      const query = Types.ObjectId.isValid(idOrSlug) ? { _id: idOrSlug } : { slug: idOrSlug };
+      const division = await DivisionModel.findOneAndUpdate(query, req.body, { returnDocument: 'after' });
       if (!division) {
         throw new AppError('Division not found.', 404, 'NOT_FOUND');
       }
@@ -72,7 +74,9 @@ export class DivisionController {
 
   static async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const division = await DivisionModel.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
+      const idOrSlug = req.params.id as string;
+      const query = Types.ObjectId.isValid(idOrSlug) ? { _id: idOrSlug } : { slug: idOrSlug };
+      const division = await DivisionModel.findOneAndUpdate(query, { isActive: false }, { returnDocument: 'after' });
       if (!division) {
         throw new AppError('Division not found.', 404, 'NOT_FOUND');
       }

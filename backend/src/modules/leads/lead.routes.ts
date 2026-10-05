@@ -151,3 +151,4 @@ leadRouter.get('/', requireAuth, roleGuard(['admin', 'superadmin']), LeadControl
 leadRouter.get('/export', requireAuth, roleGuard(['admin', 'superadmin']), LeadController.exportCSV);
 leadRouter.get('/:id', requireAuth, roleGuard(['admin', 'superadmin']), LeadController.getById);
 leadRouter.patch('/:id/status', requireAuth, roleGuard(['admin', 'superadmin']), validate({ body: updateLeadStatusSchema }), LeadController.updateStatus);
+leadRouter.patch('/:id', requireAuth, roleGuard(['admin', 'superadmin']), validate({ body: updateLeadStatusSchema }), LeadController.updateStatus);
