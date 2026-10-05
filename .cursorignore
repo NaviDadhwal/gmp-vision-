@@ -1,0 +1,14 @@
+# Secrets and build output — never index into AI context (instructions.md Section 9)
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+build/
+coverage/
+*.pem
+*.key
+id_rsa
+id_ed25519
+*.p12
+*.pfx

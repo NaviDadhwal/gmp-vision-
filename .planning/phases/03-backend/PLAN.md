@@ -4,10 +4,15 @@ title: Backend Foundation, MongoDB Schemas, REST API Endpoints & Postman Test Su
 status: planned
 depends_on: [01-file-organization]
 target_date: 2026-10-06
+standards_reference:
+  - instructions.md (Full-Stack Project Blueprint v2.2)
+  - docs/GMP_VISION_PRD.md (Master Specification v2.0)
 files_modified:
   - backend/package.json
   - backend/tsconfig.json
   - backend/.env.example
+  - backend/.gitignore
+  - .cursorignore
   - backend/src/server.ts
   - backend/src/app.ts
   - backend/src/config/env.ts
@@ -28,7 +33,11 @@ files_modified:
   - backend/src/modules/clients/*
   - backend/src/modules/settings/*
   - backend/src/modules/media/*
+  - backend/src/services/email.service.ts
+  - backend/src/services/cron.service.ts
   - backend/src/utils/jwt.ts
+  - backend/src/utils/tokenCompare.ts
+  - backend/src/utils/ownershipCheck.ts
   - backend/src/utils/pagination.ts
   - backend/src/scripts/seed.ts
   - backend/postman/collection.json
@@ -37,149 +46,185 @@ files_modified:
 
 # Phase 03: Backend Foundation, MongoDB Schemas, REST Endpoints & Postman Suite
 
-## 1. Executive Summary & PRD Tech Stack Verification
+## 1. Executive Summary & Standards Alignment
 
-As mandated by [docs/GMP_VISION_PRD.md](file:///home/hackunseen/Downloads/gmp%20vision/docs/GMP_VISION_PRD.md#L83-L160), the backend is built as an enterprise-grade RESTful API service:
+This plan enforces the standards established in **[instructions.md](file:///home/hackunseen/Downloads/gmp%20vision/instructions.md)** (Full-Stack Project Blueprint v2.2) and the technical scope in **[docs/GMP_VISION_PRD.md](file:///home/hackunseen/Downloads/gmp%20vision/docs/GMP_VISION_PRD.md)**.
 
-* **Programming Language:** **TypeScript** (`strict: true`, target ES2022/NodeNext, zero unverified `any`).
-* **Runtime:** **Node.js** (v18+ LTS).
-* **Framework:** **Express**.
-* **Database & ODM:** **MongoDB Atlas** with **Mongoose** (typed schemas, compound & unique indexes, timestamps).
-* **Request Validation:** **Zod** schemas for environment variables, request bodies, queries, and path params.
-* **Security & Hardening:**
-  * `helmet` with tuned Content Security Policy.
-  * `cors` with explicit domain allowlist.
-  * `express-rate-limit` (layered: Global 100/min, Auth 10/min, RFQ/WhatsApp 10/15min).
-  * `express-mongo-sanitize` for NoSQL injection prevention.
-  * `bcryptjs` (12 rounds) for password hashing and refresh token storage.
-  * `jsonwebtoken` for 15-minute access tokens and 7-day refresh tokens via `HttpOnly; Secure; SameSite=Strict` cookies.
-* **Asset Storage:** **Cloudinary** SDK + **Multer** stream for images (max 10MB) and PDF brochures (max 25MB).
-* **API Testing & Specification:** **Postman** (`backend/postman/collection.json` & `backend/postman/environment.json`) covering all 32 endpoints.
+### Tech Stack & Language (Strict Verification):
+* **Language:** **TypeScript** (`strict: true`, target ES2022/NodeNext, zero unverified `any`).
+* **Runtime:** **Node.js** (Active LTS v18+; local environment verified v26.8.1).
+* **Framework:** **Express** (`express@^5.2.1`).
+* **Database & ODM:** **MongoDB Atlas** with **Mongoose** (`mongoose@^9.10.4`).
+* **Validation:** **Zod** (`zod@^3.24.2`) for environment variables, request bodies, query strings, and route parameters.
+* **Testing & API Contract:** **Postman** (`backend/postman/collection.json` and `backend/postman/environment.json`).
+* **Security & Crypto:**
+  * `helmet@^8.3.0` (CSP tailored for React SPA + Cloudinary).
+  * `cors@^2.8.6` (explicit origin allowlist, credentials enabled).
+  * `express-rate-limit@^8.7.0` (Global: 100 req/min, Auth: 10 req/min, Leads: 10 req/15min).
+  * `express-mongo-sanitize@^2.2.0` (strips `$` and `.` operators).
+  * `cookie-parser@^1.4.7` (HttpOnly, Secure, SameSite=Strict cookies).
+  * `jsonwebtoken@^9.0.3` (15m access token, 7d refresh token).
+  * `bcryptjs@^3.0.3` (cost factor 12).
+  * `crypto.timingSafeEqual` (via `tokenCompare.ts`).
+* **Storage:** **Cloudinary** (`cloudinary@^2.11.0`) + **Multer** (`multer@^1.4.5-lts.1`).
+* **Email & Cron:** `nodemailer@^10.0.15` + `node-cron@^4.6.0`.
 
 ---
 
-## 2. Work Breakdown Structure (Execution Tasks)
+## 2. Implementation Waves
 
-### Task 1: Backend Scaffolding & Dependencies Initialization
-* Initialize `backend/package.json` with scripts:
-  * `build`: `tsc`
-  * `start`: `node dist/server.js`
-  * `dev`: `tsx watch src/server.ts` or `ts-node-dev`
-  * `seed`: `tsx src/scripts/seed.ts`
-* Initialize `backend/tsconfig.json` with strict mode, module resolution `node`, and output directory `dist`.
-* Create `backend/.env.example` defining:
-  `PORT`, `NODE_ENV`, `MONGODB_URI`, `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, `CORS_ORIGINS`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `SUPERADMIN_EMAIL`, `SUPERADMIN_PASSWORD`.
+### Wave 1: Foundation, Security Pipeline & Health Probes (Days 1)
+* **Task 1.1 — Package & Tooling Setup:**
+  * Create `backend/package.json` with verified dependencies and script definitions (`dev`, `build`, `start`, `seed`).
+  * Create `backend/tsconfig.json` with strict mode, `skipLibCheck: true`, `noImplicitAny: true`.
+  * Create `backend/.gitignore` and root `.cursorignore` to prevent leaking `.env`, secrets, or `node_modules` into AI indexing or git.
+  * Create `backend/.env.example` with commented placeholders.
+* **Task 1.2 — Zod Configuration & Database Lifecycle:**
+  * Implement `backend/src/config/env.ts` crashing immediately (`process.exit(1)`) on invalid config.
+  * Implement `backend/src/config/db.ts` managing Mongoose lifecycle, reconnect events, and clean shutdown on `SIGINT`/`SIGTERM`.
+* **Task 1.3 — Strict Express Pipeline (`src/app.ts`):**
+  * Wire middleware stack in mandatory order:
+    1. Helmet headers with tuned CSP
+    2. CORS allowlist (`CORS_ORIGINS.split(',')` with `credentials: true`)
+    3. Body parser `express.json({ limit: '10kb' })` & `express.urlencoded({ extended: true })`
+    4. Cookie parser
+    5. `express-mongo-sanitize`
+    6. Morgan logger (development only)
+    7. Rate limiters: Global (`/api`), Auth (`/api/v1/auth`), Leads (`/api/v1/leads`)
+    8. Routes: `/api/v1`
+    9. Health Probes: `GET /health` (liveness: 200 without DB call) & `GET /ready` (readiness: DB readyState check)
+    10. Central RFC 7807 Error Handler (`src/middleware/errorHandler.ts`)
+* **Task 1.4 — Server Entrypoint:**
+  * Implement `backend/src/server.ts` binding DB connection, starting cron, and launching HTTP listener.
 
-### Task 2: Core Server & Database Lifecycle
-* Implement `src/config/env.ts` with Zod schema validation that crashes process immediately on missing/malformed configuration.
-* Implement `src/config/db.ts` managing Mongoose connection lifecycle, reconnect logic, error listeners, and graceful shutdown on `SIGINT`/`SIGTERM`.
-* Implement `src/app.ts` configuring:
-  * Sentry request handler (if configured).
-  * Helmet security headers.
-  * CORS origin allowlist.
-  * `express.json({ limit: '10kb' })` and `cookieParser()`.
-  * `express-mongo-sanitize`.
-  * Rate limiters.
-  * Health probes (`GET /health` and `GET /ready`).
-  * RFC 7807 formatted central error handler (`src/middleware/errorHandler.ts`).
-* Implement `src/server.ts` establishing DB connection, starting cron services, and binding HTTP listener.
+---
 
-### Task 3: Authentication & Admin Management Module
-* Implement Mongoose `AdminModel` (`src/modules/admins/admin.model.ts`):
-  * Fields: `email` (unique), `passwordHash`, `role` (`admin` | `superadmin`), `isActive`, `failedLoginAttempts`, `lockUntil`, `refreshTokenHash`.
-* Implement JWT utilities (`src/utils/jwt.ts`):
-  * Access Token: 15-minute validity signed with `JWT_ACCESS_SECRET`.
-  * Refresh Token: 7-day validity signed with `JWT_REFRESH_SECRET`.
-  * Cryptographic timing-safe comparison wrapper for refresh token verification.
-* Implement Middleware:
-  * `requireAuth.ts`: Decodes access token and populates `req.user`.
-  * `roleGuard.ts`: Restricts administrative routes by role (`superadmin` vs `admin`).
-* Implement Routes & Controllers (`src/modules/auth/` and `src/modules/admins/`):
-  * `POST /api/v1/auth/login`: Email/password verification, account lockout check, issues access token + sets HttpOnly refresh cookie.
-  * `POST /api/v1/auth/refresh`: Validates refresh token cookie, rotates token hash in DB, sets new cookie, returns new access token.
-  * `POST /api/v1/auth/logout`: Revokes refresh token in DB, clears cookie.
-  * `GET /api/v1/auth/me`: Returns profile of authenticated admin.
-  * `GET /api/v1/admins`: Lists admin accounts (superadmin only).
-  * `POST /api/v1/admins`: Provisions admin user (superadmin only).
-  * `PATCH /api/v1/admins/:id`: Updates admin profile/status (superadmin only).
-  * `DELETE /api/v1/admins/:id`: Deactivates admin user (superadmin only).
+### Wave 2: Authentication, Security Primitives & Admin Management (Day 2)
+* **Task 2.1 — Cryptographic & Security Utilities:**
+  * `src/utils/tokenCompare.ts`: Timing-safe comparison wrapper using `crypto.timingSafeEqual`.
+  * `src/utils/jwt.ts`: Sign/verify 15m access token and 7d refresh token.
+  * `src/utils/ownershipCheck.ts`: `assertOwnership` helper returning `404 Not Found` (never 403).
+* **Task 2.2 — Admin Mongoose Model & Schema:**
+  * `src/modules/admins/admin.model.ts`: `email` (unique index), `passwordHash`, `role` (`admin` | `superadmin`), `failedLoginAttempts`, `lockUntil`, `refreshTokenHash`, `isActive`.
+  * Account lockout: 5 consecutive failed attempts locks account for 15 minutes.
+* **Task 2.3 — Middleware Guards:**
+  * `requireAuth.ts`: Extracts Bearer token, verifies JWT, and attaches `req.user`.
+  * `roleGuard.ts`: Enforces role hierarchy (`superadmin` vs `admin`).
+* **Task 2.4 — Auth & Admin Routes:**
+  * `POST /api/v1/auth/login`: Issues access token, stores bcrypt hashed refresh token in DB, sets `HttpOnly; Secure; SameSite=Strict` cookie.
+  * `POST /api/v1/auth/refresh`: Reads cookie, checks DB hash, rotates refresh token cookie, returns new access token.
+  * `POST /api/v1/auth/logout`: Revokes token hash in DB, clears cookie.
+  * `GET /api/v1/auth/me`: Current admin profile.
+  * `GET /api/v1/admins`, `POST /api/v1/admins`, `PATCH /api/v1/admins/:id`, `DELETE /api/v1/admins/:id` (Superadmin only).
 
-### Task 4: Core Business Schemas & Models (Mongoose)
-Implement typed schemas with compound & text indexes matching PRD Section 5:
-1. `divisions.model.ts`: 7 turnkey contracting divisions (`number`, `title`, `slug`, `tagline`, `description`, `heroImage`, `icon`, `metaTitle`, `metaDescription`, `order`, `isActive`).
-2. `products.model.ts`: Equipment catalog (`divisionId`, `category`, `subcategory`, `name`, `slug`, `description`, `specifications` array, `images` array, `tags`, `isFeatured`, `order`, `isActive`).
-3. `filters.model.ts`: Air filtration items (`category`, `name`, `micronRating`, `mediaConstruction`, `frame`, `applications`, `keyFeature`, `images`, `specSheetUrl`, `order`, `isActive`).
-4. `projects.model.ts`: Completed client references (`clientName`, `scope`, `location`, `division` array, `completionYear`, `description`, `images`, `testimonial`, `isFeatured`, `order`, `isActive`).
-5. `clients.model.ts`: Client logos & sector categorization (`name`, `logoUrl`, `sector`, `website`, `isFeatured`, `order`, `isActive`).
-6. `settings.model.ts`: Site-wide key-value dictionary (`hero_headline`, `metric_years_exp`, `metric_projects_count`, `brochure_pdf`, `whatsapp_number`, `admin_notification_email`).
-7. `leads.model.ts`: RFQs, inquiries, and WhatsApp beacons (`companyName`, `contactName`, `designation`, `email`, `phone`, `location`, `projectType`, `message`, `roomDimensions`, `cfm`, `source`, `status`, `referrerUrl`).
+---
 
-### Task 5: Business Endpoints, Dual Pagination & Reordering
-* Implement dual pagination helper (`src/utils/pagination.ts`):
+### Wave 3: Core Domain Models & Dual Pagination (Day 3)
+* **Task 3.1 — Dual Pagination Helper (`src/utils/pagination.ts`):**
   * Mode A: Offset pagination (`page`, `limit`, `total`, `totalPages`) for Admin CMS tables.
-  * Mode B: Cursor pagination (`cursor`, `limit`, `nextCursor`, `hasMore`) for public feeds.
-* Implement Controllers & Routes for each resource module:
-  * Public Read routes:
-    * `GET /api/v1/divisions`, `GET /api/v1/divisions/:slug`
-    * `GET /api/v1/products`, `GET /api/v1/products/:slug`
-    * `GET /api/v1/filters`, `GET /api/v1/filters/:id`
-    * `GET /api/v1/projects`, `GET /api/v1/projects/:id`
-    * `GET /api/v1/clients`
-    * `GET /api/v1/settings`
-  * Admin CRUD & Batch Reorder routes:
-    * `POST`, `PATCH`, `DELETE` for each catalog resource.
-    * Batch reordering endpoints: `PATCH /api/v1/:resource/reorder` executing MongoDB `bulkWrite` for array of `{ id: string; order: number }`.
-  * Leads & WhatsApp Ingestion routes:
-    * `POST /api/v1/leads`: Ingests RFQ submissions and WhatsApp click beacons, triggers email notification.
-    * `GET /api/v1/leads`: Admin list with filters & pagination.
-    * `PATCH /api/v1/leads/:id/status`: Updates lead pipeline status.
-    * `GET /api/v1/leads/export`: Streams leads as CSV.
-
-### Task 6: Cloudinary Media Upload Service
-* Implement `src/config/cloudinary.ts` with Cloudinary SDK credentials.
-* Implement `src/middleware/upload.ts` with Multer memory storage and strict MIME checking (`image/jpeg`, `image/png`, `image/webp`, `application/pdf`).
-* Implement `POST /api/v1/media/upload`: Streams buffer to Cloudinary `gmp-vision` folder, returns `{ url, publicId, format, size }`.
-* Implement `DELETE /api/v1/media/:publicId`: Removes asset from Cloudinary storage.
-
-### Task 7: Database Seeding Script
-* Implement `src/scripts/seed.ts`:
-  * Provisions default Superadmin account from environment variables.
-  * Populates the 7 Turnkey Divisions with descriptions and icons from `WEBSITE_SERVICES_AND_CATALOG.md`.
-  * Populates sample products, filtration items, and initial portfolio case studies.
-  * Populates default site settings dictionary.
-  * Ensures idempotent execution (`upsert`).
-
-### Task 8: Postman Collection & Testing Environment
-* Create `backend/postman/collection.json`:
-  * Structured folders: `System Health`, `Auth`, `Admins`, `Leads`, `Divisions`, `Products`, `Filters`, `Projects`, `Clients`, `Settings`, `Media`.
-  * Pre-request scripts and test scripts for automated token capture (`pm.environment.set("accessToken", ...)`).
-  * Request test assertions checking HTTP status codes, RFC 7807 error envelopes, and data schemas.
-* Create `backend/postman/environment.json`:
-  * `baseUrl`: `http://localhost:5000/api/v1`
-  * `accessToken`: ``
-  * `testAdminEmail`, `testAdminPassword`.
+  * Mode B: Cursor pagination (`cursor`, `limit`, `nextCursor`, `hasMore`) for public grids.
+* **Task 3.2 — Mongoose Schemas & Models (7 Domain Collections):**
+  1. `divisions.model.ts`: 7 turnkey divisions with slugs, taglines, rich text, hero image, and order.
+  2. `products.model.ts`: Cleanroom equipment, specification key-value array, gallery, division reference, order.
+  3. `filters.model.ts`: Dedicated filtration catalog with micron ratings, frames, media construction, spec sheet URLs, order.
+  4. `projects.model.ts`: Client case studies, photos, testimonials, division tags, order.
+  5. `clients.model.ts`: Trust logo wall, sector tags, website link, order.
+  6. `settings.model.ts`: Dynamic site metrics, hero headline, brochure PDF URL, WhatsApp number.
+  7. `leads.model.ts`: RFQs, inquiries, and WhatsApp beacons with lifecycle status (`new` → `contacted` → `quoted` → `converted` → `closed`).
+* **Task 3.3 — Database Indexes:**
+  * Unique indexes: `email` on admins, `slug` on divisions/products.
+  * Compound indexes: `{ isActive: 1, order: 1 }` on divisions, products, filters, projects, clients.
+  * Text index: `{ name: 'text', description: 'text', tags: 'text' }` on products for search.
 
 ---
 
-## 3. Post-Backend: Frontend Changes Required
+### Wave 4: Endpoints, Batch Reorder & Leads Ingestion (Day 4)
+* **Task 4.1 — Public Catalog Read Endpoints:**
+  * `GET /api/v1/divisions`, `GET /api/v1/divisions/:slug`
+  * `GET /api/v1/products`, `GET /api/v1/products/:slug`
+  * `GET /api/v1/filters`, `GET /api/v1/filters/:id`
+  * `GET /api/v1/projects`, `GET /api/v1/projects/:id`
+  * `GET /api/v1/clients`
+  * `GET /api/v1/settings`
+* **Task 4.2 — Admin CRUD & Batch Reordering:**
+  * Full CRUD routes with Zod validation.
+  * Batch reordering: `PATCH /api/v1/:resource/reorder` executing MongoDB `bulkWrite` for `@dnd-kit` drag-and-drop.
+* **Task 4.3 — Leads & WhatsApp Tracking:**
+  * `POST /api/v1/leads`: Ingests RFQ multi-step submissions, contact inquiries, and silent WhatsApp click beacons. Triggers Nodemailer alert.
+  * `GET /api/v1/leads`: Admin list with filters & pagination.
+  * `PATCH /api/v1/leads/:id/status`: Pipeline transitions.
+  * `GET /api/v1/leads/export`: Streams CSV export.
 
-Once the backend is operational, the frontend (`frontend/`) will be updated to transition from static/mock data to the live API:
+---
 
-1. **API Client & Refresh Interceptor (`frontend/src/lib/api/`):**
-   * Implement `client.ts`: Axios instance with request interceptor attaching `Authorization: Bearer <token>` from `tokenStore.ts`.
-   * Implement single-flight refresh queue on `401 Unauthorized`: Calls `POST /api/v1/auth/refresh` via isolated `refreshClient.ts`.
-2. **Authentication Integration (`frontend/src/auth/`):**
+### Wave 5: Cloudinary Media Upload & Database Seeding (Day 5)
+* **Task 5.1 — Media Subsystem:**
+  * `src/config/cloudinary.ts`: Cloudinary SDK credentials.
+  * `src/middleware/upload.ts`: Multer buffer upload with strict MIME validation (JPEG, PNG, WebP ≤ 10MB; PDF ≤ 25MB).
+  * `POST /api/v1/media/upload`: Streams buffer to Cloudinary `gmp-vision` folder, returns `{ url, publicId }`.
+  * `DELETE /api/v1/media/:publicId`: Permanently deletes asset from Cloudinary.
+* **Task 5.2 — Idempotent Database Seeder (`src/scripts/seed.ts`):**
+  * Populates default Superadmin account from environment.
+  * Seeds the 7 Turnkey Divisions with descriptions and icons from `WEBSITE_SERVICES_AND_CATALOG.md`.
+  * Seeds initial filtration items, sample projects, and default site settings dictionary.
+
+---
+
+### Wave 6: Postman Test Suite & Verification (Day 6)
+* **Task 6.1 — Postman Collection (`backend/postman/collection.json`):**
+  * Structured folders for all 11 modules: `Health`, `Auth`, `Admins`, `Leads`, `Divisions`, `Products`, `Filters`, `Projects`, `Clients`, `Settings`, `Media`.
+  * Root pre-request script checking `tokenExpiry` and auto-refreshing expired tokens.
+  * Test assertions on every endpoint (HTTP status, `success: true`, RFC 7807 error format, dynamic `{{resourceId}}` extraction).
+* **Task 6.2 — Postman Environment (`backend/postman/environment.json`):**
+  * Variables: `baseUrl`, `accessToken`, `tokenExpiry`, `resourceId`, `testEmail`, `testPassword`.
+* **Task 6.3 — Comprehensive Matrix Test:**
+  * Happy path (200/201).
+  * Validation error (400).
+  * Unauthorized / Expired token (401).
+  * Forbidden wrong role (403).
+  * Not found (404).
+  * Rate limit trigger (429).
+  * Duplicate conflict (409).
+
+---
+
+## 3. Post-Backend: Frontend Integration Changes
+
+Once the backend is operational, the frontend (`frontend/`) will be updated to transition from static mock data to the live API:
+
+```mermaid
+graph LR
+    subgraph Frontend ["Frontend Integration Points"]
+        A["client.ts & refreshClient.ts"] --> B["AuthProvider (Session check: GET /me)"]
+        A --> C["TanStack Query (useProducts, useProjects, etc.)"]
+        A --> D["SortableList (PATCH /reorder on drag-end)"]
+        A --> E["GalleryManager (POST /media/upload)"]
+        A --> F["RFQMultiStepForm (POST /leads on submit)"]
+    end
+    subgraph Backend ["Backend API (/api/v1)"]
+        B --> G["/auth/me & /auth/refresh"]
+        C --> H["/products, /projects, /filters, etc."]
+        D --> I["/:resource/reorder"]
+        E --> J["/media/upload"]
+        F --> K["/leads"]
+    end
+```
+
+1. **Axios Client (`frontend/src/lib/api/`):**
+   * Implement `client.ts` with `withCredentials: true`, attaching token from `tokenStore.ts`.
+   * Implement single-flight refresh queue on 401 via `refreshClient.ts`.
+2. **Authentication Flow (`frontend/src/auth/`):**
    * Wire `AdminLoginPage.tsx` to `POST /api/v1/auth/login`.
-   * Update `AuthProvider.tsx` to verify session via `GET /api/v1/auth/me` on initial page load.
+   * Update `AuthProvider.tsx` to verify session on initial load via `GET /api/v1/auth/me`.
 3. **Data Fetching with TanStack Query:**
-   * Replace static imports from `src/data/*.ts` with custom query hooks:
+   * Replace static `data/*.ts` imports with React hooks:
      * `useProducts()` / `useProduct(slug)`
      * `useDivisions()` / `useDivision(slug)`
      * `useFilters()`
      * `useProjects()` (using cursor `useInfiniteQuery`)
      * `useClients()`
      * `useSettings()`
-     * `useLeads()` (with offset pagination and filtering in Admin CMS)
+     * `useLeads()` (Admin CMS with offset pagination and status filter)
 4. **Interactive Form Wiring:**
    * Wire `RFQMultiStepForm.tsx` to emit `POST /api/v1/leads` and clear session draft on success.
    * Wire WhatsApp floating CTA to call `initiateWhatsAppInquiry()` which pings `POST /api/v1/leads` beacon in background before opening WhatsApp Web.
@@ -190,14 +235,12 @@ Once the backend is operational, the frontend (`frontend/`) will be updated to t
 
 ---
 
-## 4. Quality Gates & Verification Checklist
+## 4. Verification Criteria & Acceptance Gates
 
 - [ ] `npm run build` in `backend/` compiles with 0 TypeScript errors under `strict: true`.
-- [ ] `GET /health` and `GET /ready` return `200 OK` with valid database connectivity status.
-- [ ] Authentication suite in Postman passes:
-  * Admin login returns access token and sets HttpOnly cookie.
-  * Token refresh rotates cookie and issues new access token.
-  * Route guards reject requests with invalid/missing token (`401`) or insufficient role (`403`).
-- [ ] Database seeder (`npm run seed`) runs idempotently and populates 7 divisions.
-- [ ] Postman collection executes 100% of endpoints without uncaught exceptions.
-- [ ] Frontend compiles cleanly (`npm run build` in `frontend/`) with 0 errors.
+- [ ] `GET /health` returns `200 OK` `{ status: "ok" }` without database call.
+- [ ] `GET /ready` returns `200 OK` `{ status: "ready" }` only when MongoDB connection state is `1`.
+- [ ] Zod environment validation crashes process immediately if any required variable is missing.
+- [ ] Postman test suite executes with 100% test passes across all 32 endpoints.
+- [ ] Idempotent seed script (`npm run seed`) populates superadmin and the 7 divisions.
+- [ ] Frontend compiles with 0 errors (`npm run build` in `frontend/`).
