@@ -15,18 +15,6 @@
       "enabled": true
     },
     {
-      "key": "accessToken",
-      "value": "",
-      "type": "secret",
-      "enabled": true
-    },
-    {
-      "key": "tokenExpiry",
-      "value": "",
-      "type": "default",
-      "enabled": true
-    },
-    {
       "key": "adminEmail",
       "value": "admin@gmpvision.com",
       "type": "default",
@@ -39,7 +27,19 @@
       "enabled": true
     },
     {
-      "key": "resourceId",
+      "key": "accessToken",
+      "value": "",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "refreshToken",
+      "value": "",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "tokenExpiry",
       "value": "",
       "type": "default",
       "enabled": true
@@ -53,6 +53,54 @@
     {
       "key": "productSlug",
       "value": "cgmp-modular-puf-wall-panel",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "createdAdminId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "createdDivisionId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "createdProductId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "createdFilterId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "createdProjectId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "createdClientId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "createdLeadId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "publicId",
+      "value": "gmp-vision/sample_asset",
       "type": "default",
       "enabled": true
     }
