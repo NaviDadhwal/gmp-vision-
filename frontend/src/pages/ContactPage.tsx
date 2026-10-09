@@ -5,6 +5,7 @@ import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { Phone, Mail, MapPin, MessageCircle, Clock, ShieldCheck, CheckCircle2, Send } from 'lucide-react';
 import { initiateWhatsAppInquiry } from '../lib/whatsapp';
+import { env } from '../lib/env';
 
 export const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +21,23 @@ export const ContactPage: React.FC = () => {
     e.preventDefault();
     if (!formData.name || !formData.phone) return;
 
-    // Record mock lead
+    // 1. Dispatch to live backend API
+    fetch(`${env.VITE_API_BASE_URL}/api/v1/leads`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        companyName: formData.company || formData.name,
+        contactName: formData.name,
+        email: formData.email || undefined,
+        phone: formData.phone,
+        message: formData.message || 'Direct inquiry via Contact Page form',
+        source: 'contact_form',
+      }),
+    }).catch((err) => {
+      console.debug('Live API submission skipped, relying on local storage', err);
+    });
+
+    // 2. Record mock lead
     try {
       const existing = JSON.parse(localStorage.getItem('gmp_mock_leads') || '[]');
       const newLead = {

@@ -17,6 +17,8 @@ import {
 import { Button } from '../../../components/ui/Button';
 import { Badge } from '../../../components/ui/Badge';
 import { Modal } from '../../../components/ui/Modal';
+import { tokenStore } from '../../../auth/tokenStore';
+import { env } from '../../../lib/env';
 
 export const LeadsPage: React.FC = () => {
   const [leads, setLeads] = useState<any[]>([]);
@@ -26,11 +28,30 @@ export const LeadsPage: React.FC = () => {
   const [selectedLead, setSelectedLead] = useState<any | null>(null);
 
   useEffect(() => {
-    try {
-      const stored = JSON.parse(localStorage.getItem('gmp_mock_leads') || '[]');
-      if (stored.length > 0) {
-        setLeads(stored);
-      } else {
+    const fetchLeads = async () => {
+      const token = tokenStore.get();
+      if (token && !token.startsWith('mock_')) {
+        try {
+          const res = await fetch(`${env.VITE_API_BASE_URL}/api/v1/leads`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.success && Array.isArray(data.data?.leads)) {
+              setLeads(data.data.leads);
+              return;
+            }
+          }
+        } catch {
+          // Fall back to local mock storage
+        }
+      }
+
+      try {
+        const stored = JSON.parse(localStorage.getItem('gmp_mock_leads') || '[]');
+        if (stored.length > 0) {
+          setLeads(stored);
+        } else {
         const seedLeads = [
           {
             _id: 'rfq_1001',
@@ -96,24 +117,54 @@ export const LeadsPage: React.FC = () => {
     } catch (e) {
       console.error(e);
     }
+    };
+    fetchLeads();
   }, []);
 
-  const updateLeadStatus = (id: string, newStatus: string) => {
+  const updateLeadStatus = async (id: string, newStatus: string) => {
     const updated = leads.map((lead) => (lead._id === id ? { ...lead, status: newStatus } : lead));
     setLeads(updated);
     localStorage.setItem('gmp_mock_leads', JSON.stringify(updated));
     if (selectedLead && selectedLead._id === id) {
       setSelectedLead({ ...selectedLead, status: newStatus });
     }
+
+    const token = tokenStore.get();
+    if (token && !token.startsWith('mock_')) {
+      try {
+        await fetch(`${env.VITE_API_BASE_URL}/api/v1/leads/${id}/status`, {
+          method: 'PATCH',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ status: newStatus }),
+        });
+      } catch {
+        // Retained local update
+      }
+    }
   };
 
-  const deleteLead = (id: string) => {
+  const deleteLead = async (id: string) => {
     if (!window.confirm('Are you sure you want to delete this lead record?')) return;
     const updated = leads.filter((lead) => lead._id !== id);
     setLeads(updated);
     localStorage.setItem('gmp_mock_leads', JSON.stringify(updated));
     if (selectedLead && selectedLead._id === id) {
       setSelectedLead(null);
+    }
+
+    const token = tokenStore.get();
+    if (token && !token.startsWith('mock_')) {
+      try {
+        await fetch(`${env.VITE_API_BASE_URL}/api/v1/leads/${id}`, {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      } catch (err) {
+        console.debug('Failed to sync deletion with live backend', err);
+      }
     }
   };
 

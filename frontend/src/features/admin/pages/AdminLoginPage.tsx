@@ -135,13 +135,14 @@ export const AdminLoginPage: React.FC = () => {
               marginBottom: '1.5rem',
               fontSize: '0.75rem',
               color: '#475569',
-              lineHeight: 1.4,
+              lineHeight: 1.5,
             }}
           >
-            <div style={{ fontWeight: 700, color: '#0A3B85', marginBottom: '2px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <ShieldCheck size={14} color="#3DAE2B" /> Standalone Preview Mode Credentials:
+            <div style={{ fontWeight: 700, color: '#0A3B85', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <ShieldCheck size={14} color="#3DAE2B" /> Administrative Access Credentials:
             </div>
-            Email: <code style={{ color: '#0A3B85' }}>gmpvision3@gmail.com</code> | Pass: <code style={{ color: '#0A3B85' }}>admin123</code>
+            <div><strong>Live API:</strong> <code style={{ color: '#0A3B85' }}>admin@gmpvision.com</code> / <code style={{ color: '#0A3B85' }}>Admin@GMPVision2026!</code></div>
+            <div><strong>Offline Demo:</strong> <code style={{ color: '#0A3B85' }}>gmpvision3@gmail.com</code> / <code style={{ color: '#0A3B85' }}>admin123</code></div>
           </div>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>

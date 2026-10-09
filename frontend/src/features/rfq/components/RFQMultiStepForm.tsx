@@ -3,6 +3,7 @@ import { useRFQPersistence } from '../hooks/useRFQPersistence';
 import { DIVISIONS_DATA } from '../../../data/divisions';
 import { CheckCircle2, ArrowRight, ArrowLeft, RefreshCw, Send, Check, ShieldCheck, AlertCircle } from 'lucide-react';
 import { initiateWhatsAppInquiry } from '../../../lib/whatsapp';
+import { env } from '../../../lib/env';
 
 export const RFQMultiStepForm: React.FC = () => {
   const {
@@ -57,7 +58,39 @@ export const RFQMultiStepForm: React.FC = () => {
     const leadId = 'GMP-' + Math.floor(100000 + Math.random() * 900000);
     setSubmittedLeadId(leadId);
 
-    // Record to mock leads in localStorage for standalone admin testing
+    // 1. Dispatch to live backend API
+    fetch(`${env.VITE_API_BASE_URL}/api/v1/leads`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        companyName: formData.companyName,
+        contactName: formData.contactName,
+        designation: formData.designation || undefined,
+        email: formData.email,
+        phone: formData.phone,
+        location: formData.location || undefined,
+        projectType: formData.divisions.length > 0 ? formData.divisions : ['Modular Cleanroom Systems'],
+        divisions: formData.divisions,
+        roomDimensions: formData.roomDimensions || undefined,
+        cfm: formData.cfm ? Number(formData.cfm) : undefined,
+        targetDate: formData.targetDate || undefined,
+        message: formData.message || 'RFQ Estimator Submission',
+        source: 'rfq_form',
+      }),
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          const data = await res.json();
+          if (data.data?._id) {
+            setSubmittedLeadId(data.data._id);
+          }
+        }
+      })
+      .catch((err) => {
+        console.debug('Live API submission skipped, relying on local draft storage', err);
+      });
+
+    // 2. Record to mock leads in localStorage for standalone admin testing
     setTimeout(() => {
       try {
         const existing = JSON.parse(localStorage.getItem('gmp_mock_leads') || '[]');

@@ -40,24 +40,39 @@ GMP VISION is an enterprise web application designed for turnkey pharmaceutical 
 ### Installation & Development
 
 ```bash
-# Navigate to the frontend directory
+# Frontend development
 cd frontend
-
-# Install dependencies
 npm install
+npm run dev
 
-# Start local development server
+# Backend API development
+cd ../backend
+npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+### Automated Testing
 
-### Production Build
+Run the full end-to-end API test suite against MongoDB:
 
 ```bash
+cd backend
+npm test
+```
+
+### Production Build & Deployment
+
+```bash
+# Frontend build
 cd frontend
 npm run build
+
+# Backend build
+cd ../backend
+npm run build
 ```
+
+See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for full step-by-step instructions on deploying the frontend and backend to **Vercel**, **Render**, and **Railway**.
 
 ---
 

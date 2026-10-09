@@ -6,7 +6,7 @@ const REFRESH_COOKIE_NAME = 'refreshToken';
 const REFRESH_COOKIE_OPTIONS = {
   httpOnly: true,
   secure: env.NODE_ENV === 'production',
-  sameSite: (env.NODE_ENV === 'production' ? 'strict' : 'lax') as 'strict' | 'lax',
+  sameSite: (env.NODE_ENV === 'production' ? 'none' : 'lax') as 'none' | 'lax',
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   path: '/api/v1/auth',
 };
@@ -23,6 +23,7 @@ export class AuthController {
         data: {
           admin,
           accessToken,
+          refreshToken,
         },
       });
     } catch (error) {
@@ -53,6 +54,7 @@ export class AuthController {
         success: true,
         data: {
           accessToken,
+          refreshToken: newRefreshToken,
         },
       });
     } catch (error) {
@@ -69,7 +71,7 @@ export class AuthController {
       res.clearCookie(REFRESH_COOKIE_NAME, {
         httpOnly: true,
         secure: env.NODE_ENV === 'production',
-        sameSite: env.NODE_ENV === 'production' ? 'strict' : 'lax',
+        sameSite: env.NODE_ENV === 'production' ? 'none' : 'lax',
         path: '/api/v1/auth',
       });
 

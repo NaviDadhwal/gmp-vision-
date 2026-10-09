@@ -57,16 +57,24 @@ app.use(
   })
 );
 
-// 4. CORS with explicit origin allowlist
+// 4. CORS with explicit origin allowlist + Vercel domain support
 const allowedOrigins = env.CORS_ORIGINS.split(',').map((origin) => origin.trim());
+
+const isAllowedOrigin = (origin: string | undefined): boolean => {
+  if (!origin) return true; // Direct API clients (curl, Postman, server-to-server)
+  if (allowedOrigins.includes(origin)) return true;
+  // Support Vercel production and preview deployment URLs
+  if (/^https:\/\/[a-zA-Z0-9_\-]+\.vercel\.app$/.test(origin)) return true;
+  return false;
+};
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g. mobile apps, curl, Postman)
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (isAllowedOrigin(origin)) {
         callback(null, true);
       } else {
-        callback(new Error(`Origin ${origin} not allowed by CORS policy`));
+        callback(null, false);
       }
     },
     credentials: true,
