@@ -22,6 +22,11 @@ import { ContactPage } from './pages/ContactPage';
 import { RFQPage } from './pages/RFQPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
+// 21st.dev & Modern UI Previews
+import DemoOne from './components/ui/demo';
+import FloatingDockDemo from './components/floating-dock-demo';
+import { GMPModernHero } from './components/ui/gmp-modern-hero';
+
 // Admin CMS Pages
 import { AdminLoginPage } from './features/admin/pages/AdminLoginPage';
 import { AdminDashboard } from './features/admin/pages/AdminDashboard';
@@ -67,6 +72,11 @@ export const App: React.FC = () => {
                   <Route path="/filtration-catalog" element={<Navigate to="/solutions/air-filtration" replace />} />
                   <Route path="/validation" element={<Navigate to="/solutions/automation-validation" replace />} />
                   <Route path="/validation-services" element={<Navigate to="/solutions/automation-validation" replace />} />
+
+                  {/* Modern 21st.dev Theme Previews */}
+                  <Route path="/demo" element={<DemoOne />} />
+                  <Route path="/dock-demo" element={<FloatingDockDemo />} />
+                  <Route path="/gmp-hero-preview" element={<GMPModernHero />} />
                 </Route>
 
                 {/* Admin Authentication */}
