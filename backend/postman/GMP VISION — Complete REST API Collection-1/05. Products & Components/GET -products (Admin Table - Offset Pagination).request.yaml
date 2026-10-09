@@ -1,0 +1,12 @@
+$kind: http-request
+name: GET /products (Admin Table - Offset Pagination)
+description: Standard offset pagination feed with total page counts for admin CMS tables.
+url: "{{baseUrl}}/products?mode=offset&page=1&limit=10"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', () => pm.response.to.have.status(200));
+      pm.test('Total count exists', () => pm.expect(pm.response.json().pagination).to.have.property('total'));
+    language: text/javascript
+order: 2000

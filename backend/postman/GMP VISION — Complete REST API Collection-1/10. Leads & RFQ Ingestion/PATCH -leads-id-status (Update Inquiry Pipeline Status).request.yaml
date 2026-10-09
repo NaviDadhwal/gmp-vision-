@@ -1,0 +1,20 @@
+$kind: http-request
+name: PATCH /leads/:id/status (Update Inquiry Pipeline Status)
+description: Updates lead status in sales pipeline (new -> contacted -> quoted -> converted -> closed).
+url: "{{baseUrl}}/leads/{{createdLeadId}}/status"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{accessToken}}
+body:
+  type: json
+  content: |-
+    {
+      "status": "contacted",
+      "notes": "Consultation call completed with Rajesh Kumar. Forwarded technical parameters to cleanroom estimation team."
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test('Status is 200', () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 5000

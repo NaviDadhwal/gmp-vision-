@@ -1,0 +1,16 @@
+$kind: http-request
+name: GET /leads/export (Download CSV Spreadsheet)
+description: Exports all inquiry records to a downloadable CSV spreadsheet format.
+url: "{{baseUrl}}/leads/export"
+method: GET
+headers:
+  Authorization: Bearer {{accessToken}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', () => pm.response.to.have.status(200));
+      pm.test('Content-Type is text/csv', () => {
+        pm.expect(pm.response.headers.get('Content-Type')).to.include('text/csv');
+      });
+    language: text/javascript
+order: 3000

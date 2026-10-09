@@ -1,0 +1,20 @@
+$kind: http-request
+name: PATCH /divisions/:id (Update Division Details)
+description: Updates division tagline, heroImage, description or metadata. Accepts ID or slug.
+url: "{{baseUrl}}/divisions/{{createdDivisionId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{accessToken}}
+body:
+  type: json
+  content: |-
+    {
+      "tagline": "Updated precision cGMP engineering and climate control systems.",
+      "order": 7
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test('Status is 200', () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 4000

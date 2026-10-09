@@ -1,0 +1,10 @@
+$kind: http-request
+name: GET /filters/:id (Filter Detail by ID)
+description: Returns details of an individual air filtration catalog item.
+url: "{{baseUrl}}/filters/{{createdFilterId}}"
+method: GET
+scripts:
+  - type: afterResponse
+    code: pm.test('Status is 200 or 404', () => pm.expect(pm.response.code).to.be.oneOf([200, 404]));
+    language: text/javascript
+order: 3000

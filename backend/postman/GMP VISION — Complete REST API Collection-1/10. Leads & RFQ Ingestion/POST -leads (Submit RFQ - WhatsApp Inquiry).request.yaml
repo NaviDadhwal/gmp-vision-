@@ -1,0 +1,40 @@
+$kind: http-request
+name: POST /leads (Submit RFQ / WhatsApp Inquiry)
+description: Public ingestion endpoint for RFQ inquiries, WhatsApp direct leads, and contact forms.
+url: "{{baseUrl}}/leads"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "companyName": "Cadila Healthcare Ltd",
+      "contactName": "Rajesh Kumar",
+      "designation": "General Manager - Engineering",
+      "phone": "+919876543210",
+      "email": "rajesh@cadila.example.com",
+      "location": "Ahmedabad, Gujarat",
+      "projectType": [
+        "Turnkey Cleanroom & HVAC"
+      ],
+      "divisions": [
+        "Cleanroom Infrastructure & Modular Panels",
+        "HVAC Systems, AHUs & Dehumidifiers"
+      ],
+      "roomDimensions": "25m x 18m x 3.5m",
+      "cfm": 18000,
+      "message": "Requesting technical audit and BOQ cost estimate for Class B sterile vial filling suite.",
+      "source": "rfq_form"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 201', () => pm.response.to.have.status(201));
+      const json = pm.response.json();
+      if (json.data?.id) {
+        pm.environment.set('createdLeadId', json.data.id);
+        pm.collectionVariables.set('createdLeadId', json.data.id);
+      }
+    language: text/javascript
+order: 1000

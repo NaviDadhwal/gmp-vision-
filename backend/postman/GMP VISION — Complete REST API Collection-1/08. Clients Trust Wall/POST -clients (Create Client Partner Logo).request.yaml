@@ -1,0 +1,30 @@
+$kind: http-request
+name: POST /clients (Create Client Partner Logo)
+description: Adds a client logo to the trust wall. Sector must match supported enum.
+url: "{{baseUrl}}/clients"
+method: POST
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{accessToken}}
+body:
+  type: json
+  content: |-
+    {
+      "name": "Wallace Pharmaceuticals",
+      "logoUrl": "https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&w=200&q=80",
+      "sector": "Pharmaceutical",
+      "website": "https://wallacepharma.example.com",
+      "order": 1,
+      "isFeatured": true
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 201', () => pm.response.to.have.status(201));
+      const json = pm.response.json();
+      if (json.data?._id) {
+        pm.environment.set('createdClientId', json.data._id);
+        pm.collectionVariables.set('createdClientId', json.data._id);
+      }
+    language: text/javascript
+order: 2000

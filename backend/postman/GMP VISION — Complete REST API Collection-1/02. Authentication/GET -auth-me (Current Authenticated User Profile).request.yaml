@@ -1,0 +1,17 @@
+$kind: http-request
+name: GET /auth/me (Current Authenticated User Profile)
+description: Retrieves the session profile for the currently authenticated administrator.
+url: "{{baseUrl}}/auth/me"
+method: GET
+headers:
+  Authorization: Bearer {{accessToken}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', () => pm.response.to.have.status(200));
+      pm.test('Contains email and role', () => {
+        pm.expect(pm.response.json().data.email).to.exist;
+        pm.expect(pm.response.json().data.role).to.exist;
+      });
+    language: text/javascript
+order: 3000

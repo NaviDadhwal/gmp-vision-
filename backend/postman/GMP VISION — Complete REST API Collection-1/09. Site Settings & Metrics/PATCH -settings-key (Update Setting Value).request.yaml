@@ -1,0 +1,20 @@
+$kind: http-request
+name: PATCH /settings/:key (Update Setting Value)
+description: Updates or upserts a configuration key-value pair.
+url: "{{baseUrl}}/settings/metric_projects_count"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{accessToken}}
+body:
+  type: json
+  content: |-
+    {
+      "value": "100+ Turnkey Cleanroom Projects Completed",
+      "description": "Primary verified project count metric"
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test('Status is 200', () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 2000

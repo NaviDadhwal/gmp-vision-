@@ -1,0 +1,15 @@
+$kind: http-request
+name: POST /auth/logout (Terminate Session)
+description: Clears the database refresh token hash and invalidates the HttpOnly cookie.
+url: "{{baseUrl}}/auth/logout"
+method: POST
+headers:
+  Authorization: Bearer {{accessToken}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', () => pm.response.to.have.status(200));
+      pm.environment.set('accessToken', '');
+      pm.collectionVariables.set('accessToken', '');
+    language: text/javascript
+order: 4000

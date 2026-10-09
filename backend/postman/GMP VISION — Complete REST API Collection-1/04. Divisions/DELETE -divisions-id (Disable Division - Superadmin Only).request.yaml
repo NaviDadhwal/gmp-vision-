@@ -1,0 +1,12 @@
+$kind: http-request
+name: DELETE /divisions/:id (Disable Division - Superadmin Only)
+description: "Soft-deletes the division by setting isActive: false."
+url: "{{baseUrl}}/divisions/{{createdDivisionId}}"
+method: DELETE
+headers:
+  Authorization: Bearer {{accessToken}}
+scripts:
+  - type: afterResponse
+    code: pm.test('Status is 200', () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 5000

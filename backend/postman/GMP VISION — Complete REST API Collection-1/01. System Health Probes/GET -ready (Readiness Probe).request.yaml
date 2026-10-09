@@ -1,0 +1,12 @@
+$kind: http-request
+name: GET /ready (Readiness Probe)
+description: Deep health check verifying active MongoDB connection readyState === 1.
+url: "{{rootUrl}}/ready"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', () => pm.response.to.have.status(200));
+      pm.test('Database is connected', () => pm.expect(pm.response.json().database).to.eql('connected'));
+    language: text/javascript
+order: 2000

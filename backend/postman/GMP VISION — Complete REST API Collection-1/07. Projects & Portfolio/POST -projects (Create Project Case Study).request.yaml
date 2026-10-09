@@ -1,0 +1,38 @@
+$kind: http-request
+name: POST /projects (Create Project Case Study)
+description: Creates portfolio project reference case study.
+url: "{{baseUrl}}/projects"
+method: POST
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{accessToken}}
+body:
+  type: json
+  content: |-
+    {
+      "clientName": "Zeon Healthcare Ltd",
+      "scope": "Turnkey 15,000 sq.ft. Nutraceutical Cleanroom & AHU Validation",
+      "location": "Paonta Sahib, Himachal Pradesh",
+      "division": [
+        "Cleanroom Infrastructure & Modular Panels",
+        "HVAC Systems, AHUs & Dehumidifiers"
+      ],
+      "completionYear": 2024,
+      "description": "<p>Complete modular cleanroom installation including 80mm PUF panels and gel-seal HEPA terminal housings.</p>",
+      "images": [
+        "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=800&q=80"
+      ],
+      "isFeatured": true,
+      "order": 1
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 201', () => pm.response.to.have.status(201));
+      const json = pm.response.json();
+      if (json.data?._id) {
+        pm.environment.set('createdProjectId', json.data._id);
+        pm.collectionVariables.set('createdProjectId', json.data._id);
+      }
+    language: text/javascript
+order: 4000

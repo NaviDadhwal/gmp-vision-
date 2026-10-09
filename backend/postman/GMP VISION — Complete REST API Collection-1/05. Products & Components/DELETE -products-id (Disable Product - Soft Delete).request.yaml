@@ -1,0 +1,12 @@
+$kind: http-request
+name: DELETE /products/:id (Disable Product - Soft Delete)
+description: "Soft deletes product item (isActive: false) to preserve referential integrity."
+url: "{{baseUrl}}/products/{{createdProductId}}"
+method: DELETE
+headers:
+  Authorization: Bearer {{accessToken}}
+scripts:
+  - type: afterResponse
+    code: pm.test('Status is 200', () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 7000

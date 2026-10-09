@@ -1,0 +1,20 @@
+$kind: http-request
+name: PATCH /products/:id (Update Product Details)
+description: Updates specifications, description, name or featured state of a product.
+url: "{{baseUrl}}/products/{{createdProductId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{accessToken}}
+body:
+  type: json
+  content: |-
+    {
+      "name": "Updated cGMP Modular PUF Wall System V2",
+      "isFeatured": true
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test('Status is 200', () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 6000

@@ -1,0 +1,25 @@
+$kind: http-request
+name: POST /media/upload (Upload Image or PDF Document)
+description: Multipart form upload streaming directly to Cloudinary folder 'gmp-vision'.
+url: "{{baseUrl}}/media/upload"
+method: POST
+headers:
+  Authorization: Bearer {{accessToken}}
+body:
+  type: formdata
+  content:
+    - type: file
+      key: file
+      src: ""
+      description: Image (JPEG, PNG, WebP up to 10MB) or Technical PDF up to 25MB
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200 or 400', () => pm.expect(pm.response.code).to.be.oneOf([200, 400]));
+      const json = pm.response.json();
+      if (json.data?.publicId) {
+        pm.environment.set('publicId', json.data.publicId);
+        pm.collectionVariables.set('publicId', json.data.publicId);
+      }
+    language: text/javascript
+order: 1000

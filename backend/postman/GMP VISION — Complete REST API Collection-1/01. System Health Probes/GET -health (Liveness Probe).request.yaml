@@ -1,0 +1,12 @@
+$kind: http-request
+name: GET /health (Liveness Probe)
+description: Unauthenticated lightweight probe returning 200 if the Node.js Express process is up.
+url: "{{rootUrl}}/health"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', () => pm.response.to.have.status(200));
+      pm.test('Returns status ok', () => pm.expect(pm.response.json().status).to.eql('ok'));
+    language: text/javascript
+order: 1000

@@ -1,0 +1,24 @@
+$kind: http-request
+name: POST /auth/refresh (Rotate Session Tokens)
+description: Rotates refresh token and issues a fresh 15-minute access token.
+url: "{{baseUrl}}/auth/refresh"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "refreshToken": "{{refreshToken}}"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', () => pm.response.to.have.status(200));
+      const json = pm.response.json();
+      if (json.data?.accessToken) {
+        pm.environment.set('accessToken', json.data.accessToken);
+        pm.collectionVariables.set('accessToken', json.data.accessToken);
+      }
+    language: text/javascript
+order: 2000

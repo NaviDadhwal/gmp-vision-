@@ -1,0 +1,55 @@
+$kind: http-request
+name: POST /products (Create Product Item)
+description: Creates equipment/catalog item linked to a turnkey engineering division.
+url: "{{baseUrl}}/products"
+method: POST
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{accessToken}}
+body:
+  type: json
+  content: |-
+    {
+      "divisionId": "6ac3de4b66d5692e95d65854",
+      "category": "Modular Cleanroom Panels",
+      "subcategory": "PUF Sandwich Panels",
+      "name": "cGMP Modular PUF Insulated Wall System (50mm)",
+      "slug": "cgmp-modular-puf-insulated-wall-system-50mm",
+      "description": "<p>Continuous polyurethane core panels with PPGI flush joint skins.</p>",
+      "specifications": [
+        {
+          "key": "Panel Thickness",
+          "value": "50mm / 80mm / 100mm"
+        },
+        {
+          "key": "Density",
+          "value": "40 ± 2 kg/m³"
+        },
+        {
+          "key": "Fire Rating",
+          "value": "Class B1 Retardant"
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=800&q=80"
+      ],
+      "tags": [
+        "Cleanroom",
+        "Modular",
+        "PUF",
+        "Schedule M"
+      ],
+      "isFeatured": true,
+      "order": 1
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 201', () => pm.response.to.have.status(201));
+      const json = pm.response.json();
+      if (json.data?._id) {
+        pm.environment.set('createdProductId', json.data._id);
+        pm.collectionVariables.set('createdProductId', json.data._id);
+      }
+    language: text/javascript
+order: 4000

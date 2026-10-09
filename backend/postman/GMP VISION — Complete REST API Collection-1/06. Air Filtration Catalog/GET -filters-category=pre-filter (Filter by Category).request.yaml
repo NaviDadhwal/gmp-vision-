@@ -1,0 +1,10 @@
+$kind: http-request
+name: GET /filters?category=pre-filter (Filter by Category)
+description: Filters items by category (pre-filter, fine-filter, gel-seal-hepa, standard-hepa).
+url: "{{baseUrl}}/filters?category=pre-filter"
+method: GET
+scripts:
+  - type: afterResponse
+    code: pm.test('Status is 200', () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 2000

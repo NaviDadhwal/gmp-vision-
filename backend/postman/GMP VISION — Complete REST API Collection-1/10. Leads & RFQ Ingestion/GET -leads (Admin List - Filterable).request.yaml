@@ -1,0 +1,14 @@
+$kind: http-request
+name: GET /leads (Admin List - Filterable)
+description: Offset paginated leads feed with status, source, division and date filtering.
+url: "{{baseUrl}}/leads?page=1&limit=20&status=new"
+method: GET
+headers:
+  Authorization: Bearer {{accessToken}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', () => pm.response.to.have.status(200));
+      pm.test('Offset pagination present', () => pm.expect(pm.response.json().pagination).to.exist);
+    language: text/javascript
+order: 2000

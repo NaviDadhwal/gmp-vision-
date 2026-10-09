@@ -1,0 +1,39 @@
+$kind: http-request
+name: POST /filters (Create Air Filter Catalog Item)
+description: Adds a filtration item to the catalog. Category must match supported enum.
+url: "{{baseUrl}}/filters"
+method: POST
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{accessToken}}
+body:
+  type: json
+  content: |-
+    {
+      "category": "gel-seal-hepa",
+      "name": "Fluid Gel-Seal Terminal HEPA Filter (H14 / 99.997%)",
+      "micronRating": "0.3 Micron (99.997% DOP/PAO)",
+      "mediaConstruction": "Ultra-fine borosilicate micro-fiber glass paper with hot-melt separators",
+      "frame": "Extruded Anodized Aluminum with polyurethane gel channel",
+      "applications": [
+        "Sterile filling suites",
+        "Laminar Airflow Benches",
+        "ISO Class 5 zones"
+      ],
+      "keyFeature": "Knife-edge fluid seal guaranteeing zero perimeter air leakage",
+      "images": [
+        "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80"
+      ],
+      "order": 1
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 201', () => pm.response.to.have.status(201));
+      const json = pm.response.json();
+      if (json.data?._id) {
+        pm.environment.set('createdFilterId', json.data._id);
+        pm.collectionVariables.set('createdFilterId', json.data._id);
+      }
+    language: text/javascript
+order: 4000

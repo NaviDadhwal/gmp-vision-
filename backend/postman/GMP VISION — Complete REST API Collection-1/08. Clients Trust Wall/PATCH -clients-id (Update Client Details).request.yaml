@@ -1,0 +1,20 @@
+$kind: http-request
+name: PATCH /clients/:id (Update Client Details)
+description: Updates client company name, logoUrl or sector.
+url: "{{baseUrl}}/clients/{{createdClientId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{accessToken}}
+body:
+  type: json
+  content: |-
+    {
+      "sector": "Biotechnology",
+      "isFeatured": true
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test('Status is 200', () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 4000

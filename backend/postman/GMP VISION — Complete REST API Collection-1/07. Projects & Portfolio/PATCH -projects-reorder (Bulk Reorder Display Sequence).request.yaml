@@ -1,0 +1,24 @@
+$kind: http-request
+name: PATCH /projects/reorder (Bulk Reorder Display Sequence)
+description: Bulk reorders project case studies.
+url: "{{baseUrl}}/projects/reorder"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{accessToken}}
+body:
+  type: json
+  content: |-
+    {
+      "items": [
+        {
+          "id": "{{createdProjectId}}",
+          "order": 2
+        }
+      ]
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test('Status is 200', () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 5000
