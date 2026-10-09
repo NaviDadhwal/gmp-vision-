@@ -10,9 +10,9 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer style={{ backgroundColor: '#04122E', color: '#CBD5E1', borderTop: '4px solid #3DAE2B' }}>
+    <footer style={{ backgroundColor: '#000000', color: '#A3A3A3', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
       {/* Brand Values Banner */}
-      <div style={{ backgroundColor: '#051C42', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', padding: '1rem 0' }}>
+      <div style={{ backgroundColor: '#050505', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', padding: '1rem 0' }}>
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', gap: 'clamp(0.75rem, 2vw, 1.5rem)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: 'clamp(0.78rem, 2.2vw, 0.92rem)' }}>

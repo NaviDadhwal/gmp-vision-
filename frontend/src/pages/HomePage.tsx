@@ -3,23 +3,24 @@ import { Link } from 'react-router-dom';
 import { SEOHead } from '../components/seo/SEOHead';
 import { JsonLd, GLOBAL_ORGANIZATION_SCHEMA } from '../components/seo/JsonLd';
 import { ComplianceBar } from '../components/ui/ComplianceBar';
+import { GMPModernHero } from '../components/ui/gmp-modern-hero';
 import { DIVISIONS_DATA } from '../data/divisions';
 import { FILTRATION_CATALOG } from '../data/filters';
 import { CLIENTS_DATA } from '../data/clients';
 import { SITE_SETTINGS } from '../data/settings';
 import { Badge } from '../components/ui/Badge';
-import { ArrowRight, CheckCircle2, ShieldCheck, Award, Layers, Wind, Droplets, Activity, Zap, Cpu } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Award, Layers, Wind, Droplets, Activity, Zap, Cpu } from 'lucide-react';
 import { initiateWhatsAppInquiry } from '../lib/whatsapp';
 import { getClientLogo } from '../components/common/ClientLogos';
 
 const ICON_MAP: Record<string, React.ReactNode> = {
-  Layers: <Layers size={28} />,
-  Wind: <Wind size={28} />,
-  ShieldCheck: <ShieldCheck size={28} />,
-  Activity: <Activity size={28} />,
-  Droplets: <Droplets size={28} />,
-  Zap: <Zap size={28} />,
-  Cpu: <Cpu size={28} />,
+  Layers: <Layers size={24} />,
+  Wind: <Wind size={24} />,
+  ShieldCheck: <ShieldCheck size={24} />,
+  Activity: <Activity size={24} />,
+  Droplets: <Droplets size={24} />,
+  Zap: <Zap size={24} />,
+  Cpu: <Cpu size={24} />,
 };
 
 export const HomePage: React.FC = () => {
@@ -66,7 +67,7 @@ export const HomePage: React.FC = () => {
   const selectedFilter = featuredFilters.find((f) => f.category === filterTab) || featuredFilters[0];
 
   return (
-    <div>
+    <div className="bg-[#000000] text-white selection:bg-white selection:text-black">
       <SEOHead
         title="Turnkey Cleanroom (CRP), HVAC & MEP Contractor"
         description="GMP VISION: Single-source Turnkey Engineering, Cleanroom (CRP), HVAC Air Handling, Air Filtration, Process Piping, and 21 CFR Part 11 Validation Services."
@@ -74,168 +75,70 @@ export const HomePage: React.FC = () => {
       />
       <JsonLd schema={GLOBAL_ORGANIZATION_SCHEMA} />
 
-      {/* 1. HERO SECTION */}
-      <section
-        style={{
-          position: 'relative',
-          minHeight: '82vh',
-          display: 'flex',
-          alignItems: 'center',
-          backgroundColor: '#051C42',
-          backgroundImage: 'linear-gradient(135deg, rgba(5, 28, 66, 0.96) 0%, rgba(8, 43, 102, 0.92) 100%), url("https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=2000&q=80")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          color: '#FFFFFF',
-          padding: 'clamp(3rem, 7vw, 4.5rem) 0',
-        }}
-      >
-        <div className="container">
-          <div style={{ maxWidth: '820px' }}>
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.45rem',
-                backgroundColor: 'rgba(61, 174, 43, 0.15)',
-                border: '1px solid #3DAE2B',
-                borderRadius: '9999px',
-                padding: '0.35rem 0.85rem',
-                marginBottom: '1.25rem',
-                maxWidth: '100%',
-              }}
-            >
-              <ShieldCheck size={16} color="#48BE34" style={{ flexShrink: 0 }} />
-              <span style={{ fontSize: 'clamp(0.72rem, 2.2vw, 0.82rem)', fontWeight: 700, color: '#FFFFFF', letterSpacing: '0.03em' }}>
-                SINGLE-SOURCE TURNKEY MEP CONTRACTOR
-              </span>
-            </div>
-
-            <h1
-              style={{
-                color: '#FFFFFF',
-                lineHeight: 1.18,
-                marginBottom: '1.25rem',
-                fontSize: 'clamp(2rem, 5vw, 3.6rem)',
-              }}
-            >
-              All Solutions in One Project:{' '}
-              <br className="hidden md:inline" />
-              <span style={{ color: '#48BE34' }}>Turnkey Cleanroom,</span> HVAC & Industrial Utilities
-            </h1>
-
-            <p
-              style={{
-                fontSize: 'clamp(0.95rem, 2.2vw, 1.15rem)',
-                color: '#CBD5E1',
-                lineHeight: 1.65,
-                marginBottom: '2rem',
-                maxWidth: '720px',
-              }}
-            >
-              Single-source turnkey contracting across <strong>7 integrated divisions</strong> for pharmaceutical, biotechnology, healthcare, and chemical manufacturing facilities across India.
-            </p>
-
-            <div className="hero-cta-group">
-              <Link to="/solutions" className="btn btn-primary btn-lg" style={{ gap: '0.6rem' }}>
-                <span>Explore All 7 Divisions</span>
-                <ArrowRight size={18} />
-              </Link>
-              <Link to="/request-quote" className="btn btn-outline-white btn-lg">
-                Request Technical Audit / RFQ
-              </Link>
-            </div>
-
-            {/* Quick trust strip */}
-            <div className="hero-trust-strip">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <CheckCircle2 size={16} color="#3DAE2B" style={{ flexShrink: 0 }} />
-                <span style={{ color: '#FFFFFF' }}>15+ Yrs Industry Experience</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <CheckCircle2 size={16} color="#3DAE2B" style={{ flexShrink: 0 }} />
-                <span style={{ color: '#FFFFFF' }}>100+ Completed Projects</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <CheckCircle2 size={16} color="#3DAE2B" style={{ flexShrink: 0 }} />
-                <span style={{ color: '#FFFFFF' }}>24×7 Emergency Site Support</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 1. 21ST.DEV HIGH CONTRAST OBSIDIAN HERO */}
+      <GMPModernHero />
 
       {/* 2. METRICS TICKER BAR */}
-      <div className="ticker-wrap">
+      <div className="ticker-wrap border-y border-white/[0.08] bg-[#050505]">
         <div className="ticker-content">
           {[...SITE_SETTINGS.tickerMetrics, ...SITE_SETTINGS.tickerMetrics].map((m, idx) => (
-            <div key={idx} className="ticker-item">
-              <Award size={16} color="#3DAE2B" />
+            <div key={idx} className="ticker-item text-neutral-300 font-mono text-xs">
+              <Award size={14} className="text-[#3DAE2B]" />
               <span>{m.label}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* 3. 7 DIVISIONS GRID */}
-      <section className="section-padding" style={{ backgroundColor: '#FFFFFF' }}>
+      {/* 3. 7 TURNKEY DIVISIONS BENTO GRID */}
+      <section className="section-padding bg-[#000000] border-b border-white/[0.08]">
         <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '750px', margin: '0 auto 3rem' }}>
-            <Badge variant="green" className="mb-2">Unified Engineering Model</Badge>
-            <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', color: '#051C42', margin: '0.5rem 0 1rem' }}>
-              7 Integrated Service & Product Divisions
+          <div style={{ textAlign: 'center', maxWidth: '750px', margin: '0 auto 3.5rem' }}>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.03] px-3 py-1 text-xs text-neutral-400 mb-3">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#3DAE2B]" />
+              <span className="font-mono uppercase tracking-wider text-[11px] text-neutral-300">Unified Turnkey EPC Model</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-medium tracking-tight text-white mb-4">
+              7 Integrated Engineering Divisions
             </h2>
-            <p style={{ color: '#64748B', fontSize: 'clamp(0.92rem, 2vw, 1rem)', lineHeight: 1.6 }}>
-              Unlike fragmented contractors who handle only ducting or only panels, GMP VISION delivers end-to-end design, manufacturing, erection, and qualification under one project roof.
+            <p className="text-neutral-400 text-base leading-relaxed">
+              Unlike fragmented subcontractors, GMP VISION handles architectural cleanroom envelope, double-skin HVAC, HEPA filtration, and cGMP validation under one unified engineering SLA.
             </p>
           </div>
 
           <div className="grid grid-cols-3 gap-6 lg-grid-cols-2 md-grid-cols-1">
             {DIVISIONS_DATA.map((div) => (
-              <div key={div.id} className="card-elevated division-card">
+              <div 
+                key={div.id} 
+                className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-xl bg-[#0A0A0A] border border-white/[0.08] transition-all hover:border-white/[0.2] hover:bg-[#0E0E0E] hover:-translate-y-1 shadow-lg"
+              >
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
-                    <div
-                      style={{
-                        width: '52px',
-                        height: '52px',
-                        borderRadius: '10px',
-                        backgroundColor: 'rgba(10, 59, 133, 0.08)',
-                        color: '#0A3B85',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexShrink: 0,
-                      }}
-                    >
-                      {ICON_MAP[div.iconName] || <Layers size={28} />}
+                  <div className="flex justify-between items-start mb-5">
+                    <div className="h-11 w-11 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#38BDF8] group-hover:text-[#3DAE2B] transition-colors">
+                      {ICON_MAP[div.iconName] || <Layers size={22} />}
                     </div>
-                    <span className="stencil-number">0{div.number}</span>
+                    <span className="font-mono text-xs tracking-widest text-neutral-600 group-hover:text-neutral-400 transition-colors">
+                      0{div.number}
+                    </span>
                   </div>
 
-                  <h3 style={{ fontSize: '1.22rem', color: '#051C42', marginBottom: '0.4rem', fontWeight: 700 }}>
+                  <h3 className="text-lg sm:text-xl font-medium text-white mb-1.5 tracking-tight">
                     {div.title}
                   </h3>
 
-                  <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#3DAE2B', marginBottom: '0.85rem' }}>
+                  <div className="text-xs font-mono font-medium text-[#3DAE2B] mb-3">
                     {div.tagline}
                   </div>
 
-                  <p style={{ fontSize: '0.88rem', color: '#64748B', lineHeight: 1.55, marginBottom: '1.25rem' }}>
+                  <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed mb-5">
                     {div.shortDesc}
                   </p>
 
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginBottom: '1.5rem' }}>
+                  <div className="flex flex-wrap gap-1.5 mb-6">
                     {div.standards.map((st, i) => (
                       <span
                         key={i}
-                        style={{
-                          fontSize: '0.72rem',
-                          fontWeight: 700,
-                          padding: '0.2rem 0.5rem',
-                          backgroundColor: '#F1F5F9',
-                          borderRadius: '4px',
-                          color: '#0A3B85',
-                        }}
+                        className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-neutral-300"
                       >
                         {st}
                       </span>
@@ -245,20 +148,10 @@ export const HomePage: React.FC = () => {
 
                 <Link
                   to={`/solutions/${div.slug}`}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.4rem',
-                    color: '#0A3B85',
-                    fontSize: '0.9rem',
-                    fontWeight: 700,
-                    marginTop: 'auto',
-                    borderTop: '1px solid #E2E8F0',
-                    paddingTop: '1rem',
-                  }}
+                  className="flex items-center justify-between text-xs font-semibold text-white pt-4 border-t border-white/[0.08] group-hover:text-[#3DAE2B] transition-colors mt-auto"
                 >
-                  <span>Explore Division Capabilities</span>
-                  <ArrowRight size={16} color="#3DAE2B" />
+                  <span>Explore Technical Specifications</span>
+                  <ArrowRight size={14} className="text-neutral-400 group-hover:translate-x-1 group-hover:text-[#3DAE2B] transition-transform" />
                 </Link>
               </div>
             ))}
@@ -267,139 +160,121 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 4. COMPLIANCE BADGE BAR */}
-      <ComplianceBar />
+      <div className="bg-[#050505] border-b border-white/[0.08]">
+        <ComplianceBar />
+      </div>
 
       {/* 5. INTERACTIVE AIR FILTRATION CATALOG PREVIEW */}
-      <section className="section-padding" style={{ backgroundColor: '#F8FAFC' }}>
+      <section className="section-padding bg-[#050505] border-b border-white/[0.08]">
         <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '2rem' }}>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
             <div>
-              <Badge variant="blue">Division 3 Catalog</Badge>
-              <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)', color: '#051C42', margin: '0.4rem 0 0.5rem' }}>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.1] text-xs font-mono text-neutral-400 mb-2">
+                <span className="text-[#38BDF8]">Division 03</span>
+                <span>Air Filtration Plant</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-medium tracking-tight text-white mb-2">
                 Cleanroom Air Filtration Systems
               </h2>
-              <p style={{ color: '#64748B', maxWidth: '600px', margin: 0, fontSize: '0.94rem' }}>
-                Direct manufacturing of tested filters from coarse 10µ pre-filtration to H14 99.997% Gel-Seal HEPA.
+              <p className="text-neutral-400 text-sm max-w-xl">
+                Manufactured to EN 1822 & ISO 29463 standards. From washable 10µ pre-filtration to 99.997% H14 Gel-Seal HEPA modules.
               </p>
             </div>
 
-            <Link to="/solutions/air-filtration" className="btn btn-secondary" style={{ flexShrink: 0 }}>
-              <span>Explore Air Filtration Solutions</span>
-              <ArrowRight size={16} />
+            <Link 
+              to="/solutions/air-filtration" 
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/[0.12] bg-white/[0.03] text-xs font-medium text-white hover:bg-white/[0.08] transition-colors"
+            >
+              <span>View Full Filter Catalog</span>
+              <ArrowRight size={14} />
             </Link>
           </div>
 
-          {/* Filter Category Tabs */}
-          <div
-            style={{
-              display: 'flex',
-              gap: '0.5rem',
-              overflowX: 'auto',
-              paddingBottom: '0.5rem',
-              marginBottom: '1.75rem',
-              WebkitOverflowScrolling: 'touch',
-              scrollbarWidth: 'none',
-            }}
-          >
+          {/* Filter Category Tabs - Linear Style Pills */}
+          <div className="flex gap-2 overflow-x-auto pb-2 mb-6 scrollbar-none">
             {[
               { key: 'gel-seal-hepa', label: 'Mini Pleat Gel-Seal HEPA (H13/H14)' },
-              { key: 'pocket-bag', label: 'Multi-Pocket Bag Filters' },
+              { key: 'pocket-bag', label: 'Multi-Pocket Synthetic Bags' },
               { key: 'fine-filter', label: 'Micro-Fiber Fine Filters (1µ-5µ)' },
-              { key: 'pre-filter', label: 'Washable Pre-Filters (10µ)' },
+              { key: 'pre-filter', label: 'Washable Primary Pre-Filters (10µ)' },
             ].map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setFilterTab(tab.key as any)}
-                style={{
-                  padding: '0.7rem 1.15rem',
-                  borderRadius: '6px',
-                  fontWeight: 600,
-                  fontSize: '0.88rem',
-                  backgroundColor: filterTab === tab.key ? '#051C42' : '#FFFFFF',
-                  color: filterTab === tab.key ? '#FFFFFF' : '#475569',
-                  border: filterTab === tab.key ? '1px solid #051C42' : '1px solid #CBD5E1',
-                  whiteSpace: 'nowrap',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  flexShrink: 0,
-                }}
+                className={`px-3.5 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
+                  filterTab === tab.key
+                    ? 'bg-white text-black font-semibold shadow-sm'
+                    : 'bg-white/[0.03] border border-white/[0.08] text-neutral-400 hover:text-white hover:bg-white/[0.06]'
+                }`}
               >
                 {tab.label}
               </button>
             ))}
           </div>
 
-          {/* Active Filter Spec Card */}
+          {/* Active Filter Spec Card - Bento Panel */}
           {selectedFilter && (
-            <div className="card-elevated filter-spec-card">
-              <div className="grid grid-cols-2 gap-8 md-grid-cols-1 items-center">
+            <div className="rounded-2xl border border-white/[0.1] bg-[#0A0A0A] p-6 sm:p-8 shadow-2xl">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
-                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <Badge variant="green">{selectedFilter.efficiency}</Badge>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', fontWeight: 700, color: '#0A3B85' }}>
-                      {selectedFilter.micronRating}
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-[#3DAE2B]/10 text-[#3DAE2B] border border-[#3DAE2B]/30">
+                      {selectedFilter.efficiency}
+                    </span>
+                    <span className="font-mono text-xs text-neutral-400">
+                      Micron Rating: <strong className="text-white">{selectedFilter.micronRating}</strong>
                     </span>
                   </div>
 
-                  <h3 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.6rem)', color: '#051C42', marginBottom: '0.6rem' }}>
+                  <h3 className="text-xl sm:text-2xl font-medium text-white mb-2 tracking-tight">
                     {selectedFilter.name}
                   </h3>
 
-                  <div
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '0.4rem',
-                      padding: '0.35rem 0.75rem',
-                      backgroundColor: 'rgba(61, 174, 43, 0.1)',
-                      color: '#257518',
-                      fontWeight: 700,
-                      borderRadius: '4px',
-                      fontSize: '0.85rem',
-                      marginBottom: '1rem',
-                      maxWidth: '100%',
-                    }}
-                  >
-                    <ShieldCheck size={16} style={{ flexShrink: 0 }} />
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/[0.04] border border-white/[0.08] text-xs text-neutral-300 font-mono mb-4">
+                    <ShieldCheck size={14} className="text-[#3DAE2B]" />
                     <span>{selectedFilter.keyFeature}</span>
                   </div>
 
-                  <p style={{ color: '#475569', lineHeight: 1.6, marginBottom: '1.25rem', fontSize: '0.92rem' }}>
+                  <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed mb-5">
                     {selectedFilter.mediaConstruction}
                   </p>
 
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <strong style={{ display: 'block', fontSize: '0.88rem', color: '#051C42', marginBottom: '0.4rem' }}>
-                      Recommended Cleanroom Applications:
-                    </strong>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                  <div className="mb-6">
+                    <span className="block text-xs font-mono uppercase tracking-wider text-neutral-500 mb-2">
+                      Cleanroom Application Zones:
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
                       {selectedFilter.applications.map((app, i) => (
-                        <span key={i} style={{ fontSize: '0.8rem', padding: '0.2rem 0.6rem', backgroundColor: '#F1F5F9', borderRadius: '4px', color: '#334155' }}>
+                        <span key={i} className="text-xs px-2 py-0.5 rounded bg-white/[0.03] border border-white/[0.06] text-neutral-300">
                           {app}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  <div className="filter-action-group">
-                    <Link to="/solutions/air-filtration" className="btn btn-primary">
-                      Explore Division Solutions
+                  <div className="flex flex-wrap gap-3">
+                    <Link 
+                      to="/solutions/air-filtration" 
+                      className="px-5 py-2.5 rounded-lg bg-white text-black text-xs font-semibold hover:bg-neutral-200 transition-colors shadow-sm"
+                    >
+                      Filter Specs & Technical Cut Sheets
                     </Link>
                     <button
                       onClick={() => initiateWhatsAppInquiry({ topic: `Filter Inquiry: ${selectedFilter.name}` })}
-                      className="btn btn-outline"
+                      className="px-5 py-2.5 rounded-lg border border-white/[0.15] bg-transparent text-white text-xs font-medium hover:bg-white/[0.06] transition-colors"
                     >
-                      Instant Quote on WhatsApp
+                      Instant WhatsApp Quote
                     </button>
                   </div>
                 </div>
 
-                <div>
+                <div className="relative rounded-xl overflow-hidden border border-white/[0.08] bg-[#050505]">
                   <img
                     src={selectedFilter.image}
                     alt={selectedFilter.name}
-                    style={{ width: '100%', height: 'clamp(220px, 45vw, 320px)', objectFit: 'cover', borderRadius: '10px', boxShadow: 'var(--shadow-md)' }}
+                    className="w-full h-64 sm:h-80 object-cover opacity-85 hover:opacity-100 transition-opacity"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
                 </div>
               </div>
             </div>
@@ -408,17 +283,17 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 6. TURNKEY WORKFLOW (CONCEPT TO COMMISSIONING) */}
-      <section className="section-padding" style={{ backgroundColor: '#051C42', color: '#FFFFFF' }}>
+      <section className="section-padding bg-[#000000] border-b border-white/[0.08]">
         <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 3rem' }}>
-            <span style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#3DAE2B', fontWeight: 700 }}>
-              Engineering Execution Lifecycle
+          <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 3.5rem' }}>
+            <span className="font-mono text-xs uppercase tracking-widest text-[#3DAE2B] font-semibold">
+              Stage-Gated Project Delivery
             </span>
-            <h2 style={{ color: '#FFFFFF', fontSize: 'clamp(1.65rem, 3.5vw, 2.3rem)', margin: '0.4rem 0 1rem' }}>
-              From Concept to Regulatory Commissioning
+            <h2 className="text-3xl sm:text-5xl font-medium tracking-tight text-white mt-2 mb-3">
+              Concept to Regulatory Validation
             </h2>
-            <p style={{ color: '#CBD5E1', fontSize: 'clamp(0.92rem, 2vw, 0.98rem)', lineHeight: 1.6 }}>
-              A disciplined, stage-gated engineering methodology ensuring cleanroom projects are delivered on schedule and validated for immediate audit readiness.
+            <p className="text-neutral-400 text-sm sm:text-base leading-relaxed">
+              Standard operating workflow ensuring HVAC air balancing, cascaded pressure differentials, and GDP qualification are met on time.
             </p>
           </div>
 
@@ -427,42 +302,28 @@ export const HomePage: React.FC = () => {
               <div
                 key={idx}
                 onClick={() => setActiveWorkflowStep(idx)}
-                style={{
-                  backgroundColor: activeWorkflowStep === idx ? 'rgba(61, 174, 43, 0.12)' : 'rgba(255, 255, 255, 0.03)',
-                  border: activeWorkflowStep === idx ? '2px solid #3DAE2B' : '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '10px',
-                  padding: 'clamp(1.2rem, 3vw, 1.75rem)',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                }}
+                className={`p-6 rounded-xl border transition-all cursor-pointer ${
+                  activeWorkflowStep === idx 
+                    ? 'bg-[#0E0E0E] border-[#3DAE2B]/60 shadow-lg shadow-[#3DAE2B]/5' 
+                    : 'bg-[#0A0A0A] border-white/[0.08] hover:border-white/[0.18]'
+                }`}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.4rem', fontWeight: 800, color: '#3DAE2B' }}>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="font-mono text-xl font-bold text-neutral-400">
                     {step.num}
                   </span>
-                  <div
-                    style={{
-                      width: '28px',
-                      height: '28px',
-                      borderRadius: '50%',
-                      backgroundColor: activeWorkflowStep === idx ? '#3DAE2B' : 'rgba(255, 255, 255, 0.1)',
-                      color: '#FFFFFF',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '0.8rem',
-                      flexShrink: 0,
-                    }}
-                  >
+                  <div className={`h-6 w-6 rounded-full flex items-center justify-center text-xs font-mono ${
+                    activeWorkflowStep === idx ? 'bg-[#3DAE2B] text-black font-bold' : 'bg-white/[0.06] text-neutral-500'
+                  }`}>
                     ✓
                   </div>
                 </div>
 
-                <h3 style={{ color: '#FFFFFF', fontSize: '1.15rem', marginBottom: '0.5rem' }}>
+                <h3 className="text-base font-medium text-white mb-2 tracking-tight">
                   {step.title}
                 </h3>
 
-                <p style={{ color: '#CBD5E1', fontSize: '0.88rem', lineHeight: 1.55, margin: 0 }}>
+                <p className="text-xs text-neutral-400 leading-relaxed">
                   {step.desc}
                 </p>
               </div>
@@ -472,15 +333,17 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 7. VERIFIED CLIENT PORTFOLIO SHOWCASE */}
-      <section className="section-padding" style={{ backgroundColor: '#FFFFFF' }}>
+      <section className="section-padding bg-[#050505] border-b border-white/[0.08]">
         <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '750px', margin: '0 auto 2.75rem' }}>
-            <Badge variant="blue">Proven Track Record</Badge>
-            <h2 style={{ fontSize: 'clamp(1.65rem, 3.5vw, 2.2rem)', color: '#051C42', margin: '0.4rem 0 1rem' }}>
-              Trusted by Leading Pharmaceutical & Industrial Plants
+          <div style={{ textAlign: 'center', maxWidth: '750px', margin: '0 auto 3rem' }}>
+            <span className="font-mono text-xs uppercase tracking-widest text-[#38BDF8] font-semibold">
+              100+ Turnkey Plant Installations
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-medium tracking-tight text-white mt-2 mb-3">
+              Trusted by Pharmaceutical Leaders
             </h2>
-            <p style={{ color: '#64748B', fontSize: 'clamp(0.92rem, 2vw, 0.98rem)' }}>
-              Over 100 successful cleanroom and HVAC turnkey installations across Himachal Pradesh, Uttarakhand, Punjab, Gujarat, and Maharashtra.
+            <p className="text-neutral-400 text-xs sm:text-sm">
+              Delivering ISO Class 5 to Class 8 facilities across Baddi, Nalagarh, Paonta Sahib, Dera Bassi, Ahmedabad, and Hyderabad.
             </p>
           </div>
 
@@ -488,86 +351,62 @@ export const HomePage: React.FC = () => {
             {CLIENTS_DATA.map((client) => (
               <div
                 key={client.id}
-                style={{
-                  padding: '1.1rem 0.85rem',
-                  borderRadius: '10px',
-                  backgroundColor: '#FFFFFF',
-                  border: '1px solid #E2E8F0',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.02)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  minHeight: '120px',
-                  transition: 'all 0.2s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#3DAE2B';
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.06)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = '#E2E8F0';
-                  e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.02)';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
+                className="p-5 rounded-xl bg-[#0A0A0A] border border-white/[0.08] flex flex-col justify-between items-center min-h-[120px] transition-all hover:border-white/[0.2] hover:bg-[#0E0E0E]"
               >
-                <div style={{ height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                  {getClientLogo(client.name, 34)}
+                <div className="h-10 flex items-center justify-center w-full">
+                  {getClientLogo(client.name, 32)}
                 </div>
-                <div
-                  style={{
-                    fontSize: '0.74rem',
-                    color: '#64748B',
-                    borderTop: '1px solid #F1F5F9',
-                    paddingTop: '0.5rem',
-                    width: '100%',
-                    textAlign: 'center',
-                    marginTop: '0.5rem',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  <span style={{ fontWeight: 600, color: '#0A3B85' }}>{client.sector}</span> • {client.location}
+                <div className="text-[11px] font-mono text-neutral-400 border-t border-white/[0.06] pt-2 w-full text-center mt-3 truncate">
+                  <span className="text-neutral-200">{client.sector}</span> • {client.location}
                 </div>
               </div>
             ))}
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-            <Link to="/projects" className="btn btn-outline" style={{ gap: '0.5rem' }}>
-              <span>View All 12 Featured Plant Case Studies</span>
-              <ArrowRight size={16} />
+          <div className="text-center mt-10">
+            <Link 
+              to="/projects" 
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/[0.12] bg-white/[0.03] text-xs font-medium text-white hover:bg-white/[0.08] transition-colors"
+            >
+              <span>Explore All Plant Case Studies</span>
+              <ArrowRight size={14} />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 8. ABBREVIATED QUICK RFQ ESTIMATOR */}
-      <section className="section-padding" style={{ backgroundColor: '#F4F7FB', borderTop: '1px solid #E2E8F0' }}>
+      {/* 8. ABBREVIATED QUICK RFQ ESTIMATOR - BENTO CARD */}
+      <section className="section-padding bg-[#000000]">
         <div className="container">
-          <div className="card-elevated rfq-box-card">
-            <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 2rem' }}>
-              <Badge variant="green">Fast Turnaround</Badge>
-              <h2 style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2rem)', color: '#051C42', margin: '0.4rem 0 0.6rem' }}>
-                Request a Technical Proposal & BOQ Estimate
-              </h2>
-              <p style={{ color: '#64748B', fontSize: 'clamp(0.88rem, 2vw, 0.92rem)' }}>
-                Share your plant parameters. Our engineering department prepares preliminary design calculations and cost estimates within 4 business hours.
-              </p>
+          <div className="max-w-3xl mx-auto rounded-2xl border border-white/[0.12] bg-[#0A0A0A] p-8 sm:p-12 text-center shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#0A3B85] via-[#3DAE2B] to-[#38BDF8]" />
+            
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-3 py-1 text-xs text-neutral-400 mb-4">
+              <span className="h-2 w-2 rounded-full bg-[#3DAE2B] animate-pulse" />
+              <span>4-Hour Engineering Turnaround</span>
             </div>
 
-            <div className="rfq-action-group">
-              <Link to="/request-quote" className="btn btn-primary btn-lg" style={{ gap: '0.5rem' }}>
-                <span>Open Full 5-Step Quote Builder</span>
-                <ArrowRight size={18} />
+            <h2 className="text-2xl sm:text-4xl font-medium tracking-tight text-white mb-3">
+              Request Technical Proposal & BOQ Estimate
+            </h2>
+
+            <p className="text-neutral-400 text-xs sm:text-sm max-w-lg mx-auto mb-8">
+              Submit your room dimensions, required ISO cleanroom class, or equipment load. Our design engineers will generate preliminary CFM sizing and budgetary BOQ.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Link 
+                to="/rfq" 
+                className="w-full sm:w-auto h-11 px-8 rounded-lg bg-white text-black font-semibold text-xs flex items-center justify-center gap-2 hover:bg-neutral-200 transition-colors shadow-lg"
+              >
+                <span>Launch Turnkey Quote Builder</span>
+                <ArrowRight size={15} />
               </Link>
               <button
                 onClick={() => initiateWhatsAppInquiry({ topic: 'Direct Homepage RFQ Inquire' })}
-                className="btn btn-outline-green btn-lg"
+                className="w-full sm:w-auto h-11 px-6 rounded-lg border border-white/[0.15] bg-transparent text-white text-xs font-medium hover:bg-white/[0.06] transition-colors"
               >
-                Chat with Technical Team on WhatsApp
+                Chat on WhatsApp Hotline
               </button>
             </div>
           </div>

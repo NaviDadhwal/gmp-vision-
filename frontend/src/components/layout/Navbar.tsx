@@ -94,8 +94,8 @@ export const Navbar: React.FC = () => {
       {/* Top Utility Bar */}
       <div
         style={{
-          backgroundColor: '#031430',
-          color: '#CBD5E1',
+          backgroundColor: '#000000',
+          color: '#A3A3A3',
           fontSize: '0.8rem',
           padding: '0.4rem 0',
           borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
@@ -211,10 +211,10 @@ export const Navbar: React.FC = () => {
       {/* Main Navigation Bar */}
       <nav
         style={{
-          backgroundColor: 'rgba(5, 28, 66, 0.98)',
+          backgroundColor: 'rgba(5, 5, 5, 0.95)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
-          borderBottom: '2px solid #3DAE2B',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
           position: 'relative',
         }}
       >

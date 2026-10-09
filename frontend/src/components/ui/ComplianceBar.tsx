@@ -14,23 +14,24 @@ export const ComplianceBar: React.FC = () => {
   return (
     <div
       style={{
-        backgroundColor: '#FFFFFF',
-        borderTop: '1px solid #E2E8F0',
-        borderBottom: '1px solid #E2E8F0',
+        backgroundColor: '#050505',
+        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
         padding: '1.25rem 0',
       }}
     >
       <div className="container">
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textAlign: 'center' }}>
-            <ShieldCheck size={18} color="#3DAE2B" style={{ flexShrink: 0 }} />
+            <ShieldCheck size={16} color="#3DAE2B" style={{ flexShrink: 0 }} />
             <span
               style={{
-                fontSize: 'clamp(0.75rem, 2.4vw, 0.85rem)',
+                fontSize: 'clamp(0.72rem, 2.2vw, 0.8rem)',
                 fontWeight: 600,
                 textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                color: '#0A3B85',
+                letterSpacing: '0.08em',
+                color: '#A3A3A3',
+                fontFamily: 'var(--font-mono)',
               }}
             >
               Certified Regulatory Compliance Standards
@@ -54,15 +55,15 @@ export const ComplianceBar: React.FC = () => {
                   alignItems: 'center',
                   gap: '0.4rem',
                   padding: '0.35rem 0.75rem',
-                  backgroundColor: '#F4F7FB',
+                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
                   borderRadius: '6px',
-                  border: '1px solid #E2E8F0',
-                  fontSize: '0.84rem',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  fontSize: '0.82rem',
                 }}
                 title={s.desc}
               >
                 <CheckCircle2 size={13} color="#3DAE2B" style={{ flexShrink: 0 }} />
-                <span style={{ fontWeight: 700, color: '#051C42' }}>{s.code}</span>
+                <span style={{ fontWeight: 600, color: '#FFFFFF', fontFamily: 'var(--font-mono)' }}>{s.code}</span>
               </div>
             ))}
           </div>
