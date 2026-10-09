@@ -1,0 +1,12 @@
+$kind: http-request
+name: GET /ready (Readiness)
+url: "{{rootUrl}}/ready"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200 or 503', () => pm.expect(pm.response.code).to.be.oneOf([200, 503]));
+      if (pm.response.code === 200) {
+        pm.test('Database connected', () => pm.expect(pm.response.json().status).to.eql('ready'));
+      }
+order: 2000

@@ -1,0 +1,12 @@
+$kind: http-request
+name: GET /products?mode=offset (Admin Table)
+url: "{{baseUrl}}/products?mode=offset&page=1&limit=10"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', () => pm.response.to.have.status(200));
+      pm.test('Offset envelope valid', () => {
+        pm.expect(pm.response.json().pagination).to.have.property('total');
+      });
+order: 2000

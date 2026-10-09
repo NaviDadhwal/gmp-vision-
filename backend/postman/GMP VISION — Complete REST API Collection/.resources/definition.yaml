@@ -1,0 +1,29 @@
+$kind: collection
+description: Production API test suite for GMP VISION cleanroom and industrial contracting platform. Compliant with instructions.md v2.2 and GMP_VISION_PRD.md v2.0.
+variables:
+  baseUrl: http://localhost:5000/api/v1
+  rootUrl: http://localhost:5000
+  adminEmail: admin@gmpvision.com
+  adminPassword: Admin@GMPVision2026!
+  divisionSlug: cleanroom-panels
+  productSlug: cgmp-modular-puf-wall-panel
+  accessToken: ""
+scripts:
+  - type: http:beforeRequest
+    code: |-
+      const tokenExpiry = pm.environment.get('tokenExpiry');
+      const now = Date.now();
+      if (tokenExpiry && now >= parseInt(tokenExpiry)) {
+        pm.sendRequest({
+          url: pm.environment.get('baseUrl') + '/auth/refresh',
+          method: 'POST',
+          header: { 'Content-Type': 'application/json' },
+        }, function (err, res) {
+          if (!err && res.code === 200) {
+            const token = res.json().data.accessToken;
+            pm.environment.set('accessToken', token);
+            pm.environment.set('tokenExpiry', Date.now() + 14 * 60 * 1000);
+          }
+        });
+      }
+    language: text/javascript

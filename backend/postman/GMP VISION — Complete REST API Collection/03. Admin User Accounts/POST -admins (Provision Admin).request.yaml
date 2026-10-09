@@ -1,0 +1,23 @@
+$kind: http-request
+name: POST /admins (Provision Admin)
+url: "{{baseUrl}}/admins"
+method: POST
+headers:
+  Authorization: Bearer {{accessToken}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "staff.qa@gmpvision.com",
+      "password": "Staff@SecurePass2026",
+      "role": "admin"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 201 or 409', () => pm.expect(pm.response.code).to.be.oneOf([201, 409]));
+      if (pm.response.code === 201) {
+        pm.environment.set('createdAdminId', pm.response.json().data._id);
+      }
+order: 2000

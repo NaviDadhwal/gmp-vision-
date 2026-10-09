@@ -1,0 +1,24 @@
+$kind: http-request
+name: POST /auth/login
+url: "{{baseUrl}}/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "{{adminEmail}}",
+      "password": "{{adminPassword}}"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status is 200', () => pm.response.to.have.status(200));
+      pm.test('Response has success: true', () => pm.expect(pm.response.json().success).to.be.true);
+      const json = pm.response.json();
+      if (json.data?.accessToken) {
+        pm.environment.set('accessToken', json.data.accessToken);
+        pm.environment.set('tokenExpiry', Date.now() + 14 * 60 * 1000);
+      }
+order: 1000

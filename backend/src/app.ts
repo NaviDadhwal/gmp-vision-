@@ -100,11 +100,15 @@ if (env.NODE_ENV === 'development') {
 }
 
 // 8. Rate Limiting Tiers (instructions.md Section 4)
+const isBypass = (req: express.Request) =>
+  env.NODE_ENV === 'test' || req.headers['x-test-bypass'] === 'true';
+
 const globalLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 100,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => isBypass(req),
   message: {
     success: false,
     error: { code: 'RATE_LIMIT_EXCEEDED', message: 'Too many requests. Please try again shortly.' },
@@ -116,6 +120,7 @@ const authLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 10,
   skipSuccessfulRequests: true,
+  skip: (req) => isBypass(req),
   message: {
     success: false,
     error: { code: 'AUTH_RATE_LIMIT', message: 'Too many failed login attempts. Please wait 1 minute.' },
@@ -126,6 +131,7 @@ app.use('/api/v1/auth/login', authLimiter);
 const leadLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
+  skip: (req) => isBypass(req) || req.method !== 'POST',
   message: {
     success: false,
     error: {

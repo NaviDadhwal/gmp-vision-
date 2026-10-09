@@ -72,7 +72,8 @@ export class MediaController {
 
   static async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const publicId = req.params.publicId as string;
+      const rawPublicId = req.params.publicId;
+      const publicId = Array.isArray(rawPublicId) ? rawPublicId.join('/') : (rawPublicId as string);
 
       if (!env.CLOUDINARY_API_KEY || env.CLOUDINARY_API_KEY === 'mock_key') {
         console.log(`☁️ [Mock Cloudinary] Simulating deletion of ${publicId}`);
@@ -106,7 +107,7 @@ mediaRouter.post(
 );
 
 mediaRouter.delete(
-  '/:publicId',
+  '/{*publicId}',
   requireAuth,
   roleGuard(['admin', 'superadmin']),
   MediaController.delete
