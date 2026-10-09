@@ -27,7 +27,7 @@ export const app = express();
 app.set('trust proxy', 1);
 
 // 2. Health & Readiness Probes (Unauthenticated, excluded from strict rate limits)
-app.get('/', (_req, res) => {
+app.get(['/', '/api'], (_req, res) => {
   res.status(200).json({
     name: 'GMP VISION Production API',
     status: 'online',
