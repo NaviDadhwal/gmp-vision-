@@ -15,7 +15,7 @@ id_ed25519
 *.pfx
 
 # Build output
-dist/
+# dist/ is tracked for zero-build serverless deployment
 build/
 out/
 *.tsbuildinfo
