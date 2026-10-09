@@ -40,6 +40,10 @@ export class AdminService {
       throw new AppError('Superadmins cannot demote their own account.', 403, 'CANNOT_SELF_DEMOTE');
     }
 
+    if (adminId === currentUserId && data.isActive === false) {
+      throw new AppError('Superadmins cannot deactivate their own account.', 403, 'CANNOT_SELF_DEACTIVATE');
+    }
+
     if (data.role) admin.role = data.role;
     if (typeof data.isActive === 'boolean') admin.isActive = data.isActive;
     if (data.password) {
@@ -58,6 +62,13 @@ export class AdminService {
     const admin = await AdminModel.findById(adminId);
     if (!admin) {
       throw new AppError('Admin account not found.', 404, 'NOT_FOUND');
+    }
+
+    if (admin.role === 'superadmin') {
+      const superadminCount = await AdminModel.countDocuments({ role: 'superadmin', isActive: true });
+      if (superadminCount <= 1) {
+        throw new AppError('Cannot delete the last remaining active superadmin account.', 403, 'LAST_SUPERADMIN_PROTECTED');
+      }
     }
 
     await AdminModel.findByIdAndDelete(adminId);

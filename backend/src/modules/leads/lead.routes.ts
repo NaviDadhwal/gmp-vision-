@@ -116,7 +116,14 @@ export class LeadController {
         'Message',
       ];
 
-      const escapeCSV = (val: any) => `"${String(val ?? '').replace(/"/g, '""')}"`;
+      const escapeCSV = (val: any) => {
+        let str = String(val ?? '');
+        // Prevent CSV Formula Injection (CWE-1236)
+        if (/^[=+\-@\t\r]/.test(str)) {
+          str = `'${str}`;
+        }
+        return `"${str.replace(/"/g, '""')}"`;
+      };
 
       const rows = leads.map((l) => [
         escapeCSV(l._id),

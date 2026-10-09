@@ -7,6 +7,8 @@ import { LoginInput } from './auth.schema';
 const BCRYPT_ROUNDS = 12;
 const MAX_FAILED_ATTEMPTS = 5;
 const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15 minutes per instructions.md
+// Precomputed 12-round dummy hash to prevent timing-based user enumeration (CWE-208)
+const DUMMY_HASH = '$2a$12$K1rOaVlRjVpI5Pj5Kx4PkeO0c7F9G2ZkGgKq3L2QpZtWbY3XoM0bK';
 
 export class AuthService {
   static async login({ email, password }: LoginInput): Promise<{
@@ -17,6 +19,8 @@ export class AuthService {
     const admin = await AdminModel.findOne({ email });
 
     if (!admin) {
+      // Execute constant-time comparison to prevent timing side-channel attacks
+      await bcrypt.compare(password, DUMMY_HASH).catch(() => false);
       throw new AppError('Invalid email or password.', 401, 'INVALID_CREDENTIALS');
     }
 

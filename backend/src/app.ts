@@ -101,7 +101,7 @@ if (env.NODE_ENV === 'development') {
 
 // 8. Rate Limiting Tiers (instructions.md Section 4)
 const isBypass = (req: express.Request) =>
-  env.NODE_ENV === 'test' || req.headers['x-test-bypass'] === 'true';
+  env.NODE_ENV === 'test' && req.headers['x-test-bypass'] === 'true';
 
 const globalLimiter = rateLimit({
   windowMs: 60 * 1000,

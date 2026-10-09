@@ -5,10 +5,11 @@ export interface JsonLdProps {
 }
 
 export const JsonLd: React.FC<JsonLdProps> = ({ schema }) => {
+  const jsonContent = JSON.stringify(schema).replace(/</g, '\\u003c');
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: jsonContent }}
     />
   );
 };

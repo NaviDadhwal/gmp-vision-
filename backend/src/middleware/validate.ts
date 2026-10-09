@@ -12,7 +12,11 @@ export function validate(schema: {
         req.body = await schema.body.parseAsync(req.body);
       }
       if (schema.query) {
-        req.query = await schema.query.parseAsync(req.query);
+        const parsedQuery = await schema.query.parseAsync(req.query);
+        for (const key of Object.keys(req.query)) {
+          delete (req.query as any)[key];
+        }
+        Object.assign(req.query, parsedQuery);
       }
       if (schema.params) {
         req.params = await schema.params.parseAsync(req.params);
