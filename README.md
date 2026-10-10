@@ -76,22 +76,72 @@ See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for full step-by-step instruction
 
 ---
 
-## 📁 Repository Structure & Use Cases
+## 📖 Master Documentation
+
+- 📘 **[REST API & System Architecture Handbook](docs/API_DOCUMENTATION.md)**: Exhaustive reference of all 48 backend endpoints, status codes, RFC 7807 error dictionary, curl test commands, and frontend integration blueprints.
+- 🚀 **[Production Deployment Guide](docs/DEPLOYMENT.md)**: Cloud deployment to Vercel, Render, Railway, and MongoDB Atlas.
+- 📋 **[Product Requirements Document (PRD v2.0)](docs/GMP_VISION_PRD.md)**: Complete business specifications and technical compliance standards.
+- 🏗️ **[Services & Engineering Catalog](docs/WEBSITE_SERVICES_AND_CATALOG.md)**: Cleanroom divisions, HVAC equipment, and filtration specs.
+
+---
+
+## 🛠️ Tech Stack & Current Status
+
+- **Backend**: [Node.js 20+](https://nodejs.org/) + [Express 5](https://expressjs.com/) + [TypeScript](https://www.typescriptlang.org/)
+- **Database**: [MongoDB Atlas](https://www.mongodb.com/atlas) with [Mongoose 8.x](https://mongoosejs.com/)
+- **Security**: Helmet, strict CORS, express-mongo-sanitize, Zod schema validation, Argon2/Bcrypt password hashing
+- **Media & File Storage**: Cloudinary CDN with binary magic-number signature verification
+- **Status**: Backend REST API is 100% operational with 48 endpoints. Frontend is staged for a fresh build using **Google Stitch**.
+
+---
+
+## 📦 Getting Started
+
+### Prerequisites
+- Node.js (`v20.x` or later recommended)
+- npm (`v10.x` or later)
+- MongoDB instance or Atlas connection string
+
+### Running Backend Locally
+
+```bash
+# 1. Install root & backend dependencies
+npm install
+
+# 2. Configure environment
+cp backend/.env.example backend/.env
+
+# 3. Seed database (creates default superadmin, 7 divisions, products, filters, projects)
+npm run seed --prefix backend
+
+# 4. Start live reload dev server on port 5000
+npm run dev:backend
+```
+
+### Automated Testing
+
+Run the full end-to-end API test suite:
+
+```bash
+npm run test --prefix backend
+```
+
+### Monorepo Structure
 
 ```
 gmp-vision/
-├── frontend/                  # React 19 + TypeScript + Vite Single-Page Application
-│   ├── public/                # Static assets (logo, icons, Broucher.pdf)
-│   └── src/                   # Pages, features (RFQ, admin, filtration), components, data
-├── backend/                   # Node.js + Express + TypeScript API Server (Scaffolded)
-│   ├── src/                   # Modular architecture (auth, leads, divisions, products, etc.)
-│   └── postman/               # API collection & environment specifications
-├── docs/                      # Project Specifications & Reference Materials
-│   ├── GMP_VISION_PRD.md      # Master Product Requirements Document (PRD v2.0)
-│   ├── WEBSITE_SERVICES_AND_CATALOG.md # Master Services Catalog & Scope
-│   ├── catalogs/              # Client brochures, specs, and Word documents
-│   └── reference-media/       # Brand cards, design mockups, and client site photos
-└── .planning/                 # GSD tracking, roadmap, and project state
+├── backend/                   # Node.js + Express 5 + TypeScript REST API
+│   ├── src/                   # Modular architecture (auth, admins, divisions, products, filters, projects, clients, settings, leads, media)
+│   ├── src/scripts/           # Database seeder, endpoint test suite, and Postman generator
+│   └── package.json           # Backend scripts and dependencies
+├── docs/                      # Architectural & API Documentation
+│   ├── API_DOCUMENTATION.md   # ⭐ Complete API Handbook (48 endpoints, status codes, curl examples)
+│   ├── DEPLOYMENT.md          # Production deployment guide
+│   ├── GMP_VISION_PRD.md      # Master PRD v2.0
+│   └── WEBSITE_SERVICES_AND_CATALOG.md # Services catalog
+├── postman/                   # Postman collection & environment specifications
+├── GEMINI.md                  # Autonomous agent rules & Git push enforcement
+└── package.json               # Root monorepo orchestration scripts
 ```
 
 ---
