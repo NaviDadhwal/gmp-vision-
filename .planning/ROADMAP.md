@@ -31,13 +31,19 @@
 - [x] Cron service (daily 08:00 AM IST lead digest) and Nodemailer transporter
 - [x] Health and readiness probes (`/health`, `/ready`)
 
-### Phase 4: Frontend API Integration & Admin Panel Wire-up (NEXT)
-- [ ] Implement `frontend/src/lib/api/client.ts` with Axios, `withCredentials: true`, and queued single-flight refresh
-- [ ] Connect `AdminLoginPage.tsx` to `POST /api/v1/auth/login` and Auth context
-- [ ] Connect Admin CMS tables & forms (Products, Filters, Projects, Clients, Settings, Leads) to backend endpoints
-- [ ] Wire `@dnd-kit` drag-and-drop sortable list reordering to `PATCH /api/v1/:resource/reorder`
-- [ ] Wire `GalleryManager.tsx` media uploader to `POST /api/v1/media/upload`
-- [ ] Connect public division, product, filter, project, and lead inquiry forms to API endpoints with mock fallback option
+### Phase 4: Google Stitch Frontend Rebuild & REST API Integration (ACTIVE)
+- [ ] Initialize `frontend/` with Vite + React 19 + TypeScript + Tailwind CSS
+- [ ] Configure `GMP Cleanroom HUD` design tokens (palette `#051522`, `#10B981`, `#38BDF8`, `#1F56A8`)
+- [ ] Bundle Stitch architectural photography (`hvac-ahu-plant.jpg`, `aseptic-filling-suite.jpg`, etc.)
+- [ ] Implement `CleanroomHeader.tsx`, `CleanroomFooter.tsx`, and `TelemetryBadge.tsx`
+- [ ] Implement Home Page (`/`) from Stitch Screen `cba18b4c2c9b4a519f41284fa03ac7c2`
+- [ ] Implement Turnkey Divisions Index & Detail (`/divisions`, `/divisions/:slug`) from Stitch Screen `ba8aa97b45d84467a22a177695d735e7`
+- [ ] Implement Products & Filtration Catalog (`/products`, `/filters`) from Stitch Screens `dd91869db7d54ff5903c0527aa4da04e` / `f2715e940e0441beb9d3adad1bc376b2`
+- [ ] Implement Projects Portfolio & Case Studies (`/projects`) from Stitch Screen `bdd8483518a04d4c9bc3528f4fbbac35`
+- [ ] Implement Contact & RFQ Estimator (`/rfq`, `/contact`) from Stitch Screen `0a3c71e1274b4a579ac4a9a837607623`
+- [ ] Build matching About Us (`/about`) and 404 Quarantine (`*`) pages
+- [ ] Implement Admin Gateway (`/admin/login`) from Stitch Screen `f09c70808162421786bf5f1619ec10b1`
+- [ ] Wire all 48 backend endpoints with automated token refresh in `frontend/src/lib/api/client.ts`
 
 ### Phase 5: Production Verification, Full Seed & Deployment (PLANNED)
 - [ ] Seed database with default 7 divisions, filtration items, and sample projects
