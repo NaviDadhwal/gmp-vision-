@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Phone, Menu, X, ShieldCheck, ArrowRight, Lock } from 'lucide-react';
-import { TelemetryBadge } from '../common/TelemetryBadge';
 
 export const CleanroomHeader: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -9,147 +7,116 @@ export const CleanroomHeader: React.FC = () => {
 
   const navLinks = [
     { label: 'Home', path: '/' },
-    { label: 'Turnkey Divisions', path: '/divisions' },
-    { label: 'Products & Equipment', path: '/products' },
-    { label: 'Air Filtration', path: '/filters' },
-    { label: 'Portfolio', path: '/projects' },
-    { label: 'About', path: '/about' },
+    { label: 'Divisions', path: '/divisions' },
+    { label: 'Products', path: '/products' },
+    { label: 'Projects', path: '/projects' },
+    { label: 'Contact', path: '/contact' },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-brand-border">
-      {/* Top Telemetry / Compliance Ribbon */}
-      <div className="bg-brand-soft border-b border-brand-border py-1.5 px-4 text-xs font-mono text-brand-muted hidden md:block">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-brand-dark font-medium">
-              <ShieldCheck className="w-3.5 h-3.5 text-brand-green" />
-              cGMP & ISO 14644-1 Compliant Facility Engineering
-            </span>
-            <span className="text-brand-border">|</span>
-            <span className="text-brand-primary font-medium">ΔP Cascade: +45 Pa Validated</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span>Direct Tech Hotline:</span>
-            <a
-              href="tel:+919817343117"
-              className="font-bold text-brand-dark hover:text-brand-primary transition-colors flex items-center gap-1"
-            >
-              <Phone className="w-3 h-3 text-brand-green" />
-              +91-9817343117
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Brand Logo & Tagline */}
-          <Link to="/" className="flex items-center gap-3 group">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#E4E9F1] transition-all">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-6">
+        {/* Brand Mark */}
+        <Link className="flex items-center gap-3 group" to="/">
+          <div className="h-11 w-11 rounded-lg p-0.5 flex items-center justify-center overflow-hidden border border-[#E4E9F1] bg-white shadow-sm transition-all duration-300 group-hover:border-[#1F56A8]/40 group-hover:shadow-md">
             <img
+              alt="GMP VISION"
+              className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
               src="/logo.png"
-              alt="GMP VISION Logo"
-              className="h-12 w-auto object-contain transition-transform group-hover:scale-105"
             />
-            <div className="flex flex-col">
-              <span className="font-display font-extrabold text-xl tracking-tight text-brand-navy">
-                GMP <span className="text-brand-primary">VISION</span>
+          </div>
+          <div className="flex flex-col">
+            <div className="flex items-center gap-2">
+              <span className="font-display font-bold text-lg tracking-tight text-[#16233F] group-hover:text-[#1F56A8] transition-colors">
+                GMP VISION
               </span>
-              <span className="text-[10px] uppercase font-mono tracking-widest text-brand-muted">
-                Turnkey Cleanroom & MEP
+              <span className="px-1.5 py-0.2 rounded text-[9px] font-mono tracking-widest uppercase bg-[#F7F9FC] text-[#1F56A8] border border-[#E4E9F1]">
+                EPIC
               </span>
             </div>
-          </Link>
-
-          {/* Desktop Nav Items */}
-          <nav className="hidden lg:flex items-center gap-1 font-medium text-sm">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`px-3.5 py-2 rounded-md transition-all duration-200 ${
-                  isActive(link.path)
-                    ? 'text-brand-primary bg-brand-soft font-semibold'
-                    : 'text-brand-navy hover:text-brand-primary hover:bg-gray-50'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Action CTAs */}
-          <div className="hidden sm:flex items-center gap-3">
-            <Link
-              to="/admin/login"
-              title="Admin Console"
-              className="p-2 text-brand-muted hover:text-brand-primary rounded-md border border-brand-border hover:border-brand-primary/40 transition-colors"
-            >
-              <Lock className="w-4 h-4" />
-            </Link>
-
-            <Link
-              to="/rfq"
-              className="inline-flex items-center gap-2 bg-brand-primary hover:bg-brand-primaryHover text-white px-4 py-2.5 rounded-md font-semibold text-sm shadow-sm transition-all duration-200 hover:shadow"
-            >
-              Request RFQ
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            <span className="text-[10px] tracking-wider uppercase text-[#5B6B82] font-mono -mt-0.5">
+              Turnkey Cleanroom &amp; MEP
+            </span>
           </div>
+        </Link>
 
-          {/* Mobile Menu Button */}
-          <div className="flex items-center lg:hidden">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-md text-brand-navy hover:text-brand-primary hover:bg-gray-100 focus:outline-none"
-              aria-label="Toggle navigation menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-brand-border px-4 pt-2 pb-6 space-y-2 animate-in slide-in-from-top-2">
-          <div className="py-2 border-b border-brand-border flex justify-between items-center">
-            <TelemetryBadge label="ISO Class 5" variant="green" pulse />
-            <a href="tel:+919817343117" className="text-xs font-mono font-bold text-brand-primary">
-              +91-9817343117
-            </a>
-          </div>
+        {/* Primary Nav */}
+        <nav className="hidden lg:flex items-center gap-1 text-[13px] font-medium tracking-wide text-[#5B6B82]">
           {navLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-3 py-2.5 rounded-md text-base font-medium ${
+              className={`px-3.5 py-1.5 rounded-md transition-colors ${
                 isActive(link.path)
-                  ? 'bg-brand-soft text-brand-primary font-bold'
-                  : 'text-brand-navy hover:bg-gray-50'
+                  ? 'text-[#1F56A8] bg-[#F7F9FC] font-semibold'
+                  : 'hover:text-[#16233F] hover:bg-[#F7F9FC]'
               }`}
             >
               {link.label}
             </Link>
           ))}
-          <div className="pt-4 flex flex-col gap-2">
+        </nav>
+
+        {/* Header Action Button */}
+        <div className="flex items-center gap-3">
+          <Link
+            className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-semibold tracking-wider uppercase bg-[#1F56A8] text-white hover:bg-[#16233F] active:scale-[0.98] transition-all duration-200 font-display shadow-sm hover:shadow-md"
+            to="/rfq"
+          >
+            <span>Request RFQ</span>
+            <span className="material-symbols-outlined text-[15px] font-bold transition-transform duration-200 group-hover:translate-x-1">
+              arrow_forward
+            </span>
+          </Link>
+
+          <a
+            className="lg:hidden p-2 rounded-lg bg-[#F7F9FC] text-[#16233F] border border-[#E4E9F1] hover:bg-white active:scale-95 transition-all"
+            href="tel:+919817343117"
+          >
+            <span className="material-symbols-outlined text-lg">call</span>
+          </a>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 rounded-lg bg-[#F7F9FC] text-[#16233F] border border-[#E4E9F1] hover:bg-white active:scale-95 transition-all"
+            aria-label="Toggle Navigation Menu"
+          >
+            <span className="material-symbols-outlined text-lg">
+              {mobileMenuOpen ? 'close' : 'menu'}
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Nav Drawer */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-white border-b border-[#E4E9F1] px-4 pt-2 pb-4 space-y-1 shadow-lg">
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`block px-3 py-2 rounded-md text-sm font-medium ${
+                isActive(link.path)
+                  ? 'text-[#1F56A8] bg-[#F7F9FC] font-semibold'
+                  : 'text-[#5B6B82] hover:text-[#16233F] hover:bg-[#F7F9FC]'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <div className="pt-2">
             <Link
               to="/rfq"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center bg-brand-primary text-white py-3 rounded-md font-semibold text-sm"
+              className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold uppercase bg-[#1F56A8] text-white"
             >
-              Request Cleanroom RFQ
-            </Link>
-            <Link
-              to="/admin/login"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center border border-brand-border text-brand-navy py-2 rounded-md text-xs font-mono"
-            >
-              Admin Portal
+              Request Project RFQ
             </Link>
           </div>
         </div>

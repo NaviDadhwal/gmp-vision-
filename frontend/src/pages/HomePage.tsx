@@ -1,22 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  ArrowRight,
-  ArrowLeft,
-  CheckCircle2,
-  Clock,
-  Building2,
-  Users,
-  Ruler,
-  ShieldCheck,
-  Send,
-  MessageCircle,
-  Phone,
-  Verified,
-  History,
-  Layers,
-  Box,
-} from 'lucide-react';
 import { ApiService } from '../lib/api/endpoints';
 
 export const HomePage: React.FC = () => {
@@ -29,24 +11,17 @@ export const HomePage: React.FC = () => {
   const [rfqGrade, setRfqGrade] = useState('ISO Class 7 / Grade C');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const scrollRail = (direction: 'left' | 'right') => {
     if (equipRailRef.current) {
-      const scrollAmount = direction === 'left' ? -340 : 340;
+      const scrollAmount = direction === 'left' ? -320 : 320;
       equipRailRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
 
   const handleRfqSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!rfqPhone || rfqPhone.trim().length < 8) {
-      setErrorMsg('Please provide a valid contact telephone/WhatsApp number.');
-      return;
-    }
-
     setSubmitting(true);
-    setErrorMsg(null);
 
     try {
       await ApiService.submitLead({
@@ -56,57 +31,58 @@ export const HomePage: React.FC = () => {
         message: `Inquiry for ${rfqGrade}. Estimated cleanroom area: ${rfqFacility || 'Not specified'} sq.ft.`,
         source: 'rfq_form',
       });
-      setSubmitted(true);
     } catch (err: any) {
       console.warn('Backend unavailable, showing offline confirmation:', err);
-      // Still show success to user for high conversion UX
-      setSubmitted(true);
     } finally {
+      setSubmitted(true);
       setSubmitting(false);
+      setRfqName('');
+      setRfqPhone('');
+      setRfqFacility('');
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 8000);
     }
   };
 
   return (
-    <div className="space-y-0 text-[#16233F]">
-      {/* 2. HERO SECTION: IMMERSIVE PHOTOGRAPHIC SHOWCASE (Stitch Screen cba18b4c2c9b4a519f41284fa03ac7c2) */}
+    <div className="bg-white text-[#16233F] antialiased selection:bg-[#1F56A8]/10 selection:text-[#1F56A8]">
+      {/* 2. HERO SECTION: IMMERSIVE PHOTOGRAPHIC SHOWCASE */}
       <section className="relative overflow-hidden py-12 lg:py-20 border-b border-[#E4E9F1] bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left Text & Actions */}
             <div className="lg:col-span-5 flex flex-col items-start">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] text-xs font-mono font-medium mb-5 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] text-xs font-mono font-medium mb-5 shadow-xs">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1F56A8] opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1F56A8]"></span>
                 </span>
                 <span className="tracking-wide">TURNKEY PHARMA CLEANROOM &amp; HVAC</span>
               </div>
-
               <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-[52px] text-[#16233F] tracking-tight leading-[1.1] mb-5">
                 Engineering <span className="text-[#1F56A8]">Sterile Environments</span>
               </h1>
-
               <p className="text-base text-[#5B6B82] leading-relaxed max-w-lg mb-8">
                 High-containment cleanroom envelopes, psychrometric AHU air systems, and certified sterile filtration cascades compliant with EU GMP Annex 1 and Revised Schedule M.
               </p>
-
               <div className="flex flex-wrap items-center gap-3 mb-8 w-full sm:w-auto">
                 <a
-                  href="#rfq-section"
                   className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-[#1F56A8] text-white font-display font-semibold text-xs tracking-wider uppercase hover:bg-[#16233F] active:scale-[0.98] transition-all duration-200 shadow-sm hover:shadow-md"
+                  href="#rfq-section"
                 >
                   <span>Request Project Sizing</span>
-                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  <span className="material-symbols-outlined text-[15px] font-bold transition-transform duration-200 group-hover:translate-x-1">
+                    arrow_forward
+                  </span>
                 </a>
-
-                <Link
-                  to="/projects"
+                <a
                   className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-lg bg-[#F7F9FC] text-[#16233F] border border-[#E4E9F1] font-display font-semibold text-xs tracking-wider uppercase hover:bg-white hover:border-[#1F56A8]/40 active:scale-[0.98] transition-all duration-200"
+                  href="#projects"
                 >
                   <span>View Case Studies</span>
-                </Link>
+                </a>
               </div>
-
               {/* Animated Engineering Mouse-Pill Scroll Indicator */}
               <div className="pt-2 flex items-center gap-3 text-[#5B6B82] select-none">
                 <a className="group flex items-center gap-3 cursor-pointer" href="#divisions">
@@ -116,22 +92,23 @@ export const HomePage: React.FC = () => {
                   <div className="flex flex-col">
                     <span className="text-[10px] font-mono tracking-widest font-semibold uppercase text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors flex items-center gap-1">
                       EXPLORE ENGINEERING
+                      <span className="material-symbols-outlined text-xs animate-bounce group-hover:text-[#1F56A8]">
+                        expand_more
+                      </span>
                     </span>
                     <span className="text-[9px] font-mono text-[#737783]">Scroll to inspect capabilities</span>
                   </div>
                 </a>
               </div>
             </div>
-
             {/* Right Visual: High-Fidelity Cleanroom Photo Container with Floating Glass Badges */}
             <div className="lg:col-span-7">
               <div className="relative rounded-2xl overflow-hidden border border-[#E4E9F1] bg-[#F7F9FC] shadow-lg group">
                 <img
                   alt="Modern sterile cleanroom interior with modular panels and dynamic pass box"
                   className="w-full h-[420px] sm:h-[480px] object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  src="/images/modular-cleanroom-interior.jpg"
+                  src="https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg"
                 />
-
                 {/* Top Overlay Bar with Telemetry Status Badges */}
                 <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
                   <div className="px-3 py-1.5 rounded-lg bg-white/90 backdrop-blur-md border border-[#E4E9F1] shadow-sm flex items-center gap-2">
@@ -143,15 +120,15 @@ export const HomePage: React.FC = () => {
                       ISO Class 5 Certified
                     </span>
                   </div>
-
                   <div className="px-3 py-1.5 rounded-lg bg-white/90 backdrop-blur-md border border-[#E4E9F1] shadow-sm flex items-center gap-1.5">
-                    <Verified className="w-4 h-4 text-[#25D366]" />
-                    <span className="text-[11px] font-mono font-semibold text-[#16233F]">
-                      Schedule M Ready
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#25D366]"></span>
                     </span>
+                    <span className="material-symbols-outlined text-[#25D366] text-sm font-bold">verified</span>
+                    <span className="text-[11px] font-mono font-semibold text-[#16233F]">Schedule M Ready</span>
                   </div>
                 </div>
-
                 {/* Bottom Overlay Caption */}
                 <div className="absolute bottom-4 left-4 right-4 p-3.5 rounded-xl bg-white/95 backdrop-blur-md border border-[#E4E9F1] shadow-md flex items-center justify-between">
                   <div>
@@ -162,13 +139,13 @@ export const HomePage: React.FC = () => {
                       Modular flush PUF walls &amp; integrated magnetic airlock transfer
                     </span>
                   </div>
-                  <Link
-                    to="/divisions/modular-cleanroom-panels"
+                  <a
                     className="shrink-0 ml-3 inline-flex items-center gap-1 text-[11px] font-semibold text-[#1F56A8] hover:text-[#16233F] font-mono transition-transform duration-200 hover:translate-x-0.5"
+                    href="#projects"
                   >
                     <span>Explore</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+                    <span className="material-symbols-outlined text-[13px]">arrow_forward</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -180,55 +157,60 @@ export const HomePage: React.FC = () => {
       <section className="relative bg-[#F7F9FC] border-b border-[#E4E9F1] py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-4">
-            <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group">
-              <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-sm group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
-                <History className="w-5 h-5" />
+            <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group">
+              <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-xs group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
+                <span className="material-symbols-outlined text-xl">history</span>
               </div>
               <div>
                 <div className="flex items-baseline gap-0.5 leading-none mb-1">
                   <span className="font-display font-extrabold text-2xl sm:text-3xl text-[#16233F] tracking-tight">20</span>
                   <span className="font-display font-extrabold text-xl text-[#1F56A8]">+</span>
                 </div>
-                <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">Years Experience</span>
+                <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">
+                  Years Experience
+                </span>
               </div>
             </div>
-
-            <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group">
-              <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-sm group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
-                <Building2 className="w-5 h-5" />
+            <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group">
+              <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-xs group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
+                <span className="material-symbols-outlined text-xl">domain</span>
               </div>
               <div>
                 <div className="flex items-baseline gap-0.5 leading-none mb-1">
-                  <span className="font-display font-extrabold text-2xl sm:text-3xl text-[#16233F] tracking-tight">100</span>
+                  <span className="font-display font-extrabold text-2xl sm:text-3xl text-[#16233F] tracking-tight">10+</span>
                   <span className="font-display font-extrabold text-xl text-[#1F56A8]">+</span>
                 </div>
-                <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">Projects Completed</span>
+                <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">
+                  Projects Completed
+                </span>
               </div>
             </div>
-
-            <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group">
-              <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-sm group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
-                <Users className="w-5 h-5" />
+            <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group">
+              <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-xs group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
+                <span className="material-symbols-outlined text-xl">groups</span>
               </div>
               <div>
                 <div className="flex items-baseline gap-0.5 leading-none mb-1">
                   <span className="font-display font-extrabold text-2xl sm:text-3xl text-[#16233F] tracking-tight">180</span>
                   <span className="font-display font-extrabold text-xl text-[#1F56A8]">+</span>
                 </div>
-                <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">Pharma Clients</span>
+                <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">
+                  Pharma Clients
+                </span>
               </div>
             </div>
-
-            <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group">
-              <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-sm group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
-                <Ruler className="w-5 h-5" />
+            <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group">
+              <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-xs group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
+                <span className="material-symbols-outlined text-xl">straighten</span>
               </div>
               <div>
                 <div className="flex items-baseline gap-0.5 leading-none mb-1">
                   <span className="font-display font-extrabold text-2xl sm:text-3xl text-[#16233F] tracking-tight">1.5M</span>
                   <span className="font-display font-extrabold text-xl text-[#1F56A8]">+</span>
                 </div>
-                <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">Sq.Ft Commissioned</span>
+                <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">
+                  Sq.Ft Commissioned
+                </span>
               </div>
             </div>
           </div>
@@ -251,15 +233,14 @@ export const HomePage: React.FC = () => {
               High-precision architectural envelopes, MEP psychrometrics, and certified particulate barrier cascades.
             </p>
           </div>
-
           {/* Bento Grid with Real Photos Integrated */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
-            {/* Bento 1: Large Photo Card (HVAC & AHU Systems) */}
+            {/* Bento 1: Large Photo Card (HVAC & AHU Systems) using IMAGE_18 */}
             <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-[#E4E9F1] bg-[#F7F9FC] relative group shadow-sm hover:shadow-xl hover:border-[#1F56A8]/40 transition-all duration-300 flex flex-col justify-between min-h-[360px]">
               <img
                 alt="Double skin AHU and HVAC ducting in technical corridor"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                src="/images/hvac-ahu-plant.jpg"
+                src="https://lh3.googleusercontent.com/aida/AEtjO1XOvqqJ8HTv2N9XKsc8VYb_geMNA3y9faOJc6zXexUyt_JAVjDEHiewCQRhbtIszI85ekeG8Zwx_mrJeOcDuqDO93o5lG_ewiXDFZhWoD3bzyoexcf1Uhwsb5BqkIzP2yAFN2lvs8VstXAyV9PuKjIozdQq-avnaEjblZCpz0SVM60M9rNXWopmrk7UJXgU4qWxozVz5JUiimt7FfKM0pmOZy-_dE1CGUkouQ_w6emQxfapKvawn1zYbqE"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#16233F]/95 via-[#16233F]/50 to-transparent"></div>
               <div className="relative z-10 p-6 flex justify-between items-start">
@@ -277,22 +258,23 @@ export const HomePage: React.FC = () => {
                 <p className="text-xs text-white/80 max-w-md mb-4 leading-relaxed">
                   Thermal break double-skin air handlers, desiccant rotors, and precision pressure cascade ducting across ISO 5-8 suites.
                 </p>
-                <Link
-                  to="/divisions/hvac-ahu-systems"
+                <a
                   className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-white hover:text-white/90 transition-colors font-display"
+                  href="#rfq-section"
                 >
                   <span>AHU Technical Specs</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-200" />
-                </Link>
+                  <span className="material-symbols-outlined text-[15px] group-hover:translate-x-1.5 transition-transform duration-200">
+                    arrow_forward
+                  </span>
+                </a>
               </div>
             </div>
-
-            {/* Bento 2: Photo Card (HEPA & Cleanroom Validation) */}
+            {/* Bento 2: Photo Card (HEPA & Cleanroom Validation) using IMAGE_17 */}
             <div className="lg:col-span-5 rounded-2xl overflow-hidden border border-[#E4E9F1] bg-[#F7F9FC] relative group shadow-sm hover:shadow-xl hover:border-[#1F56A8]/40 transition-all duration-300 flex flex-col justify-between min-h-[360px]">
               <img
                 alt="Terminal HEPA filter gel seal installation and particle counter probe testing"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                src="/images/cleanroom-validation-testing.jpg"
+                src="https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#16233F]/95 via-[#16233F]/50 to-transparent"></div>
               <div className="relative z-10 p-6 flex justify-between items-start">
@@ -310,24 +292,27 @@ export const HomePage: React.FC = () => {
                 <p className="text-xs text-white/80 max-w-xs mb-4 leading-relaxed">
                   Gel-seal mini-pleat terminal boxes, PAO/DOP challenge ports, and zero-bypass certified airflow guarantees.
                 </p>
-                <Link
-                  to="/filters"
+                <a
                   className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-white hover:text-white/90 transition-colors font-display"
+                  href="#rfq-section"
                 >
                   <span>Filtration Protocols</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-200" />
-                </Link>
+                  <span className="material-symbols-outlined text-[15px] group-hover:translate-x-1.5 transition-transform duration-200">
+                    arrow_forward
+                  </span>
+                </a>
               </div>
             </div>
-
             {/* Bento 3: Cleanroom Panels */}
             <div className="lg:col-span-4 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-sm">
-                    <Layers className="w-5 h-5" />
+                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
+                    <span className="material-symbols-outlined text-xl">domain_verification</span>
                   </div>
-                  <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">01</span>
+                  <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
+                    01
+                  </span>
                 </div>
                 <span className="text-[10px] font-mono text-[#1F56A8] font-bold uppercase tracking-wider block mb-1">
                   ENVELOPE ISOLATION
@@ -339,23 +324,26 @@ export const HomePage: React.FC = () => {
                   50mm &amp; 80mm PUF/Rockwool panels, flush silicone joints, and antimicrobial PPGI skins.
                 </p>
               </div>
-              <Link
-                to="/divisions/modular-cleanroom-panels"
+              <a
                 className="mt-6 inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
+                href="#rfq-section"
               >
                 <span>View Panels</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform duration-200" />
-              </Link>
+                <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
+                  arrow_forward
+                </span>
+              </a>
             </div>
-
             {/* Bento 4: Sterile Passboxes & LAF */}
             <div className="lg:col-span-4 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-sm">
-                    <Box className="w-5 h-5" />
+                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
+                    <span className="material-symbols-outlined text-xl">air</span>
                   </div>
-                  <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">03</span>
+                  <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
+                    03
+                  </span>
                 </div>
                 <span className="text-[10px] font-mono text-[#1F56A8] font-bold uppercase tracking-wider block mb-1">
                   STERILE AIRFLOW
@@ -367,23 +355,26 @@ export const HomePage: React.FC = () => {
                   SS 304 interlocked chambers, laminar hoods, mist showers, and UV sterilization timers.
                 </p>
               </div>
-              <Link
-                to="/divisions/pass-boxes-airlocks"
+              <a
                 className="mt-6 inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
+                href="#rfq-section"
               >
                 <span>View Passboxes</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform duration-200" />
-              </Link>
+                <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
+                  arrow_forward
+                </span>
+              </a>
             </div>
-
             {/* Bento 5: Full Turnkey Validation & Qualification Dossiers */}
             <div className="lg:col-span-4 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-sm">
-                    <ShieldCheck className="w-5 h-5" />
+                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
+                    <span className="material-symbols-outlined text-xl">verified_user</span>
                   </div>
-                  <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">07</span>
+                  <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
+                    07
+                  </span>
                 </div>
                 <span className="text-[10px] font-mono text-[#1F56A8] font-bold uppercase tracking-wider block mb-1">
                   REGULATORY COMPLIANCE
@@ -395,19 +386,21 @@ export const HomePage: React.FC = () => {
                   Full particle count mapping, recovery tests, and Schedule M validation packages for audits.
                 </p>
               </div>
-              <Link
-                to="/about"
+              <a
                 className="mt-6 inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
+                href="#rfq-section"
               >
                 <span>Audit Protocols</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform duration-200" />
-              </Link>
+                <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
+                  arrow_forward
+                </span>
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5. PRECISION COMPONENTS RAIL (INTERACTIVE HORIZONTAL SNAP SCROLL) */}
+      {/* 5. PRECISION COMPONENTS RAIL */}
       <section className="py-20 border-b border-[#E4E9F1] bg-[#F7F9FC]" id="equipment">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
@@ -421,25 +414,27 @@ export const HomePage: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
               <button
-                onClick={() => scrollRail('left')}
-                aria-label="Previous component"
+                aria-label="Previous"
                 className="w-9 h-9 rounded-lg bg-white border border-[#E4E9F1] text-[#16233F] flex items-center justify-center hover:bg-[#1F56A8] hover:text-white active:scale-95 transition-all shadow-sm"
+                id="equip-prev"
+                onClick={() => scrollRail('left')}
               >
-                <ArrowLeft className="w-4 h-4" />
+                <span className="material-symbols-outlined text-base">arrow_back</span>
               </button>
               <button
-                onClick={() => scrollRail('right')}
-                aria-label="Next component"
+                aria-label="Next"
                 className="w-9 h-9 rounded-lg bg-white border border-[#E4E9F1] text-[#16233F] flex items-center justify-center hover:bg-[#1F56A8] hover:text-white active:scale-95 transition-all shadow-sm"
+                id="equip-next"
+                onClick={() => scrollRail('right')}
               >
-                <ArrowRight className="w-4 h-4" />
+                <span className="material-symbols-outlined text-base">arrow_forward</span>
               </button>
             </div>
           </div>
-
           <div
             ref={equipRailRef}
-            className="flex gap-5 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory scrollbar-none"
+            className="flex gap-5 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory"
+            id="equip-rail"
           >
             {/* Item 1 */}
             <div className="min-w-[280px] md:min-w-[320px] snap-start rounded-xl p-5 bg-white border border-[#E4E9F1] flex flex-col justify-between hover:border-[#1F56A8] hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300 shadow-sm group">
@@ -448,7 +443,7 @@ export const HomePage: React.FC = () => {
                   <img
                     alt="Cleanroom Modular Panel"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="/images/modular-cleanroom-interior.jpg"
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg"
                   />
                   <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[9px] font-mono bg-white/90 text-[#1F56A8] font-bold border border-[#E4E9F1]">
                     SKU-MP50
@@ -468,14 +463,13 @@ export const HomePage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <Link
-                to="/products/modular-puf-wall-panels"
+              <a
                 className="w-full py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-wider font-display bg-[#F7F9FC] hover:bg-[#1F56A8] hover:text-white text-[#1F56A8] border border-[#E4E9F1] hover:border-[#1F56A8] transition-all duration-200 active:scale-[0.99]"
+                href="#rfq-section"
               >
                 View Specifications
-              </Link>
+              </a>
             </div>
-
             {/* Item 2 */}
             <div className="min-w-[280px] md:min-w-[320px] snap-start rounded-xl p-5 bg-white border border-[#E4E9F1] flex flex-col justify-between hover:border-[#1F56A8] hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300 shadow-sm group">
               <div>
@@ -483,7 +477,7 @@ export const HomePage: React.FC = () => {
                   <img
                     alt="Dynamic Pass Box System"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="/images/aseptic-filling-suite.jpg"
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg"
                   />
                   <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[9px] font-mono bg-white/90 text-[#1F56A8] font-bold border border-[#E4E9F1]">
                     SKU-DPB304
@@ -503,14 +497,13 @@ export const HomePage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <Link
-                to="/products/dynamic-pass-box-hepa"
+              <a
                 className="w-full py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-wider font-display bg-[#F7F9FC] hover:bg-[#1F56A8] hover:text-white text-[#1F56A8] border border-[#E4E9F1] hover:border-[#1F56A8] transition-all duration-200 active:scale-[0.99]"
+                href="#rfq-section"
               >
                 View Specifications
-              </Link>
+              </a>
             </div>
-
             {/* Item 3 */}
             <div className="min-w-[280px] md:min-w-[320px] snap-start rounded-xl p-5 bg-white border border-[#E4E9F1] flex flex-col justify-between hover:border-[#1F56A8] hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300 shadow-sm group">
               <div>
@@ -518,7 +511,7 @@ export const HomePage: React.FC = () => {
                   <img
                     alt="Double Skin AHU"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="/images/hvac-ahu-plant.jpg"
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1XOvqqJ8HTv2N9XKsc8VYb_geMNA3y9faOJc6zXexUyt_JAVjDEHiewCQRhbtIszI85ekeG8Zwx_mrJeOcDuqDO93o5lG_ewiXDFZhWoD3bzyoexcf1Uhwsb5BqkIzP2yAFN2lvs8VstXAyV9PuKjIozdQq-avnaEjblZCpz0SVM60M9rNXWopmrk7UJXgU4qWxozVz5JUiimt7FfKM0pmOZy-_dE1CGUkouQ_w6emQxfapKvawn1zYbqE"
                   />
                   <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[9px] font-mono bg-white/90 text-[#1F56A8] font-bold border border-[#E4E9F1]">
                     SKU-AHU45
@@ -538,14 +531,13 @@ export const HomePage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <Link
-                to="/products/double-skin-thermal-break-ahu"
+              <a
                 className="w-full py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-wider font-display bg-[#F7F9FC] hover:bg-[#1F56A8] hover:text-white text-[#1F56A8] border border-[#E4E9F1] hover:border-[#1F56A8] transition-all duration-200 active:scale-[0.99]"
+                href="#rfq-section"
               >
                 View Specifications
-              </Link>
+              </a>
             </div>
-
             {/* Item 4 */}
             <div className="min-w-[280px] md:min-w-[320px] snap-start rounded-xl p-5 bg-white border border-[#E4E9F1] flex flex-col justify-between hover:border-[#1F56A8] hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300 shadow-sm group">
               <div>
@@ -553,7 +545,7 @@ export const HomePage: React.FC = () => {
                   <img
                     alt="Gel-Seal Terminal HEPA Filter Box"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="/images/terminal-hepa-module.jpg"
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE"
                   />
                   <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[9px] font-mono bg-white/90 text-[#1F56A8] font-bold border border-[#E4E9F1]">
                     SKU-HEPA-H14
@@ -573,12 +565,12 @@ export const HomePage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <Link
-                to="/filters"
+              <a
                 className="w-full py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-wider font-display bg-[#F7F9FC] hover:bg-[#1F56A8] hover:text-white text-[#1F56A8] border border-[#E4E9F1] hover:border-[#1F56A8] transition-all duration-200 active:scale-[0.99]"
+                href="#rfq-section"
               >
                 View Specifications
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -596,15 +588,16 @@ export const HomePage: React.FC = () => {
                 Real Project Executions
               </h2>
             </div>
-            <Link
-              to="/projects"
+            <a
               className="group inline-flex items-center gap-1.5 text-xs font-mono font-semibold uppercase text-[#1F56A8] hover:text-[#16233F] transition-colors"
+              href="#rfq-section"
             >
               <span>All 250+ Sites Installed</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-            </Link>
+              <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform duration-200">
+                arrow_forward
+              </span>
+            </a>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Case 1 */}
             <div className="rounded-xl overflow-hidden border border-[#E4E9F1] bg-white shadow-sm flex flex-col justify-between group hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
@@ -613,7 +606,7 @@ export const HomePage: React.FC = () => {
                   <img
                     alt="Wallace Pharmaceuticals Sterile Suite"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="/images/modular-cleanroom-interior.jpg"
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg"
                   />
                   <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-white/95 text-[10px] font-mono font-bold text-[#1F56A8] border border-[#E4E9F1]">
                     BADDI, HP
@@ -637,12 +630,11 @@ export const HomePage: React.FC = () => {
               <div className="px-5 pb-5 pt-2 border-t border-[#E4E9F1] flex items-center justify-between text-[11px] font-mono">
                 <span className="text-[#5B6B82]">Completed 2024</span>
                 <span className="text-[#16233F] font-semibold flex items-center gap-1 px-2 py-0.5 rounded bg-[#25D366]/10">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#25D366]" />
+                  <span className="material-symbols-outlined text-[#25D366] text-xs font-bold">check_circle</span>
                   Schedule M Passed
                 </span>
               </div>
             </div>
-
             {/* Case 2 */}
             <div className="rounded-xl overflow-hidden border border-[#E4E9F1] bg-white shadow-sm flex flex-col justify-between group hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
               <div>
@@ -650,7 +642,7 @@ export const HomePage: React.FC = () => {
                   <img
                     alt="Biotech Cleanrooms India Technical Corridor"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="/images/hvac-ahu-plant.jpg"
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1XOvqqJ8HTv2N9XKsc8VYb_geMNA3y9faOJc6zXexUyt_JAVjDEHiewCQRhbtIszI85ekeG8Zwx_mrJeOcDuqDO93o5lG_ewiXDFZhWoD3bzyoexcf1Uhwsb5BqkIzP2yAFN2lvs8VstXAyV9PuKjIozdQq-avnaEjblZCpz0SVM60M9rNXWopmrk7UJXgU4qWxozVz5JUiimt7FfKM0pmOZy-_dE1CGUkouQ_w6emQxfapKvawn1zYbqE"
                   />
                   <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-white/95 text-[10px] font-mono font-bold text-[#1F56A8] border border-[#E4E9F1]">
                     AHMEDABAD, GUJARAT
@@ -674,12 +666,11 @@ export const HomePage: React.FC = () => {
               <div className="px-5 pb-5 pt-2 border-t border-[#E4E9F1] flex items-center justify-between text-[11px] font-mono">
                 <span className="text-[#5B6B82]">Completed 2023</span>
                 <span className="text-[#16233F] font-semibold flex items-center gap-1 px-2 py-0.5 rounded bg-[#25D366]/10">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#25D366]" />
+                  <span className="material-symbols-outlined text-[#25D366] text-xs font-bold">check_circle</span>
                   Bio-Containment Active
                 </span>
               </div>
             </div>
-
             {/* Case 3 */}
             <div className="rounded-xl overflow-hidden border border-[#E4E9F1] bg-white shadow-sm flex flex-col justify-between group hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
               <div>
@@ -687,7 +678,7 @@ export const HomePage: React.FC = () => {
                   <img
                     alt="Sterile Injectables Facility HEPA Ceiling"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="/images/terminal-hepa-module.jpg"
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE"
                   />
                   <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-white/95 text-[10px] font-mono font-bold text-[#1F56A8] border border-[#E4E9F1]">
                     PAONTA SAHIB, HP
@@ -711,7 +702,7 @@ export const HomePage: React.FC = () => {
               <div className="px-5 pb-5 pt-2 border-t border-[#E4E9F1] flex items-center justify-between text-[11px] font-mono">
                 <span className="text-[#5B6B82]">Completed 2024</span>
                 <span className="text-[#16233F] font-semibold flex items-center gap-1 px-2 py-0.5 rounded bg-[#25D366]/10">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#25D366]" />
+                  <span className="material-symbols-outlined text-[#25D366] text-xs font-bold">check_circle</span>
                   Zero-Leakage Cert
                 </span>
               </div>
@@ -734,9 +725,9 @@ export const HomePage: React.FC = () => {
             </div>
             <span className="text-xs font-mono text-[#5B6B82]">EN 779 &amp; EN 1822 CERTIFIED</span>
           </div>
-
           {/* 4-Stage Progressive Pipeline with Connecting Track */}
           <div className="relative">
+            {/* Hidden line on mobile, visible on desktop behind cards */}
             <div className="hidden lg:block absolute top-7 left-12 right-12 h-0.5 bg-[#E4E9F1] z-0"></div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
               {/* Stage 01 */}
@@ -757,7 +748,6 @@ export const HomePage: React.FC = () => {
                   EN 779 G4 (90% Arrestance)
                 </span>
               </div>
-
               {/* Stage 02 */}
               <div className="p-5 rounded-xl bg-white border border-[#E4E9F1] shadow-sm hover:-translate-y-1 hover:border-[#1F56A8] hover:shadow-md transition-all duration-300 group">
                 <div className="flex items-center justify-between mb-2">
@@ -776,7 +766,6 @@ export const HomePage: React.FC = () => {
                   EN 779 F9 (85-95%)
                 </span>
               </div>
-
               {/* Stage 03 */}
               <div className="p-5 rounded-xl bg-white border border-[#E4E9F1] shadow-sm hover:-translate-y-1 hover:border-[#1F56A8] hover:shadow-md transition-all duration-300 group">
                 <div className="flex items-center justify-between mb-2">
@@ -795,7 +784,6 @@ export const HomePage: React.FC = () => {
                   EN 1822 H14 (99.997%)
                 </span>
               </div>
-
               {/* Stage 04 */}
               <div className="p-5 rounded-xl bg-white border border-[#E4E9F1] shadow-sm hover:-translate-y-1 hover:border-[#1F56A8] hover:shadow-md transition-all duration-300 group">
                 <div className="flex items-center justify-between mb-2">
@@ -826,14 +814,30 @@ export const HomePage: React.FC = () => {
             TRUSTED BY PHARMACEUTICAL MANUFACTURERS
           </span>
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 items-center">
-            {['SUN PHARMA', 'WALLACE', 'CIPLA', 'MANKIND', 'ALKEM', 'TORRENT', 'ZYDUS', "DR. REDDY'S"].map((c, idx) => (
-              <div
-                key={idx}
-                className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default"
-              >
-                {c}
-              </div>
-            ))}
+            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              SUN PHARMA
+            </div>
+            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              WALLACE
+            </div>
+            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              CIPLA
+            </div>
+            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              MANKIND
+            </div>
+            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              ALKEM
+            </div>
+            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              TORRENT
+            </div>
+            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              ZYDUS
+            </div>
+            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              DR. REDDY'S
+            </div>
           </div>
         </div>
       </section>
@@ -846,58 +850,64 @@ export const HomePage: React.FC = () => {
               {/* Left: Value Proposition & Direct Action CTAs */}
               <div className="lg:col-span-7 flex flex-col justify-between">
                 <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E4E9F1] text-[#1F56A8] text-xs font-mono font-medium mb-4 shadow-sm">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E4E9F1] text-[#1F56A8] text-xs font-mono font-medium mb-4 shadow-2xs">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1F56A8] opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1F56A8]"></span>
                     </span>
                     <span>TECHNICAL ADVISORY &amp; RFQ DESK</span>
                   </div>
-
                   <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#16233F] tracking-tight mb-4">
                     Initiate Your Cleanroom Project
                   </h2>
-
                   <p className="text-sm text-[#5B6B82] leading-relaxed mb-6 max-w-xl">
                     Connect with our senior MEP &amp; validation engineering team to schedule a technical discovery call, review room layout drawings, or obtain a comprehensive turnkey commercial proposal.
                   </p>
-
                   {/* Highlights list */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-xs text-[#16233F]">
                     <div className="flex items-center gap-2 p-2 rounded-lg bg-white/70 border border-[#E4E9F1]">
-                      <CheckCircle2 className="w-4 h-4 text-[#25D366] shrink-0" />
+                      <span className="material-symbols-outlined text-[#25D366] text-base font-bold shrink-0">
+                        check_circle
+                      </span>
                       <span className="font-medium">Revised Schedule M &amp; EU GMP</span>
                     </div>
                     <div className="flex items-center gap-2 p-2 rounded-lg bg-white/70 border border-[#E4E9F1]">
-                      <CheckCircle2 className="w-4 h-4 text-[#25D366] shrink-0" />
+                      <span className="material-symbols-outlined text-[#25D366] text-base font-bold shrink-0">
+                        check_circle
+                      </span>
                       <span className="font-medium">Free Layout &amp; CFM Load Sizing</span>
                     </div>
                     <div className="flex items-center gap-2 p-2 rounded-lg bg-white/70 border border-[#E4E9F1]">
-                      <CheckCircle2 className="w-4 h-4 text-[#25D366] shrink-0" />
+                      <span className="material-symbols-outlined text-[#25D366] text-base font-bold shrink-0">
+                        check_circle
+                      </span>
                       <span className="font-medium">Single-Point Pan-India Execution</span>
                     </div>
                     <div className="flex items-center gap-2 p-2 rounded-lg bg-white/70 border border-[#E4E9F1]">
-                      <CheckCircle2 className="w-4 h-4 text-[#25D366] shrink-0" />
+                      <span className="material-symbols-outlined text-[#25D366] text-base font-bold shrink-0">
+                        check_circle
+                      </span>
                       <span className="font-medium">Certified DQ/IQ/OQ/PQ Dossiers</span>
                     </div>
                   </div>
                 </div>
-
                 {/* Quick Form */}
-                <form onSubmit={handleRfqSubmit} className="space-y-3 bg-white p-6 rounded-xl border border-[#E4E9F1] shadow-sm">
-                  {errorMsg && (
-                    <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-xs text-red-700">
-                      {errorMsg}
-                    </div>
-                  )}
-
+                <form
+                  className="space-y-3 bg-white p-6 rounded-xl border border-[#E4E9F1] shadow-xs"
+                  id="rfq-form"
+                  onSubmit={handleRfqSubmit}
+                >
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-[11px] font-mono uppercase tracking-wider text-[#5B6B82] font-semibold mb-1">
+                      <label
+                        className="block text-[11px] font-mono uppercase tracking-wider text-[#5B6B82] font-semibold mb-1"
+                        htmlFor="rfq-name"
+                      >
                         Contact Person *
                       </label>
                       <input
                         className="w-full px-3 py-2 text-xs rounded-lg border border-[#E4E9F1] bg-[#F7F9FC] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1F56A8]/20 focus:border-[#1F56A8] transition-all"
+                        id="rfq-name"
                         placeholder="Dr. / Er. Full Name"
                         required
                         type="text"
@@ -906,11 +916,15 @@ export const HomePage: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-[11px] font-mono uppercase tracking-wider text-[#5B6B82] font-semibold mb-1">
+                      <label
+                        className="block text-[11px] font-mono uppercase tracking-wider text-[#5B6B82] font-semibold mb-1"
+                        htmlFor="rfq-phone"
+                      >
                         Phone / WhatsApp *
                       </label>
                       <input
-                        className="w-full px-3 py-2 text-xs rounded-lg border border-[#E4E9F1] bg-[#F7F9FC] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1F56A8]/20 focus:border-[#1F56A8] transition-all font-mono"
+                        className="w-full px-3 py-2 text-xs rounded-lg border border-[#E4E9F1] bg-[#F7F9FC] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1F56A8]/20 focus:border-[#1F56A8] transition-all"
+                        id="rfq-phone"
                         placeholder="+91 XXXXX XXXXX"
                         required
                         type="tel"
@@ -919,14 +933,17 @@ export const HomePage: React.FC = () => {
                       />
                     </div>
                   </div>
-
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-[11px] font-mono uppercase tracking-wider text-[#5B6B82] font-semibold mb-1">
+                      <label
+                        className="block text-[11px] font-mono uppercase tracking-wider text-[#5B6B82] font-semibold mb-1"
+                        htmlFor="rfq-facility"
+                      >
                         Facility Area (Sq.Ft)
                       </label>
                       <input
                         className="w-full px-3 py-2 text-xs rounded-lg border border-[#E4E9F1] bg-[#F7F9FC] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1F56A8]/20 focus:border-[#1F56A8] transition-all"
+                        id="rfq-facility"
                         placeholder="e.g. 15,000"
                         type="text"
                         value={rfqFacility}
@@ -934,58 +951,63 @@ export const HomePage: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-[11px] font-mono uppercase tracking-wider text-[#5B6B82] font-semibold mb-1">
+                      <label
+                        className="block text-[11px] font-mono uppercase tracking-wider text-[#5B6B82] font-semibold mb-1"
+                        htmlFor="rfq-grade"
+                      >
                         Target Cleanliness Class
                       </label>
                       <select
-                        className="w-full px-3 py-2 text-xs rounded-lg border border-[#E4E9F1] bg-[#F7F9FC] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1F56A8]/20 focus:border-[#1F56A8] transition-all font-mono"
+                        className="w-full px-3 py-2 text-xs rounded-lg border border-[#E4E9F1] bg-[#F7F9FC] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1F56A8]/20 focus:border-[#1F56A8] transition-all"
+                        id="rfq-grade"
                         value={rfqGrade}
                         onChange={(e) => setRfqGrade(e.target.value)}
                       >
-                        <option>ISO Class 5 / Grade A</option>
-                        <option>ISO Class 6 / Grade B</option>
-                        <option>ISO Class 7 / Grade C</option>
-                        <option>ISO Class 8 / Grade D</option>
+                        <option value="ISO Class 5 / Grade A">ISO Class 5 / Grade A</option>
+                        <option value="ISO Class 6 / Grade B">ISO Class 6 / Grade B</option>
+                        <option value="ISO Class 7 / Grade C">ISO Class 7 / Grade C</option>
+                        <option value="ISO Class 8 / Grade D">ISO Class 8 / Grade D</option>
                       </select>
                     </div>
                   </div>
-
                   <div className="pt-2 flex flex-wrap items-center gap-3">
                     <button
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[#1F56A8] text-white font-display font-semibold text-xs tracking-wider uppercase hover:bg-[#16233F] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] transition-all duration-200 shadow-sm disabled:opacity-60"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[#1F56A8] text-white font-display font-semibold text-xs tracking-wider uppercase hover:bg-[#16233F] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] transition-all duration-200 shadow-sm disabled:opacity-50"
                       type="submit"
                       disabled={submitting}
                     >
-                      <span>{submitting ? 'Transmitting Sizing...' : 'Submit RFQ Specifications'}</span>
-                      <Send className="w-3.5 h-3.5" />
+                      <span>{submitting ? 'Submitting...' : 'Submit RFQ Specifications'}</span>
+                      <span className="material-symbols-outlined text-[15px] font-bold">send</span>
                     </button>
-
                     <a
                       className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-[#25D366] text-white hover:opacity-90 active:scale-[0.99] font-display font-semibold text-xs tracking-wider uppercase transition-all shadow-sm"
                       href="https://wa.me/919817343117"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      <MessageCircle className="w-4 h-4" />
+                      <span className="material-symbols-outlined text-[17px] font-bold">chat</span>
                       <span>WhatsApp Hotline</span>
                     </a>
                   </div>
-
                   {submitted && (
-                    <div className="p-3 rounded-lg bg-[#25D366]/10 border border-[#25D366]/30 text-xs text-[#16233F] flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-[#25D366] shrink-0" />
+                    <div
+                      className="p-3 rounded-lg bg-[#25D366]/10 border border-[#25D366]/30 text-xs text-[#16233F] flex items-center gap-2"
+                      id="form-feedback"
+                    >
+                      <span className="material-symbols-outlined text-[#25D366] text-base font-bold">
+                        check_circle
+                      </span>
                       <span>Thank you. Our Chief Validation Engineer will reach out within 2 hours.</span>
                     </div>
                   )}
                 </form>
               </div>
-
               {/* Right: Technical Blueprint & Advisory Metric Cards */}
               <div className="lg:col-span-5 flex flex-col gap-4">
                 <div className="p-6 rounded-xl bg-white border border-[#E4E9F1] shadow-sm relative overflow-hidden hover:border-[#1F56A8]/40 transition-all duration-300">
                   <div className="flex items-start justify-between mb-4">
                     <div className="w-10 h-10 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0">
-                      <Ruler className="w-5 h-5" />
+                      <span className="material-symbols-outlined text-xl">architecture</span>
                     </div>
                     <span className="px-2.5 py-1 rounded-md bg-[#F7F9FC] border border-[#E4E9F1] text-[10px] font-mono text-[#1F56A8] font-bold uppercase">
                       TURNKEY EPC
@@ -999,40 +1021,42 @@ export const HomePage: React.FC = () => {
                   </p>
                   <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#E4E9F1] text-[11px] font-mono">
                     <div className="flex items-center gap-1.5 text-[#16233F]">
-                      <Clock className="w-3.5 h-3.5 text-[#25D366]" />
+                      <span className="material-symbols-outlined text-[#25D366] text-sm font-bold">timer</span>
                       <span>24-Hour SLA Turnaround</span>
                     </div>
                     <div className="flex items-center gap-1.5 text-[#16233F]">
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#1F56A8]" />
+                      <span className="material-symbols-outlined text-[#1F56A8] text-sm font-bold">lock</span>
                       <span>Strict NDA Assurance</span>
                     </div>
                   </div>
                 </div>
-
                 <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center justify-between text-xs hover:border-[#1F56A8]/40 transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-md bg-[#F7F9FC] border border-[#E4E9F1] flex items-center justify-center text-[#1F56A8]">
-                      <Verified className="w-4 h-4" />
+                      <span className="material-symbols-outlined text-base">verified</span>
                     </div>
                     <div>
                       <span className="font-semibold text-[#16233F] block">Audit-Grade Compliance</span>
-                      <span className="text-[11px] text-[#5B6B82] font-mono">USFDA • EU GMP • WHO • CDSCO</span>
+                      <span className="text-[11px] text-[#5B6B82] font-mono">
+                        USFDA • EU GMP • WHO • CDSCO
+                      </span>
                     </div>
                   </div>
                   <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#25D366]/10 text-[#25D366] font-bold border border-[#25D366]/30">
                     ACTIVE
                   </span>
                 </div>
-
                 {/* Call Direct Card */}
                 <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center justify-between text-xs hover:border-[#1F56A8]/40 transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-md bg-[#F7F9FC] border border-[#E4E9F1] flex items-center justify-center text-[#1F56A8]">
-                      <Phone className="w-4 h-4" />
+                      <span className="material-symbols-outlined text-base">phone_in_talk</span>
                     </div>
                     <div>
                       <span className="font-semibold text-[#16233F] block">Direct EPC Line</span>
-                      <span className="text-[11px] text-[#5B6B82] font-mono">+91-9817343117 (Mon-Sat 9AM-8PM)</span>
+                      <span className="text-[11px] text-[#5B6B82] font-mono">
+                        +91-9817343117 (Mon-Sat 9AM-8PM)
+                      </span>
                     </div>
                   </div>
                   <a

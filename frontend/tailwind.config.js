@@ -27,6 +27,8 @@ export default {
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       boxShadow: {
+        '2xs': '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
+        'xs': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
         'hud': '0 0 15px rgba(31, 86, 168, 0.08)',
         'hud-green': '0 0 15px rgba(121, 184, 46, 0.12)',
         'hud-hover': '0 10px 25px -5px rgba(22, 35, 63, 0.08), 0 8px 10px -6px rgba(22, 35, 63, 0.04)',
