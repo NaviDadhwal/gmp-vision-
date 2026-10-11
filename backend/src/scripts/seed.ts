@@ -291,7 +291,7 @@ async function seed() {
         division: ['Turnkey Electrical Contracting & HT/LT Power Systems'],
         completionYear: 2024,
         description: '<p>Complete turnkey electrical contracting: 11kV HT yard, 1500 kVA transformer, synchronized sandwich bus trunking (BBT), PCC/MCC panels, flameproof gear, and IP65 cleanroom lighting.</p>',
-        images: ['https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=800&q=80'],
+        images: ['/images/electrical-switchgear-panel.jpg'],
         isFeatured: true,
         order: 4,
       },

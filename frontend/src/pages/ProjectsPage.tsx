@@ -138,7 +138,7 @@ const FALLBACK_PROJECTS: Partial<Project>[] = [
     areaSqFt: 35000,
     completionDate: '2024-11',
     description: 'Complete turnkey electrical contracting including 11kV HT yard, 1500 kVA oil-cooled transformer installation, synchronized sandwich bus trunking (BBT), centralized PCC/MCC panels, flameproof switchgear, and IP65 flush teardrop cleanroom lighting network.',
-    images: ['/images/plant-utilities-equipment.jpg'],
+    images: ['/images/electrical-switchgear-panel.jpg'],
     featured: true,
   },
   {
