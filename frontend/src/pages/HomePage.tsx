@@ -11,7 +11,6 @@ export const HomePage: React.FC = () => {
   const [rfqGrade, setRfqGrade] = useState('ISO Class 7 / Grade C');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [activeUtilityHotspot, setActiveUtilityHotspot] = useState<string | null>(null);
 
   const scrollRail = (direction: 'left' | 'right') => {
     if (equipRailRef.current) {
@@ -236,246 +235,98 @@ export const HomePage: React.FC = () => {
           </div>
           {/* Bento Grid with Real Photos & Interactive Equipment Highlights */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
-            {/* Bento 1: Central Plant Utilities & Heavy Electromechanical Equipment */}
+            {/* Bento 1: Central Plant Utilities & Primary MEP */}
             <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-[#E4E9F1] bg-[#16233F] relative group shadow-sm hover:shadow-xl hover:border-[#1F56A8]/40 transition-all duration-300 flex flex-col justify-between min-h-[460px]">
               {/* Photo Background */}
               <img
                 alt="Pharmaceutical Plant Utilities: Electrical Transformer, Diesel Engine DG Set, Air Compressor, and Steam Boiler"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-102"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                 src="/images/plant-utilities-equipment.jpg"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#16233F] via-[#16233F]/40 to-[#16233F]/30 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#16233F] via-[#16233F]/75 to-[#16233F]/40 pointer-events-none"></div>
 
-              {/* Top Header Over Photo */}
+              {/* Top Header */}
               <div className="relative z-10 p-5 sm:p-6 flex flex-wrap justify-between items-center gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-[#1F56A8] uppercase tracking-wider shadow-xs">
-                    DIVISION 05 • PLANT UTILITIES &amp; MEP
-                  </span>
-                  <span className="px-2 py-1 rounded-md bg-amber-500/90 text-[10px] font-mono font-bold text-white uppercase tracking-wider flex items-center gap-1 shadow-xs">
-                    <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>
-                    4 KEY UTILITIES
-                  </span>
-                </div>
-                <span className="px-2.5 py-1 rounded-md bg-black/50 backdrop-blur-md text-[10px] font-mono text-white/90">
-                  CONTINUOUS OPERATION
+                <span className="px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-[#1F56A8] uppercase tracking-wider shadow-xs">
+                  DIVISION 05 • PLANT UTILITIES &amp; MEP
+                </span>
+                <span className="px-2.5 py-1 rounded-md bg-amber-500/90 text-[10px] font-mono font-bold text-white shadow-xs">
+                  24/7 CONTINUOUS OPERATION
                 </span>
               </div>
 
-              {/* Interactive Visual Hotspots directly on the picture */}
-              <div className="relative z-20 flex-1 min-h-[180px] sm:min-h-[220px]">
-                {/* 1. Transformer Hotspot (left 11%, top 48%) */}
-                <div
-                  className="absolute"
-                  style={{ left: '11%', top: '46%' }}
-                >
-                  <button
-                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'transformer' ? null : 'transformer')}
-                    onMouseEnter={() => setActiveUtilityHotspot('transformer')}
-                    className={`group/pin relative flex items-center justify-center cursor-pointer transition-all ${
-                      activeUtilityHotspot === 'transformer' ? 'scale-125 z-30' : 'hover:scale-115 z-20'
-                    }`}
-                    aria-label="Highlight Transformer"
-                  >
-                    <span className="absolute -inset-2 rounded-full bg-amber-400 opacity-60 animate-ping"></span>
-                    <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-white font-bold text-xs shadow-lg ring-2 ring-white">
-                      <span className="material-symbols-outlined text-[15px]">bolt</span>
-                    </span>
-                    <span className="hidden sm:flex absolute left-full ml-2 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold uppercase bg-black/80 backdrop-blur-md text-amber-300 border border-amber-400/50 whitespace-nowrap shadow-md pointer-events-none">
-                      Transformer
-                    </span>
-                  </button>
-                </div>
-
-                {/* 2. Diesel Engine (DG Set) Hotspot (left 36%, top 48%) */}
-                <div
-                  className="absolute"
-                  style={{ left: '36%', top: '48%' }}
-                >
-                  <button
-                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'diesel' ? null : 'diesel')}
-                    onMouseEnter={() => setActiveUtilityHotspot('diesel')}
-                    className={`group/pin relative flex items-center justify-center cursor-pointer transition-all ${
-                      activeUtilityHotspot === 'diesel' ? 'scale-125 z-30' : 'hover:scale-115 z-20'
-                    }`}
-                    aria-label="Highlight Diesel Engine"
-                  >
-                    <span className="absolute -inset-2 rounded-full bg-yellow-400 opacity-60 animate-ping"></span>
-                    <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-yellow-500 text-white font-bold text-xs shadow-lg ring-2 ring-white">
-                      <span className="material-symbols-outlined text-[15px]">settings_power</span>
-                    </span>
-                    <span className="hidden sm:flex absolute left-full ml-2 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold uppercase bg-black/80 backdrop-blur-md text-yellow-300 border border-yellow-400/50 whitespace-nowrap shadow-md pointer-events-none">
-                      Diesel Engine
-                    </span>
-                  </button>
-                </div>
-
-                {/* 3. Air Compressor Hotspot (left 60%, top 58%) */}
-                <div
-                  className="absolute"
-                  style={{ left: '59%', top: '56%' }}
-                >
-                  <button
-                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'compressor' ? null : 'compressor')}
-                    onMouseEnter={() => setActiveUtilityHotspot('compressor')}
-                    className={`group/pin relative flex items-center justify-center cursor-pointer transition-all ${
-                      activeUtilityHotspot === 'compressor' ? 'scale-125 z-30' : 'hover:scale-115 z-20'
-                    }`}
-                    aria-label="Highlight Air Compressor"
-                  >
-                    <span className="absolute -inset-2 rounded-full bg-cyan-400 opacity-60 animate-ping"></span>
-                    <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-cyan-500 text-white font-bold text-xs shadow-lg ring-2 ring-white">
-                      <span className="material-symbols-outlined text-[15px]">air</span>
-                    </span>
-                    <span className="hidden sm:flex absolute left-full ml-2 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold uppercase bg-black/80 backdrop-blur-md text-cyan-300 border border-cyan-400/50 whitespace-nowrap shadow-md pointer-events-none">
-                      Air Compressor
-                    </span>
-                  </button>
-                </div>
-
-                {/* 4. Boiler Hotspot (left 78%, top 36%) */}
-                <div
-                  className="absolute"
-                  style={{ left: '77%', top: '34%' }}
-                >
-                  <button
-                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'boiler' ? null : 'boiler')}
-                    onMouseEnter={() => setActiveUtilityHotspot('boiler')}
-                    className={`group/pin relative flex items-center justify-center cursor-pointer transition-all ${
-                      activeUtilityHotspot === 'boiler' ? 'scale-125 z-30' : 'hover:scale-115 z-20'
-                    }`}
-                    aria-label="Highlight Boiler"
-                  >
-                    <span className="absolute -inset-2 rounded-full bg-orange-400 opacity-60 animate-ping"></span>
-                    <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-orange-500 text-white font-bold text-xs shadow-lg ring-2 ring-white">
-                      <span className="material-symbols-outlined text-[15px]">local_fire_department</span>
-                    </span>
-                    <span className="hidden sm:flex absolute right-full mr-2 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold uppercase bg-black/80 backdrop-blur-md text-orange-300 border border-orange-400/50 whitespace-nowrap shadow-md pointer-events-none">
-                      Steam Boiler
-                    </span>
-                  </button>
+              {/* Equipment Highlight Badge on Picture */}
+              <div className="relative z-20 px-6 py-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono">
+                  <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
+                  <span>Primary Utilities (Transformer • DG Set • Compressor • Boiler)</span>
                 </div>
               </div>
 
-              {/* Bottom Card Content & Interactive Equipment Bar */}
-              <div className="relative z-10 p-5 sm:p-6 text-white bg-gradient-to-t from-[#16233F] via-[#16233F]/90 to-transparent">
-                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-2">
-                  <h3 className="font-display font-bold text-2xl text-white">
-                    Central Plant Utilities &amp; Primary MEP
-                  </h3>
-                  <span className="text-[11px] font-mono text-white/70">
-                    Tap equipment to spotlight
+              {/* Card Body */}
+              <div className="relative z-10 p-5 sm:p-6 text-white">
+                <h3 className="font-display font-bold text-xl sm:text-2xl text-white mb-2 leading-tight">
+                  Central Plant Utilities &amp; Primary MEP
+                </h3>
+                <p className="text-xs text-white/90 mb-3.5 leading-relaxed">
+                  Heavy electromechanical plant utility packages engineered for uninterruptible cleanroom power, instrument-grade compressed air, and sterile clean process steam.
+                </p>
+
+                {/* Standards Badges */}
+                <div className="flex flex-wrap gap-1.5 mb-3.5">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white/15 text-white border border-white/20">
+                    IEEE / IS 2026 Distribution
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white/15 text-white border border-white/20">
+                    CPCB-IV+ Silent DG Sets
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white/15 text-white border border-white/20">
+                    ISO 8573-1 Class 0 Air
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                    IBR / ASME Steam Boilers
                   </span>
                 </div>
 
-                {/* Equipment Pills Selector */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-3.5">
-                  <button
-                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'transformer' ? null : 'transformer')}
-                    className={`px-2.5 py-1.5 rounded-lg text-left text-xs transition-all flex items-center gap-1.5 border cursor-pointer ${
-                      activeUtilityHotspot === 'transformer'
-                        ? 'bg-amber-500/30 border-amber-400 text-white shadow-sm'
-                        : 'bg-white/10 border-white/10 text-white/80 hover:bg-white/20'
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-[15px] text-amber-400 shrink-0">bolt</span>
-                    <div className="truncate">
-                      <div className="font-semibold leading-tight truncate">Transformer</div>
-                      <div className="text-[9px] font-mono text-white/60 truncate">11kV / 433V HT</div>
-                    </div>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'diesel' ? null : 'diesel')}
-                    className={`px-2.5 py-1.5 rounded-lg text-left text-xs transition-all flex items-center gap-1.5 border cursor-pointer ${
-                      activeUtilityHotspot === 'diesel'
-                        ? 'bg-yellow-500/30 border-yellow-400 text-white shadow-sm'
-                        : 'bg-white/10 border-white/10 text-white/80 hover:bg-white/20'
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-[15px] text-yellow-400 shrink-0">settings_power</span>
-                    <div className="truncate">
-                      <div className="font-semibold leading-tight truncate">Diesel Engine</div>
-                      <div className="text-[9px] font-mono text-white/60 truncate">Silent DG Set</div>
-                    </div>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'compressor' ? null : 'compressor')}
-                    className={`px-2.5 py-1.5 rounded-lg text-left text-xs transition-all flex items-center gap-1.5 border cursor-pointer ${
-                      activeUtilityHotspot === 'compressor'
-                        ? 'bg-cyan-500/30 border-cyan-400 text-white shadow-sm'
-                        : 'bg-white/10 border-white/10 text-white/80 hover:bg-white/20'
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-[15px] text-cyan-400 shrink-0">air</span>
-                    <div className="truncate">
-                      <div className="font-semibold leading-tight truncate">Air Compressor</div>
-                      <div className="text-[9px] font-mono text-white/60 truncate">Screw + Receiver</div>
-                    </div>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'boiler' ? null : 'boiler')}
-                    className={`px-2.5 py-1.5 rounded-lg text-left text-xs transition-all flex items-center gap-1.5 border cursor-pointer ${
-                      activeUtilityHotspot === 'boiler'
-                        ? 'bg-orange-500/30 border-orange-400 text-white shadow-sm'
-                        : 'bg-white/10 border-white/10 text-white/80 hover:bg-white/20'
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-[15px] text-orange-400 shrink-0">local_fire_department</span>
-                    <div className="truncate">
-                      <div className="font-semibold leading-tight truncate">Steam Boiler</div>
-                      <div className="text-[9px] font-mono text-white/60 truncate">Process Clean Steam</div>
-                    </div>
-                  </button>
+                {/* Engineering Highlights */}
+                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15 mb-4 space-y-1.5">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-white/70 font-bold block mb-1">
+                    Engineering Highlights:
+                  </span>
+                  <div className="flex items-start gap-1.5 text-[11px] text-white/95">
+                    <span className="material-symbols-outlined text-[14px] text-amber-400 shrink-0 mt-0.5">check_circle</span>
+                    <span>11kV/433V step-down substation transformer with copper windings &amp; bus ducts</span>
+                  </div>
+                  <div className="flex items-start gap-1.5 text-[11px] text-white/95">
+                    <span className="material-symbols-outlined text-[14px] text-amber-400 shrink-0 mt-0.5">check_circle</span>
+                    <span>Acoustic silent diesel engine (DG set) with automated AMF changeover synchronization</span>
+                  </div>
+                  <div className="flex items-start gap-1.5 text-[11px] text-white/95">
+                    <span className="material-symbols-outlined text-[14px] text-amber-400 shrink-0 mt-0.5">check_circle</span>
+                    <span>Oil-free rotary screw air compressor with vertical receiver tank &amp; desiccant dryer</span>
+                  </div>
+                  <div className="flex items-start gap-1.5 text-[11px] text-white/95">
+                    <span className="material-symbols-outlined text-[14px] text-amber-400 shrink-0 mt-0.5">check_circle</span>
+                    <span>Skid-mounted industrial steam boiler with modulating burner &amp; sterile steam piping</span>
+                  </div>
                 </div>
 
-                {/* Description or Active Equipment Details */}
-                {activeUtilityHotspot === 'transformer' && (
-                  <p className="text-xs text-amber-200 bg-amber-950/50 p-2.5 rounded-lg border border-amber-500/30 mb-3 leading-relaxed">
-                    <strong>⚡ Transformer:</strong> Step-down distribution transformer (11kV to 433V) with copper winding, bus duct connections, and transient surge suppressors providing continuous cleanroom power.
-                  </p>
-                )}
-                {activeUtilityHotspot === 'diesel' && (
-                  <p className="text-xs text-yellow-200 bg-yellow-950/50 p-2.5 rounded-lg border border-yellow-500/30 mb-3 leading-relaxed">
-                    <strong>⚙️ Diesel Engine (DG Set):</strong> Heavy-duty acoustic enclosed diesel generator with automatic mains failure (AMF) synchronizing panel ensuring zero power interruption for critical cleanrooms.
-                  </p>
-                )}
-                {activeUtilityHotspot === 'compressor' && (
-                  <p className="text-xs text-cyan-200 bg-cyan-950/50 p-2.5 rounded-lg border border-cyan-500/30 mb-3 leading-relaxed">
-                    <strong>💨 Air Compressor:</strong> Multi-stage rotary screw air compressor with vertical receiver tank and refrigerated desiccant dryer supplying Class 0 oil-free pneumatic utility air.
-                  </p>
-                )}
-                {activeUtilityHotspot === 'boiler' && (
-                  <p className="text-xs text-orange-200 bg-orange-950/50 p-2.5 rounded-lg border border-orange-500/30 mb-3 leading-relaxed">
-                    <strong>🔥 Steam Boiler:</strong> Packaged skid-mounted industrial steam boiler with insulated steam distribution piping and automated burner modulation delivering sterile process steam.
-                  </p>
-                )}
-                {!activeUtilityHotspot && (
-                  <p className="text-xs text-white/80 max-w-xl mb-3 leading-relaxed">
-                    Turnkey execution of core pharmaceutical plant utilities: step-down electrical transformer, acoustic diesel engine DG backup, oil-free rotary screw compressor, and industrial steam boiler.
-                  </p>
-                )}
-
-                <div className="flex items-center justify-between pt-1">
+                <div className="flex items-center justify-between">
                   <a
                     className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-white hover:text-white/90 transition-colors font-display"
-                    href="#rfq-section"
+                    href="/divisions"
                   >
-                    <span>Plant Utilities RFQ</span>
+                    <span>Utilities Infrastructure</span>
                     <span className="material-symbols-outlined text-[15px] group-hover:translate-x-1.5 transition-transform duration-200">
                       arrow_forward
                     </span>
                   </a>
-                  {activeUtilityHotspot && (
-                    <button
-                      onClick={() => setActiveUtilityHotspot(null)}
-                      className="text-[11px] font-mono text-white/60 hover:text-white underline cursor-pointer"
-                    >
-                      Reset Highlight
-                    </button>
-                  )}
+                  <a
+                    href="#rfq-section"
+                    className="text-[11px] font-mono uppercase tracking-wider text-amber-300 hover:underline"
+                  >
+                    Request Utilities Quote ➔
+                  </a>
                 </div>
               </div>
             </div>
