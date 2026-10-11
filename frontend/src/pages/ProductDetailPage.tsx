@@ -194,10 +194,10 @@ export const ProductDetailPage: React.FC = () => {
 
               <div className="pt-3 border-t border-brand-border text-center">
                 <a
-                  href="tel:+919818818818"
+                  href="tel:+919317343117"
                   className="text-xs font-mono text-brand-primary hover:underline font-bold"
                 >
-                  Emergency Tech Desk: +91-9818818818
+                  Emergency Tech Desk: +91 93173 43117
                 </a>
               </div>
             </div>

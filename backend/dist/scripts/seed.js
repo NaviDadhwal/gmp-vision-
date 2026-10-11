@@ -104,6 +104,26 @@ async function seed() {
                 heroImage: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80',
                 order: 7,
             },
+            {
+                number: 8,
+                title: 'Turnkey Electrical Contracting & HT/LT Power Systems',
+                slug: 'turnkey-electrical-contracting',
+                tagline: '11kV/33kV substations, power transformers, bus ducts, PCC/MCC panels, flameproof gear, and IP65 cleanroom lighting.',
+                description: '<p>Full-scope electrical contracting for industrial and pharmaceutical manufacturing complexes adhering to CEA and IS 732 / IEC 60364 norms.</p>',
+                icon: 'Zap',
+                heroImage: 'https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1200&q=80',
+                order: 8,
+            },
+            {
+                number: 9,
+                title: 'Chemical Process Contracting & Specialized Industrial Piping',
+                slug: 'chemical-process-contracting',
+                tagline: 'High-purity chemical loops, hazardous solvent headers, wet scrubbers, and chemical-resistant flooring.',
+                description: '<p>Orbital-welded electro-polished SS 316L chemical distribution pipelines, double-containment hazardous solvent networks, PP/FRP wet fume scrubbers, and anti-static epoxy screeds.</p>',
+                icon: 'FlaskConical',
+                heroImage: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
+                order: 9,
+            },
         ];
         const divisionMap = {};
         for (const div of divisionsData) {
@@ -113,7 +133,7 @@ async function seed() {
             });
             divisionMap[div.slug] = doc._id;
         }
-        console.log(`✅ [Divisions] Seeded 7 Turnkey Divisions`);
+        console.log(`✅ [Divisions] Seeded 9 Turnkey Divisions`);
         // 3. Sample Products (Equipment & Components)
         const productsData = [
             {
@@ -261,6 +281,28 @@ async function seed() {
                 isFeatured: true,
                 order: 3,
             },
+            {
+                clientName: 'Biodeal Pharmaceuticals',
+                scope: '11kV Substation, HT/LT Panels & Cleanroom Electrical Contracting',
+                location: 'Nalagarh, Himachal Pradesh',
+                division: ['Turnkey Electrical Contracting & HT/LT Power Systems'],
+                completionYear: 2024,
+                description: '<p>Complete turnkey electrical contracting: 11kV HT yard, 1500 kVA transformer, synchronized sandwich bus trunking (BBT), PCC/MCC panels, flameproof gear, and IP65 cleanroom lighting.</p>',
+                images: ['/images/electrical-switchgear-panel.jpg'],
+                isFeatured: true,
+                order: 4,
+            },
+            {
+                clientName: 'Rachil Remedies',
+                scope: 'High-Purity Chemical Transfer Loops & Hazardous Solvent Scrubbing Contract',
+                location: 'Baddi, Himachal Pradesh',
+                division: ['Chemical Process Contracting & Specialized Industrial Piping'],
+                completionYear: 2024,
+                description: '<p>Specialized chemical process turnkey execution: orbital-welded SS 316L solvent lines, hazardous VOC fume extraction headers, multi-stage wet scrubbers, and anti-static epoxy flooring.</p>',
+                images: ['https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80'],
+                isFeatured: true,
+                order: 5,
+            },
         ];
         for (const p of projectsData) {
             await project_model_1.ProjectModel.findOneAndUpdate({ clientName: p.clientName }, p, { upsert: true });
@@ -283,8 +325,8 @@ async function seed() {
             { key: 'metric_years_exp', value: '15+', description: 'Years of engineering leadership' },
             { key: 'metric_projects_count', value: '100+', description: 'Turnkey cleanroom projects executed' },
             { key: 'metric_compliance_rate', value: '100%', description: 'cGMP / ISO 14644 compliance pass rate' },
-            { key: 'whatsapp_number', value: '+919817343117', description: 'Primary WhatsApp hotline' },
-            { key: 'primary_phone', value: '+91-9817343117', description: 'Head office telephone' },
+            { key: 'whatsapp_number', value: '+919317343117', description: 'Primary WhatsApp hotline' },
+            { key: 'primary_phone', value: '+91-9317343117', description: 'Head office telephone' },
             { key: 'primary_email', value: 'gmpvision3@gmail.com', description: 'Central inquiry email' },
             { key: 'brochure_pdf', value: '/Broucher.pdf', description: 'Corporate brochure download URL' },
         ];

@@ -5,7 +5,7 @@ export const WhatsAppFloatingAction: React.FC = () => {
     <div className="fixed bottom-6 right-6 z-50">
       <a
         className="relative group flex items-center gap-2 px-4 py-3 rounded-full bg-[#25D366] text-white shadow-xl hover:scale-105 active:scale-95 transition-all duration-200"
-        href="https://wa.me/919817343117"
+        href="https://wa.me/919317343117"
         rel="noopener noreferrer"
         target="_blank"
       >

@@ -34,7 +34,7 @@ In the **Environment Variables** section on Vercel, add:
 |---|---|---|
 | `VITE_API_BASE_URL` | `https://api.yourdomain.com` (or local `http://localhost:5000` for testing) | Full URL of your deployed backend API (omit trailing slash) |
 | `VITE_SITE_URL` | `https://gmpvision.com` | Production canonical site domain |
-| `VITE_WHATSAPP_NUMBER` | `919817343117` | Direct WhatsApp technical hotline number |
+| `VITE_WHATSAPP_NUMBER` | `919317343117` | Direct WhatsApp technical hotline number |
 
 ### Step 4: Deploy & Verify
 1. Click **"Deploy"**.

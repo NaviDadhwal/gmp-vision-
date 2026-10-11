@@ -1297,7 +1297,7 @@ export const HomePage: React.FC = () => {
                     </button>
                     <a
                       className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-[#25D366] text-white hover:opacity-90 active:scale-[0.99] font-display font-semibold text-xs tracking-wider uppercase transition-all shadow-sm"
-                      href="https://wa.me/919817343117"
+                      href="https://wa.me/919317343117"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -1371,13 +1371,13 @@ export const HomePage: React.FC = () => {
                     <div>
                       <span className="font-semibold text-[#16233F] block">Direct EPC Line</span>
                       <span className="text-[11px] text-[#5B6B82] font-mono">
-                        +91-9817343117 (Mon-Sat 9AM-8PM)
+                        +91 93173 43117 (Mon-Sat 9AM-8PM)
                       </span>
                     </div>
                   </div>
                   <a
                     className="px-3 py-1.5 rounded text-xs font-mono bg-[#F7F9FC] text-[#1F56A8] font-bold border border-[#E4E9F1] hover:bg-[#1F56A8] hover:text-white transition-colors"
-                    href="tel:+919817343117"
+                    href="tel:+919317343117"
                   >
                     CALL NOW
                   </a>

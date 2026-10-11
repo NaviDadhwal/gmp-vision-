@@ -1093,13 +1093,13 @@ All errors return a standard machine-readable format:
   {
     "success": true,
     "data": {
-      "contact_phone": "+91-9817343117",
+      "contact_phone": "+91-9317343117",
       "contact_email": "info@gmpvision.com",
       "experience_years": 15,
       "projects_completed": 250,
       "clients_served": 180,
       "cleanroom_sqft_installed": 1500000,
-      "whatsapp_hotline": "+91-9817343117",
+      "whatsapp_hotline": "+91-9317343117",
       "company_address": "Plot No. 42, Industrial Area Phase II, Panchkula, Haryana 134113"
     }
   }
@@ -1193,7 +1193,7 @@ All errors return a standard machine-readable format:
   ```
 - **Error Responses:**
   - `400 Bad Request`: `{"success":false,"error":{"code":"VALIDATION_ERROR","fields":{"phone":["Required"]}}}`
-  - `429 Too Many Requests`: `{"success":false,"error":{"code":"LEAD_RATE_LIMIT","message":"Inquiry limit reached. Please contact us directly at +91-9817343117."}}`
+  - `429 Too Many Requests`: `{"success":false,"error":{"code":"LEAD_RATE_LIMIT","message":"Inquiry limit reached. Please contact us directly at +91 93173 43117."}}`
 
 ---
 

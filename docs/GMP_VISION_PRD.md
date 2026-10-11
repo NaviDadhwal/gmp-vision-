@@ -39,7 +39,7 @@
 | **Tagline** | "All Solutions in One Project" |
 | **Registered Office** | Ground Floor, Building No. 01, Amb Daultpur Road, Bhanjal, Distt. Una, Himachal Pradesh – 177213 |
 | **Manufacturing / Assembly** | Khasra No. 231, Near MND Hub Biotech, Village Dadhi Harnam, Nalagarh, Distt. Solan, HP – 174101 |
-| **Phone** | +91-9817343117 · +91-9317343117 |
+| **Phone** | +91-9317343117 · +91-9817343117 |
 | **Email** | gmpvision3@gmail.com |
 | **GSTIN** | 02CZKPK1192C2ZQ |
 | **Leadership** | Mr. Parveen Kumar (CEO, 15+ Yrs Exp) · Mr. Sachin Thakur (Projects Head, 21 Yrs Exp) |
@@ -380,7 +380,7 @@ VITE_API_BASE_URL=http://localhost:5000
 VITE_SITE_URL=https://gmpvision.com
 
 # ── Feature & Tracking Variables ──────────────────────────────────────────
-VITE_WHATSAPP_NUMBER=919817343117
+VITE_WHATSAPP_NUMBER=919317343117
 ```
 
 ### 4.3 Backend Zod Env Schema (`src/config/env.ts`)
@@ -1192,7 +1192,7 @@ Injected on critical public routes for enhanced search engine rich snippets:
   "logo": "https://res.cloudinary.com/gmp-vision/image/upload/v1/brand/logo.png",
   "image": "https://res.cloudinary.com/gmp-vision/image/upload/v1/brand/factory.jpg",
   "description": "Turnkey Engineering, Cleanroom (CRP), HVAC, and Industrial MEP Contractor serving pharma and biotech.",
-  "telephone": "+91-9817343117",
+  "telephone": "+91-9317343117",
   "email": "gmpvision3@gmail.com",
   "taxID": "02CZKPK1192C2ZQ",
   "address": [
@@ -1306,7 +1306,7 @@ export const initiateWhatsAppInquiry = (context: {
   divisionOrProduct?: string;
   sourcePage: string;
 }) => {
-  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '919817343117';
+  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '919317343117';
   const defaultText = encodeURIComponent(
     `Hello GMP VISION, I am inquiring about ${context.divisionOrProduct || 'Turnkey Cleanroom & MEP services'} via your website (${context.sourcePage}).`
   );
@@ -1401,7 +1401,7 @@ Dynamic route rendering deep engineering details for any of the 7 divisions:
 ### 8.7 Floating Action Buttons (Global)
 
 * **WhatsApp CTA (Bottom-Right):** Triggers `initiateWhatsAppInquiry()` beacon and opens conversation with pre-filled page context.
-* **Call Button (Bottom-Left, Mobile Only):** Direct dial `tel:+919817343117`.
+* **Call Button (Bottom-Left, Mobile Only):** Direct dial `tel:+919317343117`.
 * **Request Quote CTA (Navbar):** High-contrast orange button linking directly to `/request-quote`.
 
 ---
@@ -1576,7 +1576,7 @@ GMP VISION serves procurement heads, cleanroom engineering consultants, and indu
 
 ### 12.1 Header & Navigation
 
-* **Top Utility Strip:** Phone (`+91-9817343117`), Email (`gmpvision3@gmail.com`), GSTIN (`02CZKPK1192C2ZQ`), Quick WhatsApp button, and *"Request a Quote"* CTA.
+* **Top Utility Strip:** Phone (`+91-9317343117`), Email (`gmpvision3@gmail.com`), GSTIN (`02CZKPK1192C2ZQ`), Quick WhatsApp button, and *"Request a Quote"* CTA.
 * **Main Navigation Bar:**
   * Solutions ▾ (Mega Menu with 7 Divisions)
   * Products ▾ (AHUs, Filters, Equipment)

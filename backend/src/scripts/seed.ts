@@ -332,8 +332,8 @@ async function seed() {
       { key: 'metric_years_exp', value: '15+', description: 'Years of engineering leadership' },
       { key: 'metric_projects_count', value: '100+', description: 'Turnkey cleanroom projects executed' },
       { key: 'metric_compliance_rate', value: '100%', description: 'cGMP / ISO 14644 compliance pass rate' },
-      { key: 'whatsapp_number', value: '+919817343117', description: 'Primary WhatsApp hotline' },
-      { key: 'primary_phone', value: '+91-9817343117', description: 'Head office telephone' },
+      { key: 'whatsapp_number', value: '+919317343117', description: 'Primary WhatsApp hotline' },
+      { key: 'primary_phone', value: '+91-9317343117', description: 'Head office telephone' },
       { key: 'primary_email', value: 'gmpvision3@gmail.com', description: 'Central inquiry email' },
       { key: 'brochure_pdf', value: '/Broucher.pdf', description: 'Corporate brochure download URL' },
     ];

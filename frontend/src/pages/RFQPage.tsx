@@ -110,7 +110,7 @@ export const RFQPage: React.FC = () => {
       // If backend is offline or network fails, provide friendly validation message
       setErrorMsg(
         err?.response?.data?.message ||
-        'Unable to reach submission server at this moment. You can also contact our engineering desk directly at +91-9818818818 or info@gmpvision.in.'
+        'Unable to reach submission server at this moment. You can also contact our engineering desk directly at +91 93173 43117 or info@gmpvision.in.'
       );
     } finally {
       setSubmitting(false);
@@ -289,8 +289,8 @@ export const RFQPage: React.FC = () => {
                   <Phone className="w-4 h-4 text-brand-primary shrink-0 mt-0.5" />
                   <div>
                     <span className="font-semibold text-brand-navy block">Telephone Hotline:</span>
-                    <a href="tel:+919818818818" className="text-brand-primary hover:underline font-mono">
-                      +91-9818818818
+                    <a href="tel:+919317343117" className="text-brand-primary hover:underline font-mono">
+                      +91 93173 43117
                     </a>
                   </div>
                 </div>

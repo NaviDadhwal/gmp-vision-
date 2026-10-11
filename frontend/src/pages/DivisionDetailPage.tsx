@@ -379,8 +379,8 @@ export const DivisionDetailPage: React.FC = () => {
               </p>
               <div className="pt-1 flex items-center justify-between text-xs font-mono">
                 <span className="text-brand-muted">HOTLINE:</span>
-                <a href="tel:+919818818818" className="text-brand-primary font-bold hover:underline">
-                  +91-9818818818
+                <a href="tel:+919317343117" className="text-brand-primary font-bold hover:underline">
+                  +91 93173 43117
                 </a>
               </div>
             </div>

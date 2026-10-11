@@ -4,7 +4,7 @@
 > **Tagline:** *"All Solutions in One Project"*  
 > **Head Office:** Ground Floor, Building No. 01, Amb Daultpur Road, Bhanjal, Distt. Una, Himachal Pradesh – 177213  
 > **Manufacturing / Assembly:** Khasra No. 231, Near MND Hub Biotech, Village Dadhi Harnam, Nalagarh, Distt. Solan, HP – 174101  
-> **Contact:** +91-9817343117 | +91-9317343117 | `gmpvision3@gmail.com`  
+> **Contact:** +91-9317343117 | +91-9817343117 | `gmpvision3@gmail.com`  
 > **GSTIN:** `02CZKPK1192C2ZQ`  
 > **Leadership:** Mr. Parveen Kumar (CEO - 15+ Yrs Exp) | Mr. Sachin Thakur (Projects Head - 21 Yrs Exp) | 
 
@@ -189,7 +189,7 @@ Pharma and chemical manufacturing facilities require pure process water for form
 To present this massive catalog cleanly without overwhelming the user, the website will follow a modern, 7-tier architectural layout:
 
 ### 1. Global Navigation & Mega Menus
-* **Header Utility Bar:** Phone (`+91 9817343117`), Email (`gmpvision3@gmail.com`), GSTIN, Quick WhatsApp Button, "Request a Quote" CTA.
+* **Header Utility Bar:** Phone (`+91 93173 43117`), Email (`gmpvision3@gmail.com`), GSTIN, Quick WhatsApp Button, "Request a Quote" CTA.
 * **Solutions (Turnkey Contracting):**
   * Cleanroom Modular Systems (PUF Panels)
   * Turnkey HVAC & AHU Projects

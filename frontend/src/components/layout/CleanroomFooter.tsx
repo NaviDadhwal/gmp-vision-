@@ -34,7 +34,7 @@ export const CleanroomFooter: React.FC = () => {
               </p>
               <p className="flex items-center gap-1.5">
                 <span className="material-symbols-outlined text-[13px] text-[#1F56A8] shrink-0">phone</span>
-                <span>+91 9817343117 / +91 9317343117</span>
+                <span>+91 93173 43117</span>
               </p>
               <p className="flex items-center gap-1.5">
                 <span className="material-symbols-outlined text-[13px] text-[#1F56A8] shrink-0">mail</span>
