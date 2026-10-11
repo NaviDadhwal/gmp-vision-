@@ -146,7 +146,7 @@ const leadLimiter = (0, express_rate_limit_1.default)({
         success: false,
         error: {
             code: 'LEAD_RATE_LIMIT',
-            message: 'Inquiry limit reached. Please contact us directly at +91 93173 43117.',
+            message: 'Inquiry limit reached. Please contact us directly at +91-93173-43117.',
         },
     },
 });

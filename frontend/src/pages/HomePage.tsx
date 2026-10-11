@@ -1519,7 +1519,7 @@ export const HomePage: React.FC = () => {
                     <div>
                       <span className="font-semibold text-[#16233F] block">Direct EPC Line</span>
                       <span className="text-[11px] text-[#5B6B82] font-mono">
-                        +91 93173 43117 (Mon-Sat 9AM-8PM)
+                        +91-93173-43117 (Mon-Sat 9AM-8PM)
                       </span>
                     </div>
                   </div>

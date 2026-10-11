@@ -138,7 +138,7 @@ export const CleanroomHeader: React.FC = () => {
             <a
               className="p-2 sm:p-2.5 rounded-lg bg-[#F7F9FC] text-[#16233F] border border-[#E4E9F1] hover:bg-white hover:border-[#1F56A8]/30 active:scale-95 transition-all flex items-center justify-center shrink-0"
               href="tel:+919317343117"
-              title="Call Technical Hotline: +91 93173 43117"
+              title="Call Technical Hotline: +91-93173-43117"
               aria-label="Call technical hotline"
             >
               <span className="material-symbols-outlined text-base sm:text-lg">call</span>
@@ -249,7 +249,7 @@ export const CleanroomHeader: React.FC = () => {
                 className="flex items-center gap-2 p-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] hover:bg-white text-[#16233F] transition-colors"
               >
                 <span className="material-symbols-outlined text-base text-[#1F56A8]">call</span>
-                <span className="truncate font-medium">+91 93173 43117</span>
+                <span className="truncate font-medium">+91-93173-43117</span>
               </a>
               <a
                 href="https://wa.me/919317343117?text=Hello%20GMP%20Vision%20Team%2C%20I%20would%20like%20to%20discuss%20a%20cleanroom%20project."

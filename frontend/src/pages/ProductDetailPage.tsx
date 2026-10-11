@@ -197,7 +197,7 @@ export const ProductDetailPage: React.FC = () => {
                   href="tel:+919317343117"
                   className="text-xs font-mono text-brand-primary hover:underline font-bold"
                 >
-                  Emergency Tech Desk: +91 93173 43117
+                  Emergency Tech Desk: +91-93173-43117
                 </a>
               </div>
             </div>
