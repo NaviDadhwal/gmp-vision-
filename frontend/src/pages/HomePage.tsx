@@ -250,7 +250,7 @@ export const HomePage: React.FC = () => {
                 <span className="px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-[#1F56A8] uppercase tracking-wider shadow-xs">
                   DIVISION 05 • PLANT UTILITIES &amp; MEP
                 </span>
-                <span className="px-2.5 py-1 rounded-md bg-amber-500/90 text-[10px] font-mono font-bold text-white shadow-xs">
+                <span className="px-2.5 py-1 rounded-md bg-[#1F56A8] text-[10px] font-mono font-bold text-white shadow-xs">
                   24/7 CONTINUOUS OPERATION
                 </span>
               </div>
@@ -258,7 +258,7 @@ export const HomePage: React.FC = () => {
               {/* Equipment Highlight Badge on Picture */}
               <div className="relative z-20 px-6 py-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono">
-                  <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
+                  <span className="h-2 w-2 rounded-full bg-blue-400 animate-pulse"></span>
                   <span>Primary Utilities (Transformer • DG Set • Compressor • Boiler)</span>
                 </div>
               </div>
@@ -283,7 +283,7 @@ export const HomePage: React.FC = () => {
                   <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white/15 text-white border border-white/20">
                     ISO 8573-1 Class 0 Air
                   </span>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-[#1F56A8]/40 text-blue-200 border border-blue-400/40">
                     IBR / ASME Steam Boilers
                   </span>
                 </div>
@@ -294,19 +294,19 @@ export const HomePage: React.FC = () => {
                     Engineering Highlights:
                   </span>
                   <div className="flex items-start gap-1.5 text-[11px] text-white/95">
-                    <span className="material-symbols-outlined text-[14px] text-amber-400 shrink-0 mt-0.5">check_circle</span>
+                    <span className="material-symbols-outlined text-[14px] text-blue-400 shrink-0 mt-0.5">check_circle</span>
                     <span>11kV/433V step-down substation transformer with copper windings &amp; bus ducts</span>
                   </div>
                   <div className="flex items-start gap-1.5 text-[11px] text-white/95">
-                    <span className="material-symbols-outlined text-[14px] text-amber-400 shrink-0 mt-0.5">check_circle</span>
+                    <span className="material-symbols-outlined text-[14px] text-blue-400 shrink-0 mt-0.5">check_circle</span>
                     <span>Acoustic silent diesel engine (DG set) with automated AMF changeover synchronization</span>
                   </div>
                   <div className="flex items-start gap-1.5 text-[11px] text-white/95">
-                    <span className="material-symbols-outlined text-[14px] text-amber-400 shrink-0 mt-0.5">check_circle</span>
+                    <span className="material-symbols-outlined text-[14px] text-blue-400 shrink-0 mt-0.5">check_circle</span>
                     <span>Oil-free rotary screw air compressor with vertical receiver tank &amp; desiccant dryer</span>
                   </div>
                   <div className="flex items-start gap-1.5 text-[11px] text-white/95">
-                    <span className="material-symbols-outlined text-[14px] text-amber-400 shrink-0 mt-0.5">check_circle</span>
+                    <span className="material-symbols-outlined text-[14px] text-blue-400 shrink-0 mt-0.5">check_circle</span>
                     <span>Skid-mounted industrial steam boiler with modulating burner &amp; sterile steam piping</span>
                   </div>
                 </div>
@@ -323,7 +323,7 @@ export const HomePage: React.FC = () => {
                   </a>
                   <a
                     href="#rfq-section"
-                    className="text-[11px] font-mono uppercase tracking-wider text-amber-300 hover:underline"
+                    className="text-[11px] font-mono uppercase tracking-wider text-blue-300 hover:text-white transition-colors"
                   >
                     Request Utilities Quote ➔
                   </a>
@@ -345,7 +345,7 @@ export const HomePage: React.FC = () => {
                 <span className="px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-[#1F56A8] uppercase tracking-wider shadow-xs">
                   DIVISION 04 • AIR FILTRATION
                 </span>
-                <span className="px-2.5 py-1 rounded-md bg-emerald-500/90 text-[10px] font-mono font-bold text-white shadow-xs">
+                <span className="px-2.5 py-1 rounded-md bg-[#1F56A8] text-[10px] font-mono font-bold text-white shadow-xs">
                   MPPS &gt; 99.9995%
                 </span>
               </div>
@@ -353,7 +353,7 @@ export const HomePage: React.FC = () => {
               {/* Filter Test Hotspot Pin on the Picture */}
               <div className="relative z-20 px-6 py-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span className="h-2 w-2 rounded-full bg-blue-400 animate-pulse"></span>
                   <span>Terminal Gel-Seal HEPA (Individual Scan Tested)</span>
                 </div>
               </div>
@@ -375,7 +375,7 @@ export const HomePage: React.FC = () => {
                   <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white/15 text-white border border-white/20">
                     ISO 29463 Compliant
                   </span>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-400/20 text-emerald-300 border border-emerald-400/30">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-[#1F56A8]/40 text-blue-200 border border-blue-400/40">
                     Individual Leak Tested
                   </span>
                 </div>
@@ -386,15 +386,15 @@ export const HomePage: React.FC = () => {
                     Engineering Highlights:
                   </span>
                   <div className="flex items-start gap-1.5 text-[11px] text-white/95">
-                    <span className="material-symbols-outlined text-[14px] text-emerald-400 shrink-0 mt-0.5">check_circle</span>
+                    <span className="material-symbols-outlined text-[14px] text-blue-400 shrink-0 mt-0.5">check_circle</span>
                     <span>G3/G4 synthetic washable pre-filters in aluminum frames</span>
                   </div>
                   <div className="flex items-start gap-1.5 text-[11px] text-white/95">
-                    <span className="material-symbols-outlined text-[14px] text-emerald-400 shrink-0 mt-0.5">check_circle</span>
+                    <span className="material-symbols-outlined text-[14px] text-blue-400 shrink-0 mt-0.5">check_circle</span>
                     <span>F7/F9 deep-pleat and pocket micro-fiber synthetic fine filters</span>
                   </div>
                   <div className="flex items-start gap-1.5 text-[11px] text-white/95">
-                    <span className="material-symbols-outlined text-[14px] text-emerald-400 shrink-0 mt-0.5">check_circle</span>
+                    <span className="material-symbols-outlined text-[14px] text-blue-400 shrink-0 mt-0.5">check_circle</span>
                     <span>H13/H14 mini-pleat HEPA filters with fluid gel or polyurethane seals</span>
                   </div>
                 </div>
@@ -411,7 +411,7 @@ export const HomePage: React.FC = () => {
                   </a>
                   <a
                     href="#rfq-section"
-                    className="text-[11px] font-mono uppercase tracking-wider text-emerald-300 hover:underline"
+                    className="text-[11px] font-mono uppercase tracking-wider text-blue-300 hover:text-white transition-colors"
                   >
                     Request Filter Quote ➔
                   </a>
