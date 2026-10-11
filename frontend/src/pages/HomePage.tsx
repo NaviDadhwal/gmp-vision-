@@ -2,6 +2,143 @@ import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ApiService } from '../lib/api/endpoints';
 
+interface ClientBrand {
+  name: string;
+  sub: string;
+  logo: React.ReactNode;
+}
+
+const CLIENT_LOGOS: ClientBrand[] = [
+  {
+    name: 'SUN PHARMA',
+    sub: 'Active Cleanroom & HVAC',
+    logo: (
+      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
+        <circle cx="20" cy="20" r="15" stroke="#F97316" strokeWidth="2.5" opacity="0.25" />
+        <path
+          d="M20 7C27.2 7 33 12.8 33 20C33 27.2 27.2 33 20 33C14.2 33 9.3 29.2 7.6 24"
+          stroke="#EA580C"
+          strokeWidth="3.2"
+          strokeLinecap="round"
+        />
+        <circle cx="20" cy="20" r="6.5" stroke="#EA580C" strokeWidth="2.8" />
+      </svg>
+    ),
+  },
+  {
+    name: 'WALLACE PHARMA',
+    sub: 'Turnkey HVAC & AMC',
+    logo: (
+      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
+        <polygon points="20,4 34,12 34,28 20,36 6,28 6,12" stroke="#16233F" strokeWidth="2.4" fill="#F4F7FC" />
+        <path d="M20 11V29M14 17L20 21L26 17M14 23L20 27L26 23" stroke="#1F56A8" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="20" cy="11" r="2" fill="#1F56A8" />
+      </svg>
+    ),
+  },
+  {
+    name: 'BIODEAL PHARMA',
+    sub: 'Sterile Injectables & AMC',
+    logo: (
+      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
+        <rect x="6" y="6" width="28" height="28" rx="8" fill="#ECFDF5" stroke="#10B981" strokeWidth="2" />
+        <path d="M20 11V29M11 20H29" stroke="#059669" strokeWidth="3.2" strokeLinecap="round" />
+        <circle cx="20" cy="20" r="4" fill="#10B981" />
+      </svg>
+    ),
+  },
+  {
+    name: 'RACHIL REMEDIES',
+    sub: 'cGMP Cleanroom Complex',
+    logo: (
+      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
+        <path d="M20 5L33 10V20C33 27.5 27 33 20 35C13 33 7 27.5 7 20V10L20 5Z" fill="#EFF6FF" stroke="#1F56A8" strokeWidth="2" />
+        <path d="M15 15H21C23.2 15 24.5 16.5 24.5 18.5C24.5 20.5 23.2 22 21 22H15V26M15 22L24 26" stroke="#1F56A8" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    name: 'CB HEALTHCARE',
+    sub: 'Modular Cleanroom & HVAC',
+    logo: (
+      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
+        <rect x="6" y="6" width="12" height="12" rx="3.5" fill="#E11D48" />
+        <rect x="22" y="6" width="12" height="12" rx="3.5" fill="#84CC16" />
+        <rect x="6" y="22" width="12" height="12" rx="3.5" fill="#F59E0B" />
+        <rect x="22" y="22" width="12" height="12" rx="3.5" fill="#991B1B" />
+      </svg>
+    ),
+  },
+  {
+    name: 'MEDIWELL',
+    sub: 'Aseptic Cleanroom Upgrades',
+    logo: (
+      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
+        <path d="M10 28C6 22 7 14 13 9C19 4 28 5 32 10" stroke="#DC2626" strokeWidth="2.8" strokeLinecap="round" />
+        <circle cx="21" cy="13" r="3" fill="#DC2626" />
+        <path d="M14 18C18 20 24 20 28 18M18 21L21 29L24 21" stroke="#DC2626" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    name: 'SHARIKA BIOTECH',
+    sub: 'Biotech Biosafety Suite',
+    logo: (
+      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
+        <g transform="rotate(-38 20 20)">
+          <rect x="12" y="7" width="16" height="13" rx="6.5" fill="#1E3A8A" />
+          <rect x="12" y="20" width="16" height="13" rx="6.5" fill="#0284C7" />
+          <circle cx="20" cy="20" r="3.2" fill="white" />
+          <path d="M16 20H24" stroke="white" strokeWidth="1.5" />
+        </g>
+      </svg>
+    ),
+  },
+  {
+    name: 'AZANTIC BIO TECH',
+    sub: 'Dynamic Airlocks & Isolation',
+    logo: (
+      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
+        <polygon points="20,5 32,12 32,26 20,33 8,26 8,12" stroke="#0284C7" strokeWidth="2.2" fill="#F0F9FF" />
+        <circle cx="20" cy="5" r="2.8" fill="#0284C7" />
+        <circle cx="32" cy="12" r="2.8" fill="#0284C7" />
+        <circle cx="32" cy="26" r="2.8" fill="#0284C7" />
+        <circle cx="20" cy="33" r="2.8" fill="#0284C7" />
+        <circle cx="8" cy="26" r="2.8" fill="#0284C7" />
+        <circle cx="8" cy="12" r="2.8" fill="#0284C7" />
+        <circle cx="20" cy="19" r="4.2" fill="#1F56A8" />
+      </svg>
+    ),
+  },
+  {
+    name: 'KIMBAL PHARMA',
+    sub: 'Healthcare Formulations',
+    logo: (
+      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
+        <g stroke="#1E3A8A" strokeWidth="2.2" strokeLinecap="round">
+          <line x1="20" y1="6" x2="20" y2="34" />
+          <line x1="6" y1="20" x2="34" y2="20" />
+          <line x1="10" y1="10" x2="30" y2="30" />
+          <line x1="10" y1="30" x2="30" y2="10" />
+          <path d="M17 8L20 6L23 8M17 32L20 34L23 32M8 17L6 20L8 23M32 17L34 20L32 23" strokeWidth="1.8" />
+          <circle cx="20" cy="20" r="3" fill="#1E3A8A" />
+        </g>
+      </svg>
+    ),
+  },
+  {
+    name: 'CIPLA LIMITED',
+    sub: 'Global Pharma Standards',
+    logo: (
+      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
+        <path d="M9 29L20 9L31 29H9Z" stroke="#0F4C81" strokeWidth="2.5" fill="#F0F7FF" strokeLinejoin="round" />
+        <polygon points="15,29 20,19 25,29" fill="#D97706" />
+        <circle cx="20" cy="22" r="2.8" fill="#0F4C81" />
+      </svg>
+    ),
+  },
+];
+
 export const HomePage: React.FC = () => {
   const equipRailRef = useRef<HTMLDivElement>(null);
 
@@ -1114,44 +1251,55 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 8. PHARMACEUTICAL CLIENT LOGOS WITH ELEVATION */}
-      <section className="py-12 border-b border-[#E4E9F1] bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-[11px] font-mono uppercase tracking-widest text-[#5B6B82] font-semibold block mb-6">
+      {/* 8. PHARMACEUTICAL CLIENT LOGOS WITH CONTINUOUS RIGHT-TO-LEFT SCROLL */}
+      <section className="py-12 border-b border-[#E4E9F1] bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-6">
+          <span className="text-[11px] font-mono uppercase tracking-widest text-[#5B6B82] font-semibold block">
             TRUSTED BY PRESTIGIOUS PHARMACEUTICAL CLIENTS &amp; HEALTHCARE LEADERS
           </span>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 items-center">
-            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              SUN PHARMA
-            </div>
-            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              WALLACE PHARMA
-            </div>
-            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-emerald-300 bg-emerald-50/40 text-center font-display font-bold text-xs text-emerald-950 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              BIODEAL PHARMA
-            </div>
-            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-blue-300 bg-blue-50/40 text-center font-display font-bold text-xs text-blue-950 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              RACHIL REMEDIES
-            </div>
-            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              CB HEALTHCARE
-            </div>
-            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              MEDIWELL
-            </div>
-            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              SHARIKA BIOTECH
-            </div>
-            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              AZANTIC BIO TECH
-            </div>
-            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              KIMBAL PHARMA
-            </div>
-            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              CIPLA LIMITED
-            </div>
+        </div>
+
+        {/* Continuous Right-to-Left Infinite Scrolling Marquee */}
+        <div className="relative w-full overflow-hidden py-2">
+          {/* Left Gradient Fade */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-white via-white/90 to-transparent z-10" />
+
+          {/* Marquee Track (Double Rendered for Seamless Infinite Right-to-Left Loop) */}
+          <div className="animate-marquee-rtl flex items-center gap-4">
+            {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((client, idx) => (
+              <Link
+                key={`${client.name}-${idx}`}
+                to="/projects"
+                className="group flex items-center gap-3.5 py-3 px-4 sm:px-5 rounded-xl bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8]/40 hover:bg-white hover:shadow-md hover:-translate-y-0.5 active:scale-[0.99] transition-all duration-200 shrink-0 select-none cursor-pointer"
+                title={`View ${client.name} Projects & Case Studies`}
+              >
+                <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] flex items-center justify-center p-1.5 shrink-0 group-hover:border-[#1F56A8]/30 group-hover:shadow-2xs transition-all">
+                  {client.logo}
+                </div>
+                <div className="text-left">
+                  <span className="font-display font-bold text-xs sm:text-sm text-[#16233F] group-hover:text-[#1F56A8] transition-colors whitespace-nowrap block">
+                    {client.name}
+                  </span>
+                  <span className="text-[10px] text-[#5B6B82] font-mono whitespace-nowrap block">
+                    {client.sub}
+                  </span>
+                </div>
+              </Link>
+            ))}
           </div>
+
+          {/* Right Gradient Fade */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-white via-white/90 to-transparent z-10" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-5">
+          <p className="text-xs font-mono text-[#5B6B82] flex items-center justify-center gap-1.5 flex-wrap">
+            <span>Executing ISO Class 5–8 cGMP Envelopes across 250+ facilities ·</span>
+            <Link to="/projects" className="text-[#1F56A8] font-bold hover:underline inline-flex items-center gap-1">
+              View All Client Projects
+              <span className="material-symbols-outlined text-[13px]">arrow_forward</span>
+            </Link>
+          </p>
         </div>
       </section>
 
