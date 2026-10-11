@@ -1000,7 +1000,7 @@ export const HomePage: React.FC = () => {
               className="group inline-flex items-center gap-1.5 text-xs font-mono font-semibold uppercase text-[#1F56A8] hover:text-[#16233F] transition-colors"
               to="/projects"
             >
-              <span>View All Projects</span>
+              <span>View All Projects (250+ Sites Installed)</span>
               <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform duration-200">
                 arrow_forward
               </span>

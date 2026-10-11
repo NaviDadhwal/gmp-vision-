@@ -32,3 +32,4 @@ Thumbs.db
 # Caches
 .cache/
 .vite/
+*.mp4
