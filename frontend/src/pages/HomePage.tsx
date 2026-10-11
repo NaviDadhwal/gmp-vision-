@@ -11,6 +11,7 @@ export const HomePage: React.FC = () => {
   const [rfqGrade, setRfqGrade] = useState('ISO Class 7 / Grade C');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [activeUtilityHotspot, setActiveUtilityHotspot] = useState<string | null>(null);
 
   const scrollRail = (direction: 'left' | 'right') => {
     if (equipRailRef.current) {
@@ -233,78 +234,343 @@ export const HomePage: React.FC = () => {
               High-precision architectural envelopes, MEP psychrometrics, and certified particulate barrier cascades.
             </p>
           </div>
-          {/* Bento Grid with Real Photos Integrated */}
+          {/* Bento Grid with Real Photos & Interactive Equipment Highlights */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
-            {/* Bento 1: Large Photo Card (HVAC & AHU Systems) using IMAGE_18 */}
-            <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-[#E4E9F1] bg-[#F7F9FC] relative group shadow-sm hover:shadow-xl hover:border-[#1F56A8]/40 transition-all duration-300 flex flex-col justify-between min-h-[360px]">
+            {/* Bento 1: Central Plant Utilities & Heavy Electromechanical Equipment */}
+            <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-[#E4E9F1] bg-[#16233F] relative group shadow-sm hover:shadow-xl hover:border-[#1F56A8]/40 transition-all duration-300 flex flex-col justify-between min-h-[460px]">
+              {/* Photo Background */}
               <img
-                alt="Double skin AHU and HVAC ducting in technical corridor"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                src="https://lh3.googleusercontent.com/aida/AEtjO1XOvqqJ8HTv2N9XKsc8VYb_geMNA3y9faOJc6zXexUyt_JAVjDEHiewCQRhbtIszI85ekeG8Zwx_mrJeOcDuqDO93o5lG_ewiXDFZhWoD3bzyoexcf1Uhwsb5BqkIzP2yAFN2lvs8VstXAyV9PuKjIozdQq-avnaEjblZCpz0SVM60M9rNXWopmrk7UJXgU4qWxozVz5JUiimt7FfKM0pmOZy-_dE1CGUkouQ_w6emQxfapKvawn1zYbqE"
+                alt="Pharmaceutical Plant Utilities: Electrical Transformer, Diesel Engine DG Set, Air Compressor, and Steam Boiler"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-102"
+                src="/images/plant-utilities-equipment.jpg"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#16233F]/95 via-[#16233F]/50 to-transparent"></div>
-              <div className="relative z-10 p-6 flex justify-between items-start">
-                <span className="px-2.5 py-1 rounded-md bg-white/90 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-[#1F56A8] uppercase">
-                  DIVISION 02 • HVAC &amp; AHU
-                </span>
-                <span className="px-2.5 py-1 rounded-md bg-black/40 backdrop-blur-md text-[10px] font-mono text-white">
-                  5K - 45K CFM
+              <div className="absolute inset-0 bg-gradient-to-t from-[#16233F] via-[#16233F]/40 to-[#16233F]/30 pointer-events-none"></div>
+
+              {/* Top Header Over Photo */}
+              <div className="relative z-10 p-5 sm:p-6 flex flex-wrap justify-between items-center gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-[#1F56A8] uppercase tracking-wider shadow-xs">
+                    DIVISION 05 • PLANT UTILITIES &amp; MEP
+                  </span>
+                  <span className="px-2 py-1 rounded-md bg-amber-500/90 text-[10px] font-mono font-bold text-white uppercase tracking-wider flex items-center gap-1 shadow-xs">
+                    <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>
+                    4 KEY UTILITIES
+                  </span>
+                </div>
+                <span className="px-2.5 py-1 rounded-md bg-black/50 backdrop-blur-md text-[10px] font-mono text-white/90">
+                  CONTINUOUS OPERATION
                 </span>
               </div>
-              <div className="relative z-10 p-6 text-white">
-                <h3 className="font-display font-bold text-2xl text-white mb-2">
-                  Psychrometric AHU Systems &amp; Dehumidification
-                </h3>
-                <p className="text-xs text-white/80 max-w-md mb-4 leading-relaxed">
-                  Thermal break double-skin air handlers, desiccant rotors, and precision pressure cascade ducting across ISO 5-8 suites.
-                </p>
-                <a
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-white hover:text-white/90 transition-colors font-display"
-                  href="#rfq-section"
+
+              {/* Interactive Visual Hotspots directly on the picture */}
+              <div className="relative z-20 flex-1 min-h-[180px] sm:min-h-[220px]">
+                {/* 1. Transformer Hotspot (left 11%, top 48%) */}
+                <div
+                  className="absolute"
+                  style={{ left: '11%', top: '46%' }}
                 >
-                  <span>AHU Technical Specs</span>
-                  <span className="material-symbols-outlined text-[15px] group-hover:translate-x-1.5 transition-transform duration-200">
-                    arrow_forward
+                  <button
+                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'transformer' ? null : 'transformer')}
+                    onMouseEnter={() => setActiveUtilityHotspot('transformer')}
+                    className={`group/pin relative flex items-center justify-center cursor-pointer transition-all ${
+                      activeUtilityHotspot === 'transformer' ? 'scale-125 z-30' : 'hover:scale-115 z-20'
+                    }`}
+                    aria-label="Highlight Transformer"
+                  >
+                    <span className="absolute -inset-2 rounded-full bg-amber-400 opacity-60 animate-ping"></span>
+                    <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-white font-bold text-xs shadow-lg ring-2 ring-white">
+                      <span className="material-symbols-outlined text-[15px]">bolt</span>
+                    </span>
+                    <span className="hidden sm:flex absolute left-full ml-2 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold uppercase bg-black/80 backdrop-blur-md text-amber-300 border border-amber-400/50 whitespace-nowrap shadow-md pointer-events-none">
+                      Transformer
+                    </span>
+                  </button>
+                </div>
+
+                {/* 2. Diesel Engine (DG Set) Hotspot (left 36%, top 48%) */}
+                <div
+                  className="absolute"
+                  style={{ left: '36%', top: '48%' }}
+                >
+                  <button
+                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'diesel' ? null : 'diesel')}
+                    onMouseEnter={() => setActiveUtilityHotspot('diesel')}
+                    className={`group/pin relative flex items-center justify-center cursor-pointer transition-all ${
+                      activeUtilityHotspot === 'diesel' ? 'scale-125 z-30' : 'hover:scale-115 z-20'
+                    }`}
+                    aria-label="Highlight Diesel Engine"
+                  >
+                    <span className="absolute -inset-2 rounded-full bg-yellow-400 opacity-60 animate-ping"></span>
+                    <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-yellow-500 text-white font-bold text-xs shadow-lg ring-2 ring-white">
+                      <span className="material-symbols-outlined text-[15px]">settings_power</span>
+                    </span>
+                    <span className="hidden sm:flex absolute left-full ml-2 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold uppercase bg-black/80 backdrop-blur-md text-yellow-300 border border-yellow-400/50 whitespace-nowrap shadow-md pointer-events-none">
+                      Diesel Engine
+                    </span>
+                  </button>
+                </div>
+
+                {/* 3. Air Compressor Hotspot (left 60%, top 58%) */}
+                <div
+                  className="absolute"
+                  style={{ left: '59%', top: '56%' }}
+                >
+                  <button
+                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'compressor' ? null : 'compressor')}
+                    onMouseEnter={() => setActiveUtilityHotspot('compressor')}
+                    className={`group/pin relative flex items-center justify-center cursor-pointer transition-all ${
+                      activeUtilityHotspot === 'compressor' ? 'scale-125 z-30' : 'hover:scale-115 z-20'
+                    }`}
+                    aria-label="Highlight Air Compressor"
+                  >
+                    <span className="absolute -inset-2 rounded-full bg-cyan-400 opacity-60 animate-ping"></span>
+                    <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-cyan-500 text-white font-bold text-xs shadow-lg ring-2 ring-white">
+                      <span className="material-symbols-outlined text-[15px]">air</span>
+                    </span>
+                    <span className="hidden sm:flex absolute left-full ml-2 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold uppercase bg-black/80 backdrop-blur-md text-cyan-300 border border-cyan-400/50 whitespace-nowrap shadow-md pointer-events-none">
+                      Air Compressor
+                    </span>
+                  </button>
+                </div>
+
+                {/* 4. Boiler Hotspot (left 78%, top 36%) */}
+                <div
+                  className="absolute"
+                  style={{ left: '77%', top: '34%' }}
+                >
+                  <button
+                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'boiler' ? null : 'boiler')}
+                    onMouseEnter={() => setActiveUtilityHotspot('boiler')}
+                    className={`group/pin relative flex items-center justify-center cursor-pointer transition-all ${
+                      activeUtilityHotspot === 'boiler' ? 'scale-125 z-30' : 'hover:scale-115 z-20'
+                    }`}
+                    aria-label="Highlight Boiler"
+                  >
+                    <span className="absolute -inset-2 rounded-full bg-orange-400 opacity-60 animate-ping"></span>
+                    <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-orange-500 text-white font-bold text-xs shadow-lg ring-2 ring-white">
+                      <span className="material-symbols-outlined text-[15px]">local_fire_department</span>
+                    </span>
+                    <span className="hidden sm:flex absolute right-full mr-2 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold uppercase bg-black/80 backdrop-blur-md text-orange-300 border border-orange-400/50 whitespace-nowrap shadow-md pointer-events-none">
+                      Steam Boiler
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Bottom Card Content & Interactive Equipment Bar */}
+              <div className="relative z-10 p-5 sm:p-6 text-white bg-gradient-to-t from-[#16233F] via-[#16233F]/90 to-transparent">
+                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-2">
+                  <h3 className="font-display font-bold text-2xl text-white">
+                    Central Plant Utilities &amp; Primary MEP
+                  </h3>
+                  <span className="text-[11px] font-mono text-white/70">
+                    Tap equipment to spotlight
                   </span>
-                </a>
+                </div>
+
+                {/* Equipment Pills Selector */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-3.5">
+                  <button
+                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'transformer' ? null : 'transformer')}
+                    className={`px-2.5 py-1.5 rounded-lg text-left text-xs transition-all flex items-center gap-1.5 border cursor-pointer ${
+                      activeUtilityHotspot === 'transformer'
+                        ? 'bg-amber-500/30 border-amber-400 text-white shadow-sm'
+                        : 'bg-white/10 border-white/10 text-white/80 hover:bg-white/20'
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-[15px] text-amber-400 shrink-0">bolt</span>
+                    <div className="truncate">
+                      <div className="font-semibold leading-tight truncate">Transformer</div>
+                      <div className="text-[9px] font-mono text-white/60 truncate">11kV / 433V HT</div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'diesel' ? null : 'diesel')}
+                    className={`px-2.5 py-1.5 rounded-lg text-left text-xs transition-all flex items-center gap-1.5 border cursor-pointer ${
+                      activeUtilityHotspot === 'diesel'
+                        ? 'bg-yellow-500/30 border-yellow-400 text-white shadow-sm'
+                        : 'bg-white/10 border-white/10 text-white/80 hover:bg-white/20'
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-[15px] text-yellow-400 shrink-0">settings_power</span>
+                    <div className="truncate">
+                      <div className="font-semibold leading-tight truncate">Diesel Engine</div>
+                      <div className="text-[9px] font-mono text-white/60 truncate">Silent DG Set</div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'compressor' ? null : 'compressor')}
+                    className={`px-2.5 py-1.5 rounded-lg text-left text-xs transition-all flex items-center gap-1.5 border cursor-pointer ${
+                      activeUtilityHotspot === 'compressor'
+                        ? 'bg-cyan-500/30 border-cyan-400 text-white shadow-sm'
+                        : 'bg-white/10 border-white/10 text-white/80 hover:bg-white/20'
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-[15px] text-cyan-400 shrink-0">air</span>
+                    <div className="truncate">
+                      <div className="font-semibold leading-tight truncate">Air Compressor</div>
+                      <div className="text-[9px] font-mono text-white/60 truncate">Screw + Receiver</div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveUtilityHotspot(activeUtilityHotspot === 'boiler' ? null : 'boiler')}
+                    className={`px-2.5 py-1.5 rounded-lg text-left text-xs transition-all flex items-center gap-1.5 border cursor-pointer ${
+                      activeUtilityHotspot === 'boiler'
+                        ? 'bg-orange-500/30 border-orange-400 text-white shadow-sm'
+                        : 'bg-white/10 border-white/10 text-white/80 hover:bg-white/20'
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-[15px] text-orange-400 shrink-0">local_fire_department</span>
+                    <div className="truncate">
+                      <div className="font-semibold leading-tight truncate">Steam Boiler</div>
+                      <div className="text-[9px] font-mono text-white/60 truncate">Process Clean Steam</div>
+                    </div>
+                  </button>
+                </div>
+
+                {/* Description or Active Equipment Details */}
+                {activeUtilityHotspot === 'transformer' && (
+                  <p className="text-xs text-amber-200 bg-amber-950/50 p-2.5 rounded-lg border border-amber-500/30 mb-3 leading-relaxed">
+                    <strong>⚡ Transformer:</strong> Step-down distribution transformer (11kV to 433V) with copper winding, bus duct connections, and transient surge suppressors providing continuous cleanroom power.
+                  </p>
+                )}
+                {activeUtilityHotspot === 'diesel' && (
+                  <p className="text-xs text-yellow-200 bg-yellow-950/50 p-2.5 rounded-lg border border-yellow-500/30 mb-3 leading-relaxed">
+                    <strong>⚙️ Diesel Engine (DG Set):</strong> Heavy-duty acoustic enclosed diesel generator with automatic mains failure (AMF) synchronizing panel ensuring zero power interruption for critical cleanrooms.
+                  </p>
+                )}
+                {activeUtilityHotspot === 'compressor' && (
+                  <p className="text-xs text-cyan-200 bg-cyan-950/50 p-2.5 rounded-lg border border-cyan-500/30 mb-3 leading-relaxed">
+                    <strong>💨 Air Compressor:</strong> Multi-stage rotary screw air compressor with vertical receiver tank and refrigerated desiccant dryer supplying Class 0 oil-free pneumatic utility air.
+                  </p>
+                )}
+                {activeUtilityHotspot === 'boiler' && (
+                  <p className="text-xs text-orange-200 bg-orange-950/50 p-2.5 rounded-lg border border-orange-500/30 mb-3 leading-relaxed">
+                    <strong>🔥 Steam Boiler:</strong> Packaged skid-mounted industrial steam boiler with insulated steam distribution piping and automated burner modulation delivering sterile process steam.
+                  </p>
+                )}
+                {!activeUtilityHotspot && (
+                  <p className="text-xs text-white/80 max-w-xl mb-3 leading-relaxed">
+                    Turnkey execution of core pharmaceutical plant utilities: step-down electrical transformer, acoustic diesel engine DG backup, oil-free rotary screw compressor, and industrial steam boiler.
+                  </p>
+                )}
+
+                <div className="flex items-center justify-between pt-1">
+                  <a
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-white hover:text-white/90 transition-colors font-display"
+                    href="#rfq-section"
+                  >
+                    <span>Plant Utilities RFQ</span>
+                    <span className="material-symbols-outlined text-[15px] group-hover:translate-x-1.5 transition-transform duration-200">
+                      arrow_forward
+                    </span>
+                  </a>
+                  {activeUtilityHotspot && (
+                    <button
+                      onClick={() => setActiveUtilityHotspot(null)}
+                      className="text-[11px] font-mono text-white/60 hover:text-white underline cursor-pointer"
+                    >
+                      Reset Highlight
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
-            {/* Bento 2: Photo Card (HEPA & Cleanroom Validation) using IMAGE_17 */}
-            <div className="lg:col-span-5 rounded-2xl overflow-hidden border border-[#E4E9F1] bg-[#F7F9FC] relative group shadow-sm hover:shadow-xl hover:border-[#1F56A8]/40 transition-all duration-300 flex flex-col justify-between min-h-[360px]">
+
+            {/* Bento 2: Air Filtration & Terminal HEPA Units */}
+            <div className="lg:col-span-5 rounded-2xl overflow-hidden border border-[#E4E9F1] bg-[#16233F] relative group shadow-sm hover:shadow-xl hover:border-[#1F56A8]/40 transition-all duration-300 flex flex-col justify-between min-h-[460px]">
               <img
                 alt="Terminal HEPA filter gel seal installation and particle counter probe testing"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                 src="https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#16233F]/95 via-[#16233F]/50 to-transparent"></div>
-              <div className="relative z-10 p-6 flex justify-between items-start">
-                <span className="px-2.5 py-1 rounded-md bg-white/90 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-[#1F56A8] uppercase">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#16233F] via-[#16233F]/75 to-[#16233F]/40 pointer-events-none"></div>
+
+              {/* Top Header */}
+              <div className="relative z-10 p-5 sm:p-6 flex flex-wrap justify-between items-center gap-2">
+                <span className="px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-[#1F56A8] uppercase tracking-wider shadow-xs">
                   DIVISION 04 • AIR FILTRATION
                 </span>
-                <span className="px-2.5 py-1 rounded-md bg-black/40 backdrop-blur-md text-[10px] font-mono text-white">
-                  H14 / 99.997%
+                <span className="px-2.5 py-1 rounded-md bg-emerald-500/90 text-[10px] font-mono font-bold text-white shadow-xs">
+                  MPPS &gt; 99.9995%
                 </span>
               </div>
-              <div className="relative z-10 p-6 text-white">
-                <h3 className="font-display font-bold text-2xl text-white mb-2">
-                  Terminal HEPA / ULPA Filtration Cascades
+
+              {/* Filter Test Hotspot Pin on the Picture */}
+              <div className="relative z-20 px-6 py-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>Terminal Gel-Seal HEPA (Individual Scan Tested)</span>
+                </div>
+              </div>
+
+              {/* Card Body */}
+              <div className="relative z-10 p-5 sm:p-6 text-white">
+                <h3 className="font-display font-bold text-xl sm:text-2xl text-white mb-2 leading-tight">
+                  Air Filtration &amp; Terminal HEPA Units
                 </h3>
-                <p className="text-xs text-white/80 max-w-xs mb-4 leading-relaxed">
-                  Gel-seal mini-pleat terminal boxes, PAO/DOP challenge ports, and zero-bypass certified airflow guarantees.
+                <p className="text-xs text-white/90 mb-3.5 leading-relaxed">
+                  Comprehensive filtration from G3 pre-filters to H14 terminal gel-seal HEPA modules and U15 ULPA units with MPPS efficiency exceeding 99.9995%.
                 </p>
-                <a
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-white hover:text-white/90 transition-colors font-display"
-                  href="#rfq-section"
-                >
-                  <span>Filtration Protocols</span>
-                  <span className="material-symbols-outlined text-[15px] group-hover:translate-x-1.5 transition-transform duration-200">
-                    arrow_forward
+
+                {/* Standards Badges */}
+                <div className="flex flex-wrap gap-1.5 mb-3.5">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white/15 text-white border border-white/20">
+                    EN 1822:2019 Certified
                   </span>
-                </a>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white/15 text-white border border-white/20">
+                    ISO 29463 Compliant
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-400/20 text-emerald-300 border border-emerald-400/30">
+                    Individual Leak Tested
+                  </span>
+                </div>
+
+                {/* Engineering Highlights */}
+                <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15 mb-4 space-y-1.5">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-white/70 font-bold block mb-1">
+                    Engineering Highlights:
+                  </span>
+                  <div className="flex items-start gap-1.5 text-[11px] text-white/95">
+                    <span className="material-symbols-outlined text-[14px] text-emerald-400 shrink-0 mt-0.5">check_circle</span>
+                    <span>G3/G4 synthetic washable pre-filters in aluminum frames</span>
+                  </div>
+                  <div className="flex items-start gap-1.5 text-[11px] text-white/95">
+                    <span className="material-symbols-outlined text-[14px] text-emerald-400 shrink-0 mt-0.5">check_circle</span>
+                    <span>F7/F9 deep-pleat and pocket micro-fiber synthetic fine filters</span>
+                  </div>
+                  <div className="flex items-start gap-1.5 text-[11px] text-white/95">
+                    <span className="material-symbols-outlined text-[14px] text-emerald-400 shrink-0 mt-0.5">check_circle</span>
+                    <span>H13/H14 mini-pleat HEPA filters with fluid gel or polyurethane seals</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <a
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-white hover:text-white/90 transition-colors font-display"
+                    href="/filters"
+                  >
+                    <span>Filtration Protocols</span>
+                    <span className="material-symbols-outlined text-[15px] group-hover:translate-x-1.5 transition-transform duration-200">
+                      arrow_forward
+                    </span>
+                  </a>
+                  <a
+                    href="#rfq-section"
+                    className="text-[11px] font-mono uppercase tracking-wider text-emerald-300 hover:underline"
+                  >
+                    Request Filter Quote ➔
+                  </a>
+                </div>
               </div>
             </div>
-            {/* Bento 3: Cleanroom Panels */}
-            <div className="lg:col-span-4 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
+
+            {/* Bento Row 2: 4 Core Turnkey Engineering Divisions */}
+            {/* Bento 3: Modular Wall & Walk-on Ceilings */}
+            <div className="col-span-1 md:col-span-1 lg:col-span-3 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
@@ -326,7 +592,7 @@ export const HomePage: React.FC = () => {
               </div>
               <a
                 className="mt-6 inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
-                href="#rfq-section"
+                href="/divisions"
               >
                 <span>View Panels</span>
                 <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
@@ -334,8 +600,41 @@ export const HomePage: React.FC = () => {
                 </span>
               </a>
             </div>
-            {/* Bento 4: Sterile Passboxes & LAF */}
-            <div className="lg:col-span-4 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
+
+            {/* Bento 4: Psychrometric AHU & HVAC */}
+            <div className="col-span-1 md:col-span-1 lg:col-span-3 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
+                    <span className="material-symbols-outlined text-xl">hvac</span>
+                  </div>
+                  <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
+                    02
+                  </span>
+                </div>
+                <span className="text-[10px] font-mono text-[#1F56A8] font-bold uppercase tracking-wider block mb-1">
+                  HVAC &amp; DEHUMIDIFICATION
+                </span>
+                <h4 className="font-display font-bold text-lg text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
+                  Psychrometric AHU Packages
+                </h4>
+                <p className="text-xs text-[#5B6B82] leading-relaxed">
+                  Thermal break double-skin air handlers, desiccant rotors, and 5K–45K CFM cascade ducting.
+                </p>
+              </div>
+              <a
+                className="mt-6 inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
+                href="/divisions"
+              >
+                <span>AHU Specs</span>
+                <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
+                  arrow_forward
+                </span>
+              </a>
+            </div>
+
+            {/* Bento 5: Sterile Passboxes & LAF */}
+            <div className="col-span-1 md:col-span-1 lg:col-span-3 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
@@ -357,16 +656,17 @@ export const HomePage: React.FC = () => {
               </div>
               <a
                 className="mt-6 inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
-                href="#rfq-section"
+                href="/products"
               >
-                <span>View Passboxes</span>
+                <span>View Equipment</span>
                 <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
                   arrow_forward
                 </span>
               </a>
             </div>
-            {/* Bento 5: Full Turnkey Validation & Qualification Dossiers */}
-            <div className="lg:col-span-4 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
+
+            {/* Bento 6: Full Turnkey Validation & Qualification Dossiers */}
+            <div className="col-span-1 md:col-span-1 lg:col-span-3 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">

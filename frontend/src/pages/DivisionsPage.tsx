@@ -117,6 +117,20 @@ const DEFAULT_DIVISIONS: Partial<Division>[] = [
       'Dynamic garment cubicles with integrated UV and HEPA purge'
     ],
   },
+  {
+    _id: 'div-8',
+    name: 'Primary Plant Utilities & Electromechanical MEP',
+    slug: 'plant-utilities-infrastructure',
+    icon: 'Zap',
+    description: 'Turnkey high-voltage transformers, acoustic diesel generator sets, oil-free rotary screw air compressors, and industrial steam boiler installations.',
+    standards: ['IEEE / IS 2026 Standards', 'CPCB-IV+ Noise Emission', 'ISO 8573-1 Class 0 Air', 'IBR / ASME Code Section I'],
+    features: [
+      '11kV / 433V step-down substation distribution transformers with copper windings',
+      'Heavy-duty acoustic silent diesel generator (DG) packages with automated AMF changeover',
+      'Rotary screw instrument air compressors with vertical receiver tanks and desiccant dryers',
+      'Packaged clean steam boilers with modulating burners, feed water deaerators & insulated piping'
+    ],
+  },
 ];
 
 export const DivisionsPage: React.FC = () => {

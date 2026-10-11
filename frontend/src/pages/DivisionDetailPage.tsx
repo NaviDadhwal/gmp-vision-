@@ -183,6 +183,29 @@ const DIVISION_FALLBACKS: Record<string, DivisionDetailInfo> = {
       'Multi-Tier SS Shoe Racks & Lockers',
       'Clip-on Aluminum Cleanroom Coving & 3-Way Corner Pieces'
     ]
+  },
+  'plant-utilities-infrastructure': {
+    title: 'Primary Plant Utilities & Electromechanical MEP',
+    name: 'Primary Plant Utilities & Electromechanical MEP',
+    slug: 'plant-utilities-infrastructure',
+    icon: 'Zap',
+    description: 'Turnkey high-voltage transformers, acoustic diesel generator sets, oil-free rotary screw air compressors, and industrial steam boiler installations.',
+    fullDetails: 'Pharmaceutical cleanrooms depend critically on reliable, uninterrupted, and sterile central plant utilities. GMP Vision engineers and delivers turnkey utility packages: 11kV substation step-down transformers, silent acoustic diesel generators with automatic AMF transfer, Class 0 oil-free rotary screw air compressors with desiccant dryers, and skid-mounted industrial steam boilers.',
+    standards: ['IEEE / IS 2026 Standards', 'CPCB-IV+ Noise Emission', 'ISO 8573-1 Class 0 Air', 'IBR / ASME Code Section I'],
+    features: [
+      '11kV / 433V step-down substation distribution transformers with copper windings',
+      'Heavy-duty acoustic silent diesel generator (DG) packages with automated AMF changeover',
+      'Rotary screw instrument air compressors with vertical receiver tanks and desiccant dryers',
+      'Packaged clean steam boilers with modulating burners, feed water deaerators & insulated piping',
+      'SCADA / PLC centralized monitoring with power factor correction and energy meters'
+    ],
+    equipment: [
+      'HT/LT Substation Step-Down Transformers (500 kVA - 2500 kVA)',
+      'Acoustic Silent Diesel Generator Sets (250 kVA - 1500 kVA)',
+      'Oil-Free Rotary Screw Air Compressors & Vertical Receivers',
+      'Skid-Mounted Industrial Clean Steam Boiler Packages',
+      'Motor Control Centers (MCC) & Automatic Mains Failure (AMF) Panels'
+    ]
   }
 };
 

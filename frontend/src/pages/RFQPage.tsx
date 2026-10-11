@@ -20,6 +20,7 @@ const DIVISION_OPTIONS = [
   'Pass Boxes & Dynamic Airlocks',
   'Air Filtration & Terminal HEPA Units',
   'Cleanroom SS 304 Furniture & Accessories',
+  'Primary Plant Utilities & Electromechanical MEP',
 ];
 
 const ISO_ACPH_PRESETS: Record<string, { label: string; acph: number; desc: string }> = {
