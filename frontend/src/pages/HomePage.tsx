@@ -899,17 +899,17 @@ export const HomePage: React.FC = () => {
             </a>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Case 1 */}
+            {/* Case 1: Wallace Pharmaceuticals */}
             <div className="rounded-xl overflow-hidden border border-[#E4E9F1] bg-white shadow-sm flex flex-col justify-between group hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
               <div>
                 <div className="h-48 overflow-hidden relative">
                   <img
-                    alt="Wallace Pharmaceuticals Sterile Suite"
+                    alt="Wallace Pharmaceuticals Turnkey HVAC, Filters & Coils"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                     src="https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg"
                   />
                   <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-white/95 text-[10px] font-mono font-bold text-[#1F56A8] border border-[#E4E9F1]">
-                    BADDI, HP
+                    NALAGARH, HP
                   </div>
                   <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/60 text-[10px] font-mono text-white">
                     18,500 SQ.FT
@@ -917,13 +917,87 @@ export const HomePage: React.FC = () => {
                 </div>
                 <div className="p-5">
                   <h3 className="font-display font-bold text-lg text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
-                    Wallace Pharmaceuticals
+                    Wallace Pharmaceuticals Pvt. Ltd.
                   </h3>
                   <span className="text-xs font-mono text-[#1F56A8] block mb-2 font-medium">
-                    ISO Class 6 Sterile Liquid Facility
+                    HVAC Turnkey, Filters &amp; Coils — Active AMC
                   </span>
                   <p className="text-xs text-[#5B6B82] leading-relaxed">
-                    24,000 CFM modular AHUs, precision humidity controls, and hermetic Grade B-D pressure cascades.
+                    24,000 CFM modular AHUs, cooling coil pressure testing, terminal HEPA filtration, and ongoing Annual Maintenance Contract (AMC).
+                  </p>
+                </div>
+              </div>
+              <div className="px-5 pb-5 pt-2 border-t border-[#E4E9F1] flex items-center justify-between text-[11px] font-mono">
+                <span className="text-[#5B6B82]">Completed &amp; Active AMC</span>
+                <span className="text-emerald-700 font-semibold flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200">
+                  <span className="material-symbols-outlined text-emerald-600 text-xs font-bold">verified</span>
+                  Turnkey + AMC Active
+                </span>
+              </div>
+            </div>
+
+            {/* Case 2: Biodeal Pharmaceuticals */}
+            <div className="rounded-xl overflow-hidden border border-[#E4E9F1] bg-white shadow-sm flex flex-col justify-between group hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+              <div>
+                <div className="h-48 overflow-hidden relative">
+                  <img
+                    alt="Biodeal Pharmaceuticals Sterile Injectables Complex"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE"
+                  />
+                  <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-white/95 text-[10px] font-mono font-bold text-[#1F56A8] border border-[#E4E9F1]">
+                    NALAGARH, HP
+                  </div>
+                  <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/60 text-[10px] font-mono text-white">
+                    22,000 SQ.FT
+                  </div>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-display font-bold text-lg text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
+                    Biodeal Pharmaceuticals Pvt. Ltd.
+                  </h3>
+                  <span className="text-xs font-mono text-[#1F56A8] block mb-2 font-medium">
+                    Sterile Injectables Suite — Turnkey &amp; Routine AMC
+                  </span>
+                  <p className="text-xs text-[#5B6B82] leading-relaxed">
+                    Turnkey cleanroom execution and multi-year Annual Maintenance Contract (AMC). Quarterly PAO/DOP HEPA filter integrity scans and room balancing.
+                  </p>
+                </div>
+              </div>
+              <div className="px-5 pb-5 pt-2 border-t border-[#E4E9F1] flex items-center justify-between text-[11px] font-mono">
+                <span className="text-[#5B6B82]">2025 Active AMC</span>
+                <span className="text-emerald-700 font-semibold flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200">
+                  <span className="material-symbols-outlined text-emerald-600 text-xs font-bold">check_circle</span>
+                  Active AMC Contract
+                </span>
+              </div>
+            </div>
+
+            {/* Case 3: Rachil Remedies */}
+            <div className="rounded-xl overflow-hidden border border-[#E4E9F1] bg-white shadow-sm flex flex-col justify-between group hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+              <div>
+                <div className="h-48 overflow-hidden relative">
+                  <img
+                    alt="Rachil Remedies Modular Cleanroom Complex"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                    src="https://lh3.googleusercontent.com/aida/AEtjO1XOvqqJ8HTv2N9XKsc8VYb_geMNA3y9faOJc6zXexUyt_JAVjDEHiewCQRhbtIszI85ekeG8Zwx_mrJeOcDuqDO93o5lG_ewiXDFZhWoD3bzyoexcf1Uhwsb5BqkIzP2yAFN2lvs8VstXAyV9PuKjIozdQq-avnaEjblZCpz0SVM60M9rNXWopmrk7UJXgU4qWxozVz5JUiimt7FfKM0pmOZy-_dE1CGUkouQ_w6emQxfapKvawn1zYbqE"
+                  />
+                  <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-white/95 text-[10px] font-mono font-bold text-[#1F56A8] border border-[#E4E9F1]">
+                    BADDI, HP
+                  </div>
+                  <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/60 text-[10px] font-mono text-white">
+                    16,500 SQ.FT
+                  </div>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-display font-bold text-lg text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
+                    Rachil Remedies Pvt. Ltd.
+                  </h3>
+                  <span className="text-xs font-mono text-[#1F56A8] block mb-2 font-medium">
+                    Solid Dosage &amp; Liquid Cleanroom Complex
+                  </span>
+                  <p className="text-xs text-[#5B6B82] leading-relaxed">
+                    Modular PUF wall envelope, double-skin thermal-break AHUs, dynamic pass boxes, flush cleanroom swing doors, and complete cGMP validation.
                   </p>
                 </div>
               </div>
@@ -935,77 +1009,39 @@ export const HomePage: React.FC = () => {
                 </span>
               </div>
             </div>
-            {/* Case 2 */}
-            <div className="rounded-xl overflow-hidden border border-[#E4E9F1] bg-white shadow-sm flex flex-col justify-between group hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-              <div>
-                <div className="h-48 overflow-hidden relative">
-                  <img
-                    alt="Biotech Cleanrooms India Technical Corridor"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1XOvqqJ8HTv2N9XKsc8VYb_geMNA3y9faOJc6zXexUyt_JAVjDEHiewCQRhbtIszI85ekeG8Zwx_mrJeOcDuqDO93o5lG_ewiXDFZhWoD3bzyoexcf1Uhwsb5BqkIzP2yAFN2lvs8VstXAyV9PuKjIozdQq-avnaEjblZCpz0SVM60M9rNXWopmrk7UJXgU4qWxozVz5JUiimt7FfKM0pmOZy-_dE1CGUkouQ_w6emQxfapKvawn1zYbqE"
-                  />
-                  <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-white/95 text-[10px] font-mono font-bold text-[#1F56A8] border border-[#E4E9F1]">
-                    AHMEDABAD, GUJARAT
-                  </div>
-                  <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/60 text-[10px] font-mono text-white">
-                    14,200 SQ.FT
-                  </div>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-display font-bold text-lg text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
-                    Biotech Cleanrooms India
-                  </h3>
-                  <span className="text-xs font-mono text-[#1F56A8] block mb-2 font-medium">
-                    Class 5 Oncology Formulation Core
-                  </span>
-                  <p className="text-xs text-[#5B6B82] leading-relaxed">
-                    Negative differential pressure barriers, BIBO containment exhaust, and computerized BMS monitoring.
-                  </p>
-                </div>
+          </div>
+
+          {/* AMC Lifecycle Support Announcement Banner */}
+          <div className="mt-8 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-[#16233F] via-[#1a2d52] to-[#1F56A8] text-white flex flex-col md:flex-row items-center justify-between gap-5 border border-[#1F56A8]/40 shadow-md">
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0 shadow-inner">
+                <span className="material-symbols-outlined text-emerald-400 text-2xl">verified_user</span>
               </div>
-              <div className="px-5 pb-5 pt-2 border-t border-[#E4E9F1] flex items-center justify-between text-[11px] font-mono">
-                <span className="text-[#5B6B82]">Completed 2023</span>
-                <span className="text-[#16233F] font-semibold flex items-center gap-1 px-2 py-0.5 rounded bg-[#25D366]/10">
-                  <span className="material-symbols-outlined text-[#25D366] text-xs font-bold">check_circle</span>
-                  Bio-Containment Active
-                </span>
+              <div>
+                <div className="flex flex-wrap items-center gap-2 mb-1">
+                  <span className="font-display font-bold text-base text-white">We Also Offer Comprehensive Annual Maintenance Contracts (AMC)</span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 font-mono text-[10px] font-bold">
+                    24/7 SUPPORT
+                  </span>
+                </div>
+                <p className="text-xs text-white/80 max-w-2xl leading-relaxed">
+                  Keep your cleanrooms certified and audit-ready with quarterly in-situ PAO/DOP HEPA filter leak scans, AHU motor and coil maintenance, airflow velocity balancing, and Schedule M re-certifications.
+                </p>
               </div>
             </div>
-            {/* Case 3 */}
-            <div className="rounded-xl overflow-hidden border border-[#E4E9F1] bg-white shadow-sm flex flex-col justify-between group hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-              <div>
-                <div className="h-48 overflow-hidden relative">
-                  <img
-                    alt="Sterile Injectables Facility HEPA Ceiling"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE"
-                  />
-                  <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-white/95 text-[10px] font-mono font-bold text-[#1F56A8] border border-[#E4E9F1]">
-                    PAONTA SAHIB, HP
-                  </div>
-                  <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/60 text-[10px] font-mono text-white">
-                    12,000 SQ.FT
-                  </div>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-display font-bold text-lg text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
-                    Sterile Injectables Facility
-                  </h3>
-                  <span className="text-xs font-mono text-[#1F56A8] block mb-2 font-medium">
-                    Class B/C Gel-Seal HEPA Grid
-                  </span>
-                  <p className="text-xs text-[#5B6B82] leading-relaxed">
-                    Modular walk-on panels, orbital-welded WFI clean utilities, and rapid 12-minute room air recovery time.
-                  </p>
-                </div>
-              </div>
-              <div className="px-5 pb-5 pt-2 border-t border-[#E4E9F1] flex items-center justify-between text-[11px] font-mono">
-                <span className="text-[#5B6B82]">Completed 2024</span>
-                <span className="text-[#16233F] font-semibold flex items-center gap-1 px-2 py-0.5 rounded bg-[#25D366]/10">
-                  <span className="material-symbols-outlined text-[#25D366] text-xs font-bold">check_circle</span>
-                  Zero-Leakage Cert
-                </span>
-              </div>
+            <div className="flex items-center gap-3 shrink-0 w-full md:w-auto">
+              <a
+                href="/projects"
+                className="flex-1 md:flex-initial text-center px-4 py-2.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-mono text-xs border border-white/20 transition-colors whitespace-nowrap"
+              >
+                View AMC Projects
+              </a>
+              <a
+                href="#rfq-section"
+                className="flex-1 md:flex-initial text-center px-5 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-display font-semibold text-xs tracking-wider uppercase shadow-md transition-colors whitespace-nowrap"
+              >
+                Inquire For Plant AMC
+              </a>
             </div>
           </div>
         </div>
@@ -1111,32 +1147,38 @@ export const HomePage: React.FC = () => {
       <section className="py-12 border-b border-[#E4E9F1] bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-[11px] font-mono uppercase tracking-widest text-[#5B6B82] font-semibold block mb-6">
-            TRUSTED BY PHARMACEUTICAL MANUFACTURERS
+            TRUSTED BY PRESTIGIOUS PHARMACEUTICAL CLIENTS &amp; HEALTHCARE LEADERS
           </span>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 items-center">
-            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 items-center">
+            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
               SUN PHARMA
             </div>
-            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              WALLACE
+            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              WALLACE PHARMA
             </div>
-            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              CIPLA
+            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-emerald-300 bg-emerald-50/40 text-center font-display font-bold text-xs text-emerald-950 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              BIODEAL PHARMA
             </div>
-            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              MANKIND
+            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-blue-300 bg-blue-50/40 text-center font-display font-bold text-xs text-blue-950 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              RACHIL REMEDIES
             </div>
-            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              ALKEM
+            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              CB HEALTHCARE
             </div>
-            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              TORRENT
+            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              MEDIWELL
             </div>
-            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              ZYDUS
+            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              SHARIKA BIOTECH
             </div>
-            <div className="py-3.5 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F]/70 hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
-              DR. REDDY'S
+            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              AZANTIC BIO TECH
+            </div>
+            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              KIMBAL PHARMA
+            </div>
+            <div className="py-3 px-2 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-center font-display font-bold text-xs text-[#16233F] hover:text-[#1F56A8] hover:border-[#1F56A8]/40 hover:-translate-y-0.5 hover:shadow-sm hover:bg-white transition-all duration-200 cursor-default">
+              CIPLA LIMITED
             </div>
           </div>
         </div>
@@ -1267,6 +1309,7 @@ export const HomePage: React.FC = () => {
                         <option value="ISO Class 6 / Grade B">ISO Class 6 / Grade B</option>
                         <option value="ISO Class 7 / Grade C">ISO Class 7 / Grade C</option>
                         <option value="ISO Class 8 / Grade D">ISO Class 8 / Grade D</option>
+                        <option value="Annual Maintenance Contract (AMC)">Annual Maintenance Contract (AMC) &amp; Re-Validation</option>
                       </select>
                     </div>
                   </div>

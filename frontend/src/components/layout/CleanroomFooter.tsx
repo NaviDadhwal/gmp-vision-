@@ -46,6 +46,7 @@ export const CleanroomFooter: React.FC = () => {
               <li><Link className="hover:text-[#1F56A8] transition-colors" to="/divisions">Terminal HEPA &amp; ULPA Filtration</Link></li>
               <li><Link className="hover:text-[#1F56A8] transition-colors" to="/divisions">Dynamic Pass Boxes &amp; LAF Systems</Link></li>
               <li><Link className="hover:text-[#1F56A8] transition-colors" to="/divisions">DQ / IQ / OQ / PQ Validation Dossiers</Link></li>
+              <li><Link className="hover:text-emerald-600 transition-colors font-medium text-emerald-700" to="/projects">Annual Maintenance Contracts (AMC)</Link></li>
             </ul>
           </div>
 

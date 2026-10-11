@@ -8,6 +8,8 @@ import {
   Box,
   Filter,
   Wrench,
+  Zap,
+  ShieldCheck,
   ArrowRight,
   CheckCircle2,
   FileText,
@@ -131,6 +133,20 @@ const DEFAULT_DIVISIONS: Partial<Division>[] = [
       'Packaged clean steam boilers with modulating burners, feed water deaerators & insulated piping'
     ],
   },
+  {
+    _id: 'div-9',
+    name: 'Annual Maintenance Contracts (AMC) & Routine Validation',
+    slug: 'annual-maintenance-contracts-amc',
+    icon: 'ShieldCheck',
+    description: 'Comprehensive AMC lifecycle support for cleanroom facilities, AHU packages, chilled water/DX systems, terminal HEPA filters, and ongoing Schedule M / ISO 14644 re-qualification.',
+    standards: ['ISO 14644-2 Periodic Testing', 'WHO-GMP Schedule M Re-Validation', '24/7 Breakdown SLA'],
+    features: [
+      'Quarterly & bi-annual PAO/DOP in-situ HEPA filter leak integrity scanning',
+      'Airflow velocity measurement, ACPH calculation, and room differential pressure balancing',
+      'AHU mechanical servicing: belt tensioning, bearing lubrication, and cooling coil descaling',
+      'Calibrated discrete particle counter audits and complete regulatory compliance dossiers'
+    ],
+  },
 ];
 
 export const DivisionsPage: React.FC = () => {
@@ -164,6 +180,10 @@ export const DivisionsPage: React.FC = () => {
         return <Filter className="w-6 h-6 text-brand-primary" />;
       case 'Wrench':
         return <Wrench className="w-6 h-6 text-brand-primary" />;
+      case 'Zap':
+        return <Zap className="w-6 h-6 text-amber-500" />;
+      case 'ShieldCheck':
+        return <ShieldCheck className="w-6 h-6 text-emerald-600" />;
       default:
         return <Layers className="w-6 h-6 text-brand-primary" />;
     }
