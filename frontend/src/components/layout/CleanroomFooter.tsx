@@ -7,7 +7,7 @@ export const CleanroomFooter: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-10 border-b border-[#E4E9F1]">
           {/* Col 1: Brand Info */}
-          <div className="lg:col-span-4 flex flex-col gap-3">
+          <div className="lg:col-span-5 flex flex-col gap-3">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-lg bg-white p-0.5 flex items-center justify-center border border-[#E4E9F1] shadow-sm">
                 <img
@@ -38,7 +38,7 @@ export const CleanroomFooter: React.FC = () => {
           </div>
 
           {/* Col 2: Engineering Divisions */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-4">
             <h4 className="font-display font-semibold text-xs text-[#16233F] uppercase tracking-wider mb-3">Divisions</h4>
             <ul className="text-xs space-y-2">
               <li><Link className="hover:text-[#1F56A8] transition-colors" to="/divisions">Modular Wall &amp; Walk-on Ceilings</Link></li>
@@ -52,19 +52,7 @@ export const CleanroomFooter: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 3: Cleanroom Hardware */}
-          <div className="lg:col-span-2">
-            <h4 className="font-display font-semibold text-xs text-[#16233F] uppercase tracking-wider mb-3">Hardware</h4>
-            <ul className="text-xs space-y-2">
-              <li><Link className="hover:text-[#1F56A8] transition-colors" to="/products">Dynamic Pass Boxes</Link></li>
-              <li><Link className="hover:text-[#1F56A8] transition-colors" to="/products">Laminar Flow Benches</Link></li>
-              <li><Link className="hover:text-[#1F56A8] transition-colors" to="/products">Gel-Seal HEPA Boxes</Link></li>
-              <li><Link className="hover:text-[#1F56A8] transition-colors" to="/products">Air Showers</Link></li>
-              <li><Link className="hover:text-[#1F56A8] transition-colors" to="/products">Double Flush Doors</Link></li>
-            </ul>
-          </div>
-
-          {/* Col 4: Badges */}
+          {/* Col 3: Badges */}
           <div className="lg:col-span-3">
             <h4 className="font-display font-semibold text-xs text-[#16233F] uppercase tracking-wider mb-3">Regulatory Compliance</h4>
             <div className="flex flex-wrap gap-1.5 mb-3">
