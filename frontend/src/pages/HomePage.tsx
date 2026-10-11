@@ -230,7 +230,7 @@ export const HomePage: React.FC = () => {
               </h2>
             </div>
             <p className="text-sm text-[#5B6B82] max-w-sm">
-              High-precision architectural envelopes, MEP psychrometrics, and certified particulate barrier cascades.
+              High-precision architectural envelopes, MEP psychrometrics, electrical substations, and certified chemical process cascades.
             </p>
           </div>
           {/* Bento Grid with Real Photos & Interactive Equipment Highlights */}
@@ -546,6 +546,125 @@ export const HomePage: React.FC = () => {
                   arrow_forward
                 </span>
               </a>
+            </div>
+
+            {/* Bento Row 3: Turnkey Electrical & Chemical Process Contracts */}
+            {/* Bento 7: Turnkey Electrical Contracting & HT/LT Power Systems */}
+            <div className="col-span-1 md:col-span-1 lg:col-span-6 rounded-2xl p-6 sm:p-7 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
+                    <span className="material-symbols-outlined text-xl">electric_bolt</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#1F56A8]/10 text-[#1F56A8] border border-[#1F56A8]/20">
+                      TURNKEY CONTRACT
+                    </span>
+                    <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
+                      08
+                    </span>
+                  </div>
+                </div>
+                <span className="text-[10px] font-mono text-[#1F56A8] font-bold uppercase tracking-wider block mb-1">
+                  HT/LT POWER DISTRIBUTION &amp; CLEANROOM ELECTRIFICATION
+                </span>
+                <h4 className="font-display font-bold text-xl text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
+                  Turnkey Electrical Contracting &amp; HT/LT Substations
+                </h4>
+                <p className="text-xs text-[#5B6B82] leading-relaxed mb-4">
+                  Full-scope pharmaceutical electrical contracting: 11kV/33kV indoor/outdoor substations, power transformers, motorized sandwich bus trunking (BBT), PCC/MCC panels, flameproof (FLP / Ex-d) switchgear, IP65 flush teardrop cleanroom lighting, and automated BMS synchronization.
+                </p>
+                <div className="flex flex-wrap gap-1.5 mb-2">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white border border-[#E4E9F1] text-[#16233F]">
+                    IS 732 / IEC 60364
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white border border-[#E4E9F1] text-[#16233F]">
+                    11kV Substations &amp; Bus Ducts
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white border border-[#E4E9F1] text-[#16233F]">
+                    IP65 Flush Cleanroom LEDs
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-[#1F56A8]/10 text-[#1F56A8] border border-[#1F56A8]/30">
+                    Flameproof Ex-d Rated
+                  </span>
+                </div>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[#E4E9F1] flex items-center justify-between">
+                <a
+                  className="inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
+                  href="/divisions"
+                >
+                  <span>Electrical Scope</span>
+                  <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
+                    arrow_forward
+                  </span>
+                </a>
+                <a
+                  className="text-[11px] font-mono font-semibold text-[#1F56A8] hover:underline"
+                  href="/rfq?division=Turnkey%20Electrical%20Contracting%20%26%20HT%2FLT%20Power%20Systems"
+                >
+                  Request Electrical RFQ →
+                </a>
+              </div>
+            </div>
+
+            {/* Bento 8: Chemical Process Contracting & Specialized Industrial Piping */}
+            <div className="col-span-1 md:col-span-1 lg:col-span-6 rounded-2xl p-6 sm:p-7 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
+                    <span className="material-symbols-outlined text-xl">science</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#1F56A8]/10 text-[#1F56A8] border border-[#1F56A8]/20">
+                      PROCESS CONTRACT
+                    </span>
+                    <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
+                      09
+                    </span>
+                  </div>
+                </div>
+                <span className="text-[10px] font-mono text-[#1F56A8] font-bold uppercase tracking-wider block mb-1">
+                  API SYNTHESIS &amp; SPECIALIZED PROCESS PIPING
+                </span>
+                <h4 className="font-display font-bold text-xl text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
+                  Chemical Process &amp; Specialized Industrial Contracting
+                </h4>
+                <p className="text-xs text-[#5B6B82] leading-relaxed mb-4">
+                  Specialized chemical plant &amp; bulk drug utility contracts: orbital-welded electro-polished SS 316L chemical transfer loops with double-containment, hazardous VOC solvent exhaust headers, multi-stage PP/FRP packed-bed wet scrubbers, and acid/alkali-resistant anti-static epoxy screeds.
+                </p>
+                <div className="flex flex-wrap gap-1.5 mb-2">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white border border-[#E4E9F1] text-[#16233F]">
+                    ASME B31.3 Chemical Piping
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white border border-[#E4E9F1] text-[#16233F]">
+                    Orbital SS 316L Manifolds
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white border border-[#E4E9F1] text-[#16233F]">
+                    PP/FRP Wet Scrubbers
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-[#1F56A8]/10 text-[#1F56A8] border border-[#1F56A8]/30">
+                    ATEX / PESO Compliant
+                  </span>
+                </div>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[#E4E9F1] flex items-center justify-between">
+                <a
+                  className="inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
+                  href="/divisions"
+                >
+                  <span>Process Specs</span>
+                  <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
+                    arrow_forward
+                  </span>
+                </a>
+                <a
+                  className="text-[11px] font-mono font-semibold text-[#1F56A8] hover:underline"
+                  href="/rfq?division=Chemical%20Process%20Piping%20%26%20Specialized%20Industrial%20Contracting"
+                >
+                  Request Chemical RFQ →
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -1160,6 +1279,8 @@ export const HomePage: React.FC = () => {
                         <option value="ISO Class 6 / Grade B">ISO Class 6 / Grade B</option>
                         <option value="ISO Class 7 / Grade C">ISO Class 7 / Grade C</option>
                         <option value="ISO Class 8 / Grade D">ISO Class 8 / Grade D</option>
+                        <option value="Turnkey Electrical Contracting & Substation">Turnkey Electrical Contracting &amp; Substation</option>
+                        <option value="Chemical Process Piping & Plant Contracting">Chemical Process Piping &amp; Plant Contracting</option>
                         <option value="Annual Maintenance Contract (AMC)">Annual Maintenance Contract (AMC) &amp; Re-Validation</option>
                       </select>
                     </div>

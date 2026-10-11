@@ -127,11 +127,41 @@ const FALLBACK_PROJECTS: Partial<Project>[] = [
     images: ['/images/aseptic-filling-suite.jpg'],
     featured: false,
   },
+  {
+    _id: 'proj-electrical-substation',
+    title: '11kV Substation, HT/LT Panels & Cleanroom Electrical Contracting',
+    slug: 'turnkey-electrical-substation-contracting',
+    client: 'Sterile Parenterals & API Formulation Plant',
+    location: 'Baddi Industrial Area, Himachal Pradesh, India',
+    division: 'Turnkey Electrical Contracting',
+    isoClass: 'CEA / IS 732 / IEC 60364 Compliant',
+    areaSqFt: 35000,
+    completionDate: '2024-11',
+    description: 'Complete turnkey electrical contracting including 11kV HT yard, 1500 kVA oil-cooled transformer installation, synchronized sandwich bus trunking (BBT), centralized PCC/MCC panels, flameproof switchgear, and IP65 flush teardrop cleanroom lighting network.',
+    images: ['/images/plant-utilities-equipment.jpg'],
+    featured: true,
+  },
+  {
+    _id: 'proj-chemical-process',
+    title: 'High-Purity Chemical Transfer Loops & Hazardous Solvent Scrubbing Contract',
+    slug: 'chemical-process-piping-scrubbing',
+    client: 'Bulk Drug Active Pharmaceutical Ingredients (API) Facility',
+    location: 'Nalagarh, Himachal Pradesh, India',
+    division: 'Chemical Process & Specialized Utilities',
+    isoClass: 'ASME B31.3 / ATEX Zone 1/21',
+    areaSqFt: 24000,
+    completionDate: '2024-07',
+    description: 'Specialized chemical process turnkey execution: orbital-welded electro-polished SS 316L solvent delivery lines with double-containment, hazardous VOC fume extraction headers, multi-stage packed-bed wet scrubbers, and chemical-resistant conductive epoxy screed flooring.',
+    images: ['/images/cleanroom-validation-testing.jpg'],
+    featured: true,
+  },
 ];
 
 const DIV_FILTERS = [
   'All Divisions',
   'Annual Maintenance Contracts (AMC)',
+  'Turnkey Electrical Contracting',
+  'Chemical Process & Specialized Utilities',
   'Modular Cleanroom & HVAC',
   'HVAC & Biosafety Equipment',
   'Pass Boxes & Cleanroom Doors',
@@ -180,7 +210,7 @@ export const ProjectsPage: React.FC = () => {
               </h1>
               <p className="text-base text-brand-muted leading-relaxed">
                 Explore our portfolio of completed sterile injectables, solid dosage, and biotech facilities,
-                plus ongoing <strong>Annual Maintenance Contracts (AMC)</strong> keeping pharma manufacturing plants continuously audit-ready.
+                alongside turnkey electrical substations, chemical process piping contracts, and ongoing <strong>Annual Maintenance Contracts (AMC)</strong> keeping pharma manufacturing plants continuously audit-ready.
               </p>
             </div>
 

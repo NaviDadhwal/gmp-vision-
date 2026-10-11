@@ -15,7 +15,7 @@ export const CleanroomHeader: React.FC = () => {
 
   const navLinks: NavLinkItem[] = [
     { label: 'Home', path: '/', icon: 'home', description: 'Overview & cleanroom showcase' },
-    { label: 'Divisions', path: '/divisions', icon: 'domain', description: '7 Turnkey modular & MEP divisions' },
+    { label: 'Divisions', path: '/divisions', icon: 'domain', description: 'Turnkey cleanroom, electrical & chemical divisions' },
     { label: 'Products', path: '/products', icon: 'precision_manufacturing', description: 'Pass boxes, LAF & cleanroom gear' },
     { label: 'Filters', path: '/filters', icon: 'air', description: 'HEPA, ULPA & HVAC air filtration', badge: 'ISO' },
     { label: 'Projects', path: '/projects', icon: 'apartment', description: 'Pharma client execution showcase' },

@@ -10,6 +10,7 @@ import {
   Wrench,
   Zap,
   ShieldCheck,
+  FlaskConical,
   ArrowRight,
   CheckCircle2,
   FileText,
@@ -147,6 +148,34 @@ const DEFAULT_DIVISIONS: Partial<Division>[] = [
       'Calibrated discrete particle counter audits and complete regulatory compliance dossiers'
     ],
   },
+  {
+    _id: 'div-10',
+    name: 'Turnkey Electrical Contracting & HT/LT Power Systems',
+    slug: 'turnkey-electrical-contracting',
+    icon: 'Zap',
+    description: 'Full-scope industrial and pharmaceutical electrical contracting: 11kV/33kV substations, power transformers, synchronized bus trunking, cable routing, PCC/MCC panels, flameproof gear, and IP65 cleanroom lighting.',
+    standards: ['IS 732 / IEC 60364 Standards', 'Central Electricity Authority (CEA) Regulations', 'IS/IEC 60079 Flameproof Hazardous Areas'],
+    features: [
+      'HT/LT substation switchgear installation, distribution boards & motorized bus trunking',
+      'IP65 bottom-opening flush cleanroom teardrop LED lighting & occupancy sensor circuits',
+      'Engineered GI/perforated cable tray networks, chemical earthing pits & lightning arrestors',
+      'Flameproof (FLP / Ex-d) switchboards, emergency lighting backup & automated BMS integration'
+    ],
+  },
+  {
+    _id: 'div-11',
+    name: 'Chemical Process Contracting & Specialized Industrial Piping',
+    slug: 'chemical-process-contracting',
+    icon: 'FlaskConical',
+    description: 'Specialized chemical engineering & API formulation contracts: electro-polished SS 316L chemical transfer loops, hazardous solvent headers, wet fume scrubbers, and acid/alkali-resistant anti-static epoxy floorings.',
+    standards: ['ASME B31.3 Chemical Process Piping', 'ATEX / PESO Hazardous Solvent Guidelines', 'ASTM D4060 Chemical Resistance'],
+    features: [
+      'High-purity orbital-welded electro-polished SS 316L chemical distribution pipelines & manifold skids',
+      'Corrosive solvent & acid fume exhaust in PP/FRP with multi-stage wet packed-bed scrubbers',
+      'Self-leveling heavy-duty chemical-resistant conductive epoxy screeds & anti-static cleanroom flooring',
+      'Double-containment hazardous chemical transport piping with automated leak detection sensors'
+    ],
+  },
 ];
 
 export const DivisionsPage: React.FC = () => {
@@ -181,9 +210,11 @@ export const DivisionsPage: React.FC = () => {
       case 'Wrench':
         return <Wrench className="w-6 h-6 text-brand-primary" />;
       case 'Zap':
-        return <Zap className="w-6 h-6 text-amber-500" />;
+        return <Zap className="w-6 h-6 text-brand-primary" />;
       case 'ShieldCheck':
-        return <ShieldCheck className="w-6 h-6 text-emerald-600" />;
+        return <ShieldCheck className="w-6 h-6 text-brand-primary" />;
+      case 'FlaskConical':
+        return <FlaskConical className="w-6 h-6 text-brand-primary" />;
       default:
         return <Layers className="w-6 h-6 text-brand-primary" />;
     }

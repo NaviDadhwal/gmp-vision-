@@ -21,6 +21,8 @@ const DIVISION_OPTIONS = [
   'Air Filtration & Terminal HEPA Units',
   'Cleanroom SS 304 Furniture & Accessories',
   'Primary Plant Utilities & Electromechanical MEP',
+  'Turnkey Electrical Contracting & HT/LT Power Systems',
+  'Chemical Process Piping & Specialized Industrial Contracting',
   'Annual Maintenance Contracts (AMC)',
 ];
 
