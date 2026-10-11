@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ApiService } from '../lib/api/endpoints';
 
 export const HomePage: React.FC = () => {
@@ -858,15 +859,15 @@ export const HomePage: React.FC = () => {
                 Real Project Executions
               </h2>
             </div>
-            <a
+            <Link
               className="group inline-flex items-center gap-1.5 text-xs font-mono font-semibold uppercase text-[#1F56A8] hover:text-[#16233F] transition-colors"
-              href="#rfq-section"
+              to="/projects"
             >
-              <span>All 250+ Sites Installed</span>
+              <span>View All Projects</span>
               <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform duration-200">
                 arrow_forward
               </span>
-            </a>
+            </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Case 1: Wallace Pharmaceuticals */}
@@ -1000,12 +1001,12 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center gap-3 shrink-0 w-full md:w-auto">
-              <a
-                href="/projects"
+              <Link
+                to="/projects"
                 className="flex-1 md:flex-initial text-center px-4 py-2.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-mono text-xs border border-white/20 transition-colors whitespace-nowrap"
               >
                 View AMC Projects
-              </a>
+              </Link>
               <a
                 href="#rfq-section"
                 className="flex-1 md:flex-initial text-center px-5 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-display font-semibold text-xs tracking-wider uppercase shadow-md transition-colors whitespace-nowrap"
