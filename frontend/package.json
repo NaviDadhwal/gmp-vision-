@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "pack:cpanel": "python3 -c \"import os, zipfile; z = zipfile.ZipFile('webspacekit-build.zip', 'w', zipfile.ZIP_DEFLATED); [z.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), 'dist')) for root, _, files in os.walk('dist') for file in files]; z.close(); print('✨ Created webspacekit-build.zip ready for cPanel upload!')\""
   },
   "dependencies": {
     "axios": "^1.20.0",
