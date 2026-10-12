@@ -57,7 +57,7 @@ class FilterController {
     }
     static async update(req, res, next) {
         try {
-            const filter = await filter_model_1.FilterModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+            const filter = await filter_model_1.FilterModel.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
             if (!filter) {
                 throw new errorHandler_1.AppError('Filter item not found.', 404, 'NOT_FOUND');
             }
@@ -72,7 +72,7 @@ class FilterController {
     }
     static async delete(req, res, next) {
         try {
-            const filter = await filter_model_1.FilterModel.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
+            const filter = await filter_model_1.FilterModel.findByIdAndUpdate(req.params.id, { isActive: false }, { returnDocument: 'after' });
             if (!filter) {
                 throw new errorHandler_1.AppError('Filter item not found.', 404, 'NOT_FOUND');
             }

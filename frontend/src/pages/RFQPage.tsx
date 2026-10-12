@@ -109,8 +109,9 @@ export const RFQPage: React.FC = () => {
       console.error('Lead submission failed:', err);
       // If backend is offline or network fails, provide friendly validation message
       setErrorMsg(
+        err?.response?.data?.error?.message ||
         err?.response?.data?.message ||
-        'Unable to reach submission server at this moment. You can also contact our engineering desk directly at +91-93173-43117 or info@gmpvision.in.'
+        'Unable to reach submission server at this moment. You can also contact our engineering desk directly at +91-93173-43117 or info@gmpvision.com.'
       );
     } finally {
       setSubmitting(false);

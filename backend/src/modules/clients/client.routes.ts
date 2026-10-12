@@ -35,7 +35,7 @@ export class ClientController {
 
   static async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const client = await ClientModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      const client = await ClientModel.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
       if (!client) {
         throw new AppError('Client record not found.', 404, 'NOT_FOUND');
       }
@@ -50,7 +50,7 @@ export class ClientController {
 
   static async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const client = await ClientModel.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
+      const client = await ClientModel.findByIdAndUpdate(req.params.id, { isActive: false }, { returnDocument: 'after' });
       if (!client) {
         throw new AppError('Client record not found.', 404, 'NOT_FOUND');
       }

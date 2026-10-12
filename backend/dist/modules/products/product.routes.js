@@ -71,7 +71,7 @@ class ProductController {
     }
     static async update(req, res, next) {
         try {
-            const product = await product_model_1.ProductModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+            const product = await product_model_1.ProductModel.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
             if (!product) {
                 throw new errorHandler_1.AppError('Product not found.', 404, 'NOT_FOUND');
             }
@@ -86,7 +86,7 @@ class ProductController {
     }
     static async delete(req, res, next) {
         try {
-            const product = await product_model_1.ProductModel.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
+            const product = await product_model_1.ProductModel.findByIdAndUpdate(req.params.id, { isActive: false }, { returnDocument: 'after' });
             if (!product) {
                 throw new errorHandler_1.AppError('Product not found.', 404, 'NOT_FOUND');
             }

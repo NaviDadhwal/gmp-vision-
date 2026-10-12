@@ -36,7 +36,7 @@ class SettingController {
             if (!key || DISALLOWED_SETTING_KEYS.has(key.toLowerCase())) {
                 throw new errorHandler_1.AppError('Setting key is reserved or invalid and cannot be modified.', 400, 'INVALID_KEY');
             }
-            const setting = await setting_model_1.SettingModel.findOneAndUpdate({ key }, { value, ...(description ? { description } : {}) }, { new: true, upsert: true });
+            const setting = await setting_model_1.SettingModel.findOneAndUpdate({ key }, { value, ...(description ? { description } : {}) }, { returnDocument: 'after', upsert: true });
             res.status(200).json({
                 success: true,
                 data: setting,

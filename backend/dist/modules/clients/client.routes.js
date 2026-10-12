@@ -37,7 +37,7 @@ class ClientController {
     }
     static async update(req, res, next) {
         try {
-            const client = await client_model_1.ClientModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+            const client = await client_model_1.ClientModel.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
             if (!client) {
                 throw new errorHandler_1.AppError('Client record not found.', 404, 'NOT_FOUND');
             }
@@ -52,7 +52,7 @@ class ClientController {
     }
     static async delete(req, res, next) {
         try {
-            const client = await client_model_1.ClientModel.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
+            const client = await client_model_1.ClientModel.findByIdAndUpdate(req.params.id, { isActive: false }, { returnDocument: 'after' });
             if (!client) {
                 throw new errorHandler_1.AppError('Client record not found.', 404, 'NOT_FOUND');
             }

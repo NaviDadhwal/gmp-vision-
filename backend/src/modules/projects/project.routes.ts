@@ -80,7 +80,7 @@ export class ProjectController {
 
   static async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const project = await ProjectModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      const project = await ProjectModel.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
       if (!project) {
         throw new AppError('Project case study not found.', 404, 'NOT_FOUND');
       }
@@ -95,7 +95,7 @@ export class ProjectController {
 
   static async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const project = await ProjectModel.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
+      const project = await ProjectModel.findByIdAndUpdate(req.params.id, { isActive: false }, { returnDocument: 'after' });
       if (!project) {
         throw new AppError('Project case study not found.', 404, 'NOT_FOUND');
       }

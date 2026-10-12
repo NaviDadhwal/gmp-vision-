@@ -65,7 +65,7 @@ class ProjectController {
     }
     static async update(req, res, next) {
         try {
-            const project = await project_model_1.ProjectModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+            const project = await project_model_1.ProjectModel.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
             if (!project) {
                 throw new errorHandler_1.AppError('Project case study not found.', 404, 'NOT_FOUND');
             }
@@ -80,7 +80,7 @@ class ProjectController {
     }
     static async delete(req, res, next) {
         try {
-            const project = await project_model_1.ProjectModel.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
+            const project = await project_model_1.ProjectModel.findByIdAndUpdate(req.params.id, { isActive: false }, { returnDocument: 'after' });
             if (!project) {
                 throw new errorHandler_1.AppError('Project case study not found.', 404, 'NOT_FOUND');
             }

@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+const app_1 = require("../app");
 const db_1 = require("../config/db");
 const env_1 = require("../config/env");
 // Import all Mongoose Models for direct DB state assertions
@@ -97,8 +98,19 @@ async function runTestSuite() {
     // 1. Connect to MongoDB
     await (0, db_1.connectDB)();
     console.log(`   Connected to MongoDB: ${mongoose_1.default.connection.host}/${mongoose_1.default.connection.name}`);
-    // 2. Connect to live server at http://localhost:5000
-    baseUrl = process.env.API_URL || 'http://localhost:5000';
+    // 2. Start test server dynamically if API_URL is not provided
+    if (process.env.API_URL) {
+        baseUrl = process.env.API_URL;
+    }
+    else {
+        await new Promise((resolve) => {
+            server = app_1.app.listen(0, () => {
+                const addr = server.address();
+                baseUrl = `http://localhost:${addr.port}`;
+                resolve();
+            });
+        });
+    }
     console.log(`   Target API Base URL: ${baseUrl}`);
     try {
         // ======================================================================
@@ -724,8 +736,10 @@ async function runTestSuite() {
                 recordFail(mod, 'DELETE /api/v1/divisions/:id soft-delete', err);
             }
             // Cleanup test division from DB
-            await division_model_1.DivisionModel.findByIdAndDelete(createdDivisionId);
-            console.log(`   🧹 [Cleanup] Permanently purged test division ${createdDivisionId} from MongoDB`);
+            if (createdDivisionId) {
+                await division_model_1.DivisionModel.findByIdAndDelete(createdDivisionId);
+                console.log(`   🧹 [Cleanup] Permanently purged test division ${createdDivisionId} from MongoDB`);
+            }
         }
         // ======================================================================
         // MODULE 5: Products & Equipment Catalog
@@ -969,8 +983,10 @@ async function runTestSuite() {
                 recordFail(mod, 'DELETE /api/v1/products/:id soft-delete', err);
             }
             // Cleanup
-            await product_model_1.ProductModel.findByIdAndDelete(createdProductId);
-            console.log(`   🧹 [Cleanup] Permanently purged test product ${createdProductId} from MongoDB`);
+            if (createdProductId) {
+                await product_model_1.ProductModel.findByIdAndDelete(createdProductId);
+                console.log(`   🧹 [Cleanup] Permanently purged test product ${createdProductId} from MongoDB`);
+            }
         }
         // ======================================================================
         // MODULE 6: Air Filtration Catalog
@@ -1147,8 +1163,10 @@ async function runTestSuite() {
                 recordFail(mod, 'DELETE /api/v1/filters/:id soft-delete', err);
             }
             // Cleanup
-            await filter_model_1.FilterModel.findByIdAndDelete(createdFilterId);
-            console.log(`   🧹 [Cleanup] Permanently purged test filter ${createdFilterId} from MongoDB`);
+            if (createdFilterId) {
+                await filter_model_1.FilterModel.findByIdAndDelete(createdFilterId);
+                console.log(`   🧹 [Cleanup] Permanently purged test filter ${createdFilterId} from MongoDB`);
+            }
         }
         // ======================================================================
         // MODULE 7: Projects & Case Studies
@@ -1334,8 +1352,10 @@ async function runTestSuite() {
                 recordFail(mod, 'DELETE /api/v1/projects/:id soft-delete', err);
             }
             // Cleanup
-            await project_model_1.ProjectModel.findByIdAndDelete(createdProjectId);
-            console.log(`   🧹 [Cleanup] Permanently purged test project ${createdProjectId} from MongoDB`);
+            if (createdProjectId) {
+                await project_model_1.ProjectModel.findByIdAndDelete(createdProjectId);
+                console.log(`   🧹 [Cleanup] Permanently purged test project ${createdProjectId} from MongoDB`);
+            }
         }
         // ======================================================================
         // MODULE 8: Clients Trust Wall
@@ -1482,8 +1502,10 @@ async function runTestSuite() {
                 recordFail(mod, 'DELETE /api/v1/clients/:id soft-delete', err);
             }
             // Cleanup
-            await client_model_1.ClientModel.findByIdAndDelete(createdClientId);
-            console.log(`   🧹 [Cleanup] Permanently purged test client ${createdClientId} from MongoDB`);
+            if (createdClientId) {
+                await client_model_1.ClientModel.findByIdAndDelete(createdClientId);
+                console.log(`   🧹 [Cleanup] Permanently purged test client ${createdClientId} from MongoDB`);
+            }
         }
         // ======================================================================
         // MODULE 9: Site Settings & Metrics
@@ -1741,8 +1763,10 @@ async function runTestSuite() {
                 recordFail(mod, 'PATCH /api/v1/leads/:id/status invalid enum', err);
             }
             // Cleanup
-            await lead_model_1.LeadModel.findByIdAndDelete(createdLeadId);
-            console.log(`   🧹 [Cleanup] Permanently purged test lead ${createdLeadId} from MongoDB`);
+            if (createdLeadId) {
+                await lead_model_1.LeadModel.findByIdAndDelete(createdLeadId);
+                console.log(`   🧹 [Cleanup] Permanently purged test lead ${createdLeadId} from MongoDB`);
+            }
         }
         // ======================================================================
         // MODULE 11: Media Uploads
@@ -1924,7 +1948,8 @@ async function runTestSuite() {
     finally {
         // Graceful teardown
         if (server) {
-            await new Promise((resolve) => server.close(() => resolve()));
+            const activeServer = server;
+            await new Promise((resolve) => activeServer.close(() => resolve()));
             console.log('\n🔒 [HTTP] Test server closed gracefully.');
         }
         await (0, db_1.disconnectDB)();

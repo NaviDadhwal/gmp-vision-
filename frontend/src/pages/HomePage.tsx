@@ -1,202 +1,203 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ApiService } from '../lib/api/endpoints';
+import { CLIENT_LOGOS } from '../data/clientLogos';
 
-interface ClientBrand {
-  name: string;
-  sub: string;
-  logo: React.ReactNode;
+interface TrustMetric {
+  value: string;
+  suffix?: string;
+  title: string;
+  icon: string;
 }
 
-const CLIENT_LOGOS: ClientBrand[] = [
+const TRUST_METRICS: TrustMetric[] = [
+  { value: '20', suffix: '+', title: 'Years Experience', icon: 'history' },
+  { value: '10+', suffix: '+', title: 'Projects Completed', icon: 'domain' },
+  { value: '180', suffix: '+', title: 'Pharma Clients', icon: 'groups' },
+  { value: '1.5M', suffix: '+', title: 'Sq.Ft Commissioned', icon: 'straighten' },
+];
+
+interface CoreDivisionCard {
+  id: string;
+  category: string;
+  title: string;
+  desc: string;
+  href: string;
+  linkText: string;
+  icon: string;
+}
+
+const CORE_DIVISIONS: CoreDivisionCard[] = [
   {
-    name: 'SUN PHARMA',
-    sub: 'Active Cleanroom & HVAC',
-    logo: (
-      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
-        <circle cx="20" cy="20" r="15" stroke="#F97316" strokeWidth="2.5" opacity="0.25" />
-        <path
-          d="M20 7C27.2 7 33 12.8 33 20C33 27.2 27.2 33 20 33C14.2 33 9.3 29.2 7.6 24"
-          stroke="#EA580C"
-          strokeWidth="3.2"
-          strokeLinecap="round"
-        />
-        <circle cx="20" cy="20" r="6.5" stroke="#EA580C" strokeWidth="2.8" />
-      </svg>
-    ),
+    id: '01',
+    category: 'ENVELOPE ISOLATION',
+    title: 'Modular Wall & Walk-on Ceilings',
+    desc: '50mm & 80mm PUF/Rockwool panels, flush silicone joints, and antimicrobial PPGI skins.',
+    href: '/divisions',
+    linkText: 'View Panels',
+    icon: 'domain_verification',
   },
   {
-    name: 'WALLACE PHARMA',
-    sub: 'Turnkey HVAC & AMC',
-    logo: (
-      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
-        {/* Authentic Wallace Pharmaceuticals Hexagonal Apothecary Balance Scale */}
-        <polygon
-          points="20,3 35.5,12 35.5,28 20,37 4.5,28 4.5,12"
-          fill="#F4F8FD"
-          stroke="#0C54A0"
-          strokeWidth="2.5"
-          strokeLinejoin="round"
-        />
-        <line x1="20" y1="10.5" x2="20" y2="30" stroke="#0C54A0" strokeWidth="2" strokeLinecap="round" />
-        <circle cx="20" cy="10" r="1.8" fill="#0C54A0" />
-        <line x1="15.5" y1="30" x2="24.5" y2="30" stroke="#0C54A0" strokeWidth="2.2" strokeLinecap="round" />
-        <line x1="11" y1="14.5" x2="29" y2="14.5" stroke="#0C54A0" strokeWidth="1.8" strokeLinecap="round" />
-        <path d="M12 14.5L8.5 22.5M12 14.5L15.5 22.5" stroke="#0C54A0" strokeWidth="1.2" strokeLinecap="round" />
-        <path d="M8 22.5C8 25.2 16 25.2 16 22.5Z" fill="#0C54A0" />
-        <path d="M28 14.5L24.5 22.5M28 14.5L31.5 22.5" stroke="#0C54A0" strokeWidth="1.2" strokeLinecap="round" />
-        <path d="M24 22.5C24 25.2 32 25.2 32 22.5Z" fill="#0C54A0" />
-      </svg>
-    ),
+    id: '02',
+    category: 'HVAC & DEHUMIDIFICATION',
+    title: 'Psychrometric AHU Packages',
+    desc: 'Thermal break double-skin air handlers, desiccant rotors, and 5K–45K CFM cascade ducting.',
+    href: '/divisions',
+    linkText: 'AHU Specs',
+    icon: 'hvac',
   },
   {
-    name: 'BIODEAL PHARMA',
-    sub: 'Sterile Injectables & AMC',
-    logo: (
-      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
-        {/* Authentic Biodeal Pharmaceuticals Ribbon 'B' & Multi-Orbit Arc */}
-        <path
-          d="M 28 3.5 C 19 3 10 6 5.5 12 C 3 15.5 3 21 6.5 25.5 C 4 21 4 16 7 13 C 11.5 8 19 5.5 28 5.5 Z"
-          fill="#0284C7"
-        />
-        <path
-          d="M 26 5 C 16.5 5 8.5 8.5 4.5 14.5 C 2 18.5 2 24.5 6 29 C 3.5 24 3.5 18.5 6.5 15 C 10 10.5 17 7.5 26 7 Z"
-          fill="#10B981"
-        />
-        <path
-          d="M 7.5 16 C 3 21.5 3 28 6.5 32 C 11.5 37.5 21 38 35.5 32.5 C 23.5 36 13 35 8.5 30.5 C 5 26.5 5 21 8.5 16.5 Z"
-          fill="#F97316"
-        />
-        <g transform="translate(13, 8)">
-          <path
-            d="M 0 0 H 11.5 C 15.5 0 18.5 2.2 18.5 5.5 C 18.5 7.8 17 9.2 15 10 C 17.5 11 19 12.8 19 15.5 C 19 19.2 15.5 21.5 11.5 21.5 H 0 Z"
-            fill="#F97316"
-            stroke="#10B981"
-            strokeWidth="1.8"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M 3 3.5 H 9 C 11.5 3.5 13 4.5 13 5.8 C 13 7.2 11.5 8 9 8 H 3 Z"
-            fill="#FFFFFF"
-            stroke="#10B981"
-            strokeWidth="1.1"
-          />
-          <path
-            d="M 3 13.5 H 9.5 C 12 13.5 13.5 14.5 13.5 16 C 13.5 17.5 12 18.2 9.5 18.2 H 3 Z"
-            fill="#FFFFFF"
-            stroke="#10B981"
-            strokeWidth="1.1"
-          />
-          <path d="M 3 5.8 H 8" stroke="#F97316" strokeWidth="1.4" strokeLinecap="round" />
-          <path d="M 3 16 H 8.5" stroke="#F97316" strokeWidth="1.4" strokeLinecap="round" />
-        </g>
-      </svg>
-    ),
+    id: '03',
+    category: 'STERILE AIRFLOW',
+    title: 'Dynamic Pass Boxes & LAF Units',
+    desc: 'SS 304 interlocked chambers, laminar hoods, mist showers, and UV sterilization timers.',
+    href: '/products',
+    linkText: 'View Equipment',
+    icon: 'air',
   },
   {
-    name: 'RACHIL REMEDIES',
-    sub: 'cGMP Cleanroom Complex',
-    logo: (
-      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
-        <path d="M20 5L33 10V20C33 27.5 27 33 20 35C13 33 7 27.5 7 20V10L20 5Z" fill="#EFF6FF" stroke="#1F56A8" strokeWidth="2" />
-        <path d="M15 15H21C23.2 15 24.5 16.5 24.5 18.5C24.5 20.5 23.2 22 21 22H15V26M15 22L24 26" stroke="#1F56A8" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    id: '07',
+    category: 'REGULATORY COMPLIANCE',
+    title: 'DQ / IQ / OQ / PQ Validation Dossiers',
+    desc: 'Full particle count mapping, recovery tests, and Schedule M validation packages for audits.',
+    href: '#rfq-section',
+    linkText: 'Audit Protocols',
+    icon: 'verified_user',
+  },
+];
+
+interface HardwareComponent {
+  sku: string;
+  name: string;
+  img: string;
+  specs: [string, string][];
+}
+
+const PRECISION_COMPONENTS: HardwareComponent[] = [
+  {
+    sku: 'SKU-MP50',
+    name: 'cGMP Modular Wall Panels',
+    img: 'https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg',
+    specs: [
+      ['Core Density:', '40 kg/m³ PUF'],
+      ['Thickness:', '50 / 80 / 100mm'],
+    ],
   },
   {
-    name: 'CB HEALTHCARE',
-    sub: 'Modular Cleanroom & HVAC',
-    logo: (
-      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
-        <rect x="6" y="6" width="12" height="12" rx="3.5" fill="#E11D48" />
-        <rect x="22" y="6" width="12" height="12" rx="3.5" fill="#84CC16" />
-        <rect x="6" y="22" width="12" height="12" rx="3.5" fill="#F59E0B" />
-        <rect x="22" y="22" width="12" height="12" rx="3.5" fill="#991B1B" />
-      </svg>
-    ),
+    sku: 'SKU-DPB304',
+    name: 'Dynamic Pass Box Unit',
+    img: 'https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg',
+    specs: [
+      ['Filtration:', '0.3µm @ 99.997%'],
+      ['Interlock:', 'Electro-magnetic'],
+    ],
   },
   {
-    name: 'MEDIWELL',
-    sub: 'Aseptic Cleanroom Upgrades',
-    logo: (
-      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
-        <path d="M10 28C6 22 7 14 13 9C19 4 28 5 32 10" stroke="#DC2626" strokeWidth="2.8" strokeLinecap="round" />
-        <circle cx="21" cy="13" r="3" fill="#DC2626" />
-        <path d="M14 18C18 20 24 20 28 18M18 21L21 29L24 21" stroke="#DC2626" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    sku: 'SKU-AHU45',
+    name: 'Double-Skin Air Handling Unit',
+    img: 'https://lh3.googleusercontent.com/aida/AEtjO1XOvqqJ8HTv2N9XKsc8VYb_geMNA3y9faOJc6zXexUyt_JAVjDEHiewCQRhbtIszI85ekeG8Zwx_mrJeOcDuqDO93o5lG_ewiXDFZhWoD3bzyoexcf1Uhwsb5BqkIzP2yAFN2lvs8VstXAyV9PuKjIozdQq-avnaEjblZCpz0SVM60M9rNXWopmrk7UJXgU4qWxozVz5JUiimt7FfKM0pmOZy-_dE1CGUkouQ_w6emQxfapKvawn1zYbqE',
+    specs: [
+      ['Air Volume:', '5,000–45,000 CFM'],
+      ['Thermal Break:', 'TB2 Profile'],
+    ],
   },
   {
-    name: 'SHARIKA BIOTECH',
-    sub: 'Biotech Biosafety Suite',
-    logo: (
-      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
-        <g transform="rotate(-38 20 20)">
-          <rect x="12" y="7" width="16" height="13" rx="6.5" fill="#1E3A8A" />
-          <rect x="12" y="20" width="16" height="13" rx="6.5" fill="#0284C7" />
-          <circle cx="20" cy="20" r="3.2" fill="white" />
-          <path d="M16 20H24" stroke="white" strokeWidth="1.5" />
-        </g>
-      </svg>
-    ),
+    sku: 'SKU-HEPA-H14',
+    name: 'Gel-Seal Terminal HEPA Box',
+    img: 'https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE',
+    specs: [
+      ['Efficiency:', 'EN 1822 H14'],
+      ['Seal Type:', 'Knife-Edge Gel'],
+    ],
+  },
+];
+
+interface CaseStudy {
+  client: string;
+  location: string;
+  area: string;
+  title: string;
+  sub: string;
+  desc: string;
+  img: string;
+  badge: string;
+  badgeIcon: string;
+  status: string;
+}
+
+const CASE_STUDIES: CaseStudy[] = [
+  {
+    client: 'Wallace Pharmaceuticals Pvt. Ltd.',
+    location: 'NALAGARH, HP',
+    area: '18,500 SQ.FT',
+    title: 'Wallace Pharmaceuticals Pvt. Ltd.',
+    sub: 'HVAC Turnkey, Filters & Coils — Active AMC',
+    desc: '24,000 CFM modular AHUs, cooling coil pressure testing, terminal HEPA filtration, and ongoing Annual Maintenance Contract (AMC).',
+    img: 'https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg',
+    badge: 'Turnkey + AMC Active',
+    badgeIcon: 'verified',
+    status: 'Completed & Active AMC',
   },
   {
-    name: 'AZANTIC BIO TECH',
-    sub: 'Dynamic Airlocks & Isolation',
-    logo: (
-      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
-        <polygon points="20,5 32,12 32,26 20,33 8,26 8,12" stroke="#0284C7" strokeWidth="2.2" fill="#F0F9FF" />
-        <circle cx="20" cy="5" r="2.8" fill="#0284C7" />
-        <circle cx="32" cy="12" r="2.8" fill="#0284C7" />
-        <circle cx="32" cy="26" r="2.8" fill="#0284C7" />
-        <circle cx="20" cy="33" r="2.8" fill="#0284C7" />
-        <circle cx="8" cy="26" r="2.8" fill="#0284C7" />
-        <circle cx="8" cy="12" r="2.8" fill="#0284C7" />
-        <circle cx="20" cy="19" r="4.2" fill="#1F56A8" />
-      </svg>
-    ),
+    client: 'Biodeal Pharmaceuticals Pvt. Ltd.',
+    location: 'NALAGARH, HP',
+    area: '22,000 SQ.FT',
+    title: 'Biodeal Pharmaceuticals Pvt. Ltd.',
+    sub: 'Sterile Injectables Suite — Turnkey & Routine AMC',
+    desc: 'Turnkey cleanroom execution and multi-year Annual Maintenance Contract (AMC). Quarterly PAO/DOP HEPA filter integrity scans and room balancing.',
+    img: 'https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE',
+    badge: 'Active AMC Contract',
+    badgeIcon: 'check_circle',
+    status: '2025 Active AMC',
   },
   {
-    name: 'KIMBAL PHARMA',
-    sub: 'Healthcare Formulations',
-    logo: (
-      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
-        <g stroke="#1E3A8A" strokeWidth="2.2" strokeLinecap="round">
-          <line x1="20" y1="6" x2="20" y2="34" />
-          <line x1="6" y1="20" x2="34" y2="20" />
-          <line x1="10" y1="10" x2="30" y2="30" />
-          <line x1="10" y1="30" x2="30" y2="10" />
-          <path d="M17 8L20 6L23 8M17 32L20 34L23 32M8 17L6 20L8 23M32 17L34 20L32 23" strokeWidth="1.8" />
-          <circle cx="20" cy="20" r="3" fill="#1E3A8A" />
-        </g>
-      </svg>
-    ),
+    client: 'Rachil Remedies Pvt. Ltd.',
+    location: 'BADDI, HP',
+    area: '16,500 SQ.FT',
+    title: 'Rachil Remedies Pvt. Ltd.',
+    sub: 'Solid Dosage & Liquid Cleanroom Complex',
+    desc: 'Modular PUF wall envelope, double-skin thermal-break AHUs, dynamic pass boxes, flush cleanroom swing doors, and complete cGMP validation.',
+    img: 'https://lh3.googleusercontent.com/aida/AEtjO1XOvqqJ8HTv2N9XKsc8VYb_geMNA3y9faOJc6zXexUyt_JAVjDEHiewCQRhbtIszI85ekeG8Zwx_mrJeOcDuqDO93o5lG_ewiXDFZhWoD3bzyoexcf1Uhwsb5BqkIzP2yAFN2lvs8VstXAyV9PuKjIozdQq-avnaEjblZCpz0SVM60M9rNXWopmrk7UJXgU4qWxozVz5JUiimt7FfKM0pmOZy-_dE1CGUkouQ_w6emQxfapKvawn1zYbqE',
+    badge: 'Schedule M Passed',
+    badgeIcon: 'check_circle',
+    status: 'Completed 2024',
+  },
+];
+
+interface FiltrationStage {
+  stage: string;
+  name: string;
+  desc: string;
+  standard: string;
+  isTerminal?: boolean;
+}
+
+const FILTRATION_STAGES: FiltrationStage[] = [
+  {
+    stage: 'STAGE 01 • PRE-FILTER',
+    name: 'Primary Coarse G4',
+    desc: '10µm - 20µm capture protecting AHU blowers.',
+    standard: 'EN 779 G4 (90% Arrestance)',
   },
   {
-    name: 'CIPLA LIMITED',
-    sub: 'Global Pharma Standards',
-    logo: (
-      <svg viewBox="0 0 40 40" className="w-7 h-7 shrink-0" fill="none">
-        {/* Authentic Cipla Wordmark (Official Vector in Cipla Blue #233F8C) */}
-        <g transform="translate(2, 13.5) scale(0.285)">
-          <path d="M 38.37,0.28 L 47.53,0.28 L 47.53,6.12 L 38.37,6.12 z" fill="#233F8C" />
-          <path
-            d="M 24.86,13.71 L 34.84,13.71 C 34.84,13.71 32.56,1.13 18.31,0.005 C 18.31,0.005 5.45,-0.65 0.92,12.30 C 0.92,12.30 -2.62,20.94 4.16,29.22 C 4.16,29.22 8.59,35.34 17.69,35.49 C 17.69,35.49 25.15,36.11 30.76,29.58 C 30.76,29.58 34.53,25.22 34.80,21.59 L 24.99,21.59 C 24.99,21.59 22.25,27.21 16.35,26.05 C 16.35,26.05 10.80,25.83 9.43,19.05 C 9.43,19.05 8.45,12.49 14.68,9.88 C 14.68,9.88 21.50,7.61 24.86,13.71"
-            fill="#233F8C"
-          />
-          <path d="M 38.37,8.80 L 47.50,8.80 L 47.50,34.90 L 38.36,34.90 z" fill="#233F8C" />
-          <path
-            d="M 62.04,24.70 C 63.22,26.36 65.45,27.38 67.46,26.87 C 67.89,26.76 68.27,26.52 68.71,26.41 C 70.47,25.42 71.63,23.33 71.40,21.12 C 71.09,19.59 70.10,18.02 68.64,17.32 C 67.48,16.67 65.79,16.55 64.60,17.01 C 63.59,17.41 62.69,18.05 62.03,18.98 C 60.91,20.58 60.95,23.08 62.04,24.70 M 61.19,11.32 C 61.19,11.32 62.99,9.57 64.53,9.00 C 64.53,9.00 67.82,7.69 71.60,9.18 C 71.60,9.18 75.33,10.19 78.29,14.22 C 78.29,14.22 81.07,17.98 80.66,22.48 C 80.66,22.48 80.68,27.47 76.85,31.12 C 76.85,31.12 73.33,35.16 67.72,35.11 C 67.72,35.11 64.68,35.73 61.19,32.28 L 61.19,41.85 L 51.98,41.85 L 51.98,8.81 L 61.19,8.81 L 61.19,11.20"
-            fill="#233F8C"
-          />
-          <path d="M 84.15,0.20 L 93.36,0.20 L 93.36,34.90 L 84.15,34.90 z" fill="#233F8C" />
-          <path
-            d="M 105.81,22.43 C 106.04,24.54 107.61,26.20 109.40,26.84 C 111.33,27.48 113.68,26.81 115.00,25.20 C 116.18,23.79 116.43,21.81 115.82,20.09 C 115.16,18.18 113.12,16.87 111.10,16.80 C 109.37,16.79 107.75,17.63 106.71,19.00 C 106.11,20.02 105.69,21.18 105.81,22.43 M 116.15,8.80 L 125.62,8.80 L 125.62,34.90 L 116.15,34.90 L 116.15,32.49 C 116.15,32.49 113.36,35.44 109.91,35.17 C 109.91,35.17 102.57,35.55 98.59,28.65 C 98.59,28.65 96.36,24.95 96.78,21.45 C 96.78,21.45 96.81,18.16 98.46,15.45 C 98.46,15.45 99.79,12.98 101.65,11.57 C 101.65,11.57 104.94,9.07 107.37,8.93 C 107.37,8.93 112.48,7.39 116.15,11.33 L 116.15,8.80 z"
-            fill="#233F8C"
-          />
-        </g>
-      </svg>
-    ),
+    stage: 'STAGE 02 • INTERMEDIATE',
+    name: 'Fine Bag Filters F7-F9',
+    desc: '3µm - 5µm atmospheric dust pre-HEPA strip.',
+    standard: 'EN 779 F9 (85-95%)',
+  },
+  {
+    stage: 'STAGE 03 • TERMINAL HEPA',
+    name: 'Gel-Seal Mini-Pleat H14',
+    desc: '0.3µm sterile core barrier with zero bypass.',
+    standard: 'EN 1822 H14 (99.997%)',
+    isTerminal: true,
+  },
+  {
+    stage: 'STAGE 04 • STERILE CORE',
+    name: 'Ultra-Low ULPA U15',
+    desc: '0.12µm injectable filling line isolation.',
+    standard: 'EN 1822 U15 (99.9995%)',
+    isTerminal: true,
   },
 ];
 
@@ -356,62 +357,31 @@ export const HomePage: React.FC = () => {
       <section className="relative bg-[#F7F9FC] border-b border-[#E4E9F1] py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-4">
-            <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group">
-              <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-xs group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
-                <span className="material-symbols-outlined text-xl">history</span>
-              </div>
-              <div>
-                <div className="flex items-baseline gap-0.5 leading-none mb-1">
-                  <span className="font-display font-extrabold text-2xl sm:text-3xl text-[#16233F] tracking-tight">20</span>
-                  <span className="font-display font-extrabold text-xl text-[#1F56A8]">+</span>
+            {TRUST_METRICS.map((metric) => (
+              <div
+                key={metric.title}
+                className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group"
+              >
+                <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-xs group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
+                  <span className="material-symbols-outlined text-xl">{metric.icon}</span>
                 </div>
-                <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">
-                  Years Experience
-                </span>
-              </div>
-            </div>
-            <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group">
-              <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-xs group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
-                <span className="material-symbols-outlined text-xl">domain</span>
-              </div>
-              <div>
-                <div className="flex items-baseline gap-0.5 leading-none mb-1">
-                  <span className="font-display font-extrabold text-2xl sm:text-3xl text-[#16233F] tracking-tight">10+</span>
-                  <span className="font-display font-extrabold text-xl text-[#1F56A8]">+</span>
+                <div>
+                  <div className="flex items-baseline gap-0.5 leading-none mb-1">
+                    <span className="font-display font-extrabold text-2xl sm:text-3xl text-[#16233F] tracking-tight">
+                      {metric.value}
+                    </span>
+                    {metric.suffix && (
+                      <span className="font-display font-extrabold text-xl text-[#1F56A8]">
+                        {metric.suffix}
+                      </span>
+                    )}
+                  </div>
+                  <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">
+                    {metric.title}
+                  </span>
                 </div>
-                <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">
-                  Projects Completed
-                </span>
               </div>
-            </div>
-            <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group">
-              <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-xs group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
-                <span className="material-symbols-outlined text-xl">groups</span>
-              </div>
-              <div>
-                <div className="flex items-baseline gap-0.5 leading-none mb-1">
-                  <span className="font-display font-extrabold text-2xl sm:text-3xl text-[#16233F] tracking-tight">180</span>
-                  <span className="font-display font-extrabold text-xl text-[#1F56A8]">+</span>
-                </div>
-                <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">
-                  Pharma Clients
-                </span>
-              </div>
-            </div>
-            <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center gap-3.5 shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#1F56A8]/40 transition-all duration-300 group">
-              <div className="w-11 h-11 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center shrink-0 shadow-xs group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300">
-                <span className="material-symbols-outlined text-xl">straighten</span>
-              </div>
-              <div>
-                <div className="flex items-baseline gap-0.5 leading-none mb-1">
-                  <span className="font-display font-extrabold text-2xl sm:text-3xl text-[#16233F] tracking-tight">1.5M</span>
-                  <span className="font-display font-extrabold text-xl text-[#1F56A8]">+</span>
-                </div>
-                <span className="font-display font-medium text-[11px] sm:text-xs text-[#5B6B82] uppercase tracking-wider block">
-                  Sq.Ft Commissioned
-                </span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -432,11 +402,10 @@ export const HomePage: React.FC = () => {
               High-precision architectural envelopes, MEP psychrometrics, electrical substations, and certified chemical process cascades.
             </p>
           </div>
-          {/* Bento Grid with Real Photos & Interactive Equipment Highlights */}
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
             {/* Bento 1: Central Plant Utilities & Primary MEP */}
             <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-[#E4E9F1] bg-[#16233F] relative group shadow-sm hover:shadow-xl hover:border-[#1F56A8]/40 transition-all duration-300 flex flex-col justify-between min-h-[460px]">
-              {/* Photo Background */}
               <img
                 alt="Pharmaceutical Plant Utilities: Electrical Transformer, Diesel Engine DG Set, Air Compressor, and Steam Boiler"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
@@ -444,7 +413,6 @@ export const HomePage: React.FC = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#16233F] via-[#16233F]/75 to-[#16233F]/40 pointer-events-none"></div>
 
-              {/* Top Header */}
               <div className="relative z-10 p-5 sm:p-6 flex flex-wrap justify-between items-center gap-2">
                 <span className="px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-[#1F56A8] uppercase tracking-wider shadow-xs">
                   DIVISION 05 • PLANT UTILITIES &amp; MEP
@@ -454,7 +422,6 @@ export const HomePage: React.FC = () => {
                 </span>
               </div>
 
-              {/* Equipment Highlight Badge on Picture */}
               <div className="relative z-20 px-6 py-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono">
                   <span className="h-2 w-2 rounded-full bg-blue-400 animate-pulse"></span>
@@ -462,7 +429,6 @@ export const HomePage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Card Body */}
               <div className="relative z-10 p-5 sm:p-6 text-white">
                 <h3 className="font-display font-bold text-xl sm:text-2xl text-white mb-2 leading-tight">
                   Central Plant Utilities &amp; Primary MEP
@@ -471,7 +437,6 @@ export const HomePage: React.FC = () => {
                   Heavy electromechanical plant utility packages engineered for uninterruptible cleanroom power, instrument-grade compressed air, and sterile clean process steam.
                 </p>
 
-                {/* Standards Badges */}
                 <div className="flex flex-wrap gap-1.5 mb-3.5">
                   <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white/15 text-white border border-white/20">
                     IEEE / IS 2026 Distribution
@@ -487,7 +452,6 @@ export const HomePage: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Engineering Highlights */}
                 <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15 mb-4 space-y-1.5">
                   <span className="text-[10px] font-mono uppercase tracking-wider text-white/70 font-bold block mb-1">
                     Engineering Highlights:
@@ -539,7 +503,6 @@ export const HomePage: React.FC = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#16233F] via-[#16233F]/75 to-[#16233F]/40 pointer-events-none"></div>
 
-              {/* Top Header */}
               <div className="relative z-10 p-5 sm:p-6 flex flex-wrap justify-between items-center gap-2">
                 <span className="px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-[#1F56A8] uppercase tracking-wider shadow-xs">
                   DIVISION 04 • AIR FILTRATION
@@ -549,7 +512,6 @@ export const HomePage: React.FC = () => {
                 </span>
               </div>
 
-              {/* Filter Test Hotspot Pin on the Picture */}
               <div className="relative z-20 px-6 py-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono">
                   <span className="h-2 w-2 rounded-full bg-blue-400 animate-pulse"></span>
@@ -557,7 +519,6 @@ export const HomePage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Card Body */}
               <div className="relative z-10 p-5 sm:p-6 text-white">
                 <h3 className="font-display font-bold text-xl sm:text-2xl text-white mb-2 leading-tight">
                   Air Filtration &amp; Terminal HEPA Units
@@ -566,7 +527,6 @@ export const HomePage: React.FC = () => {
                   Comprehensive filtration from G3 pre-filters to H14 terminal gel-seal HEPA modules and U15 ULPA units with MPPS efficiency exceeding 99.9995%.
                 </p>
 
-                {/* Standards Badges */}
                 <div className="flex flex-wrap gap-1.5 mb-3.5">
                   <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-white/15 text-white border border-white/20">
                     EN 1822:2019 Certified
@@ -579,7 +539,6 @@ export const HomePage: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Engineering Highlights */}
                 <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15 mb-4 space-y-1.5">
                   <span className="text-[10px] font-mono uppercase tracking-wider text-white/70 font-bold block mb-1">
                     Engineering Highlights:
@@ -619,136 +578,43 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* Bento Row 2: 4 Core Turnkey Engineering Divisions */}
-            {/* Bento 3: Modular Wall & Walk-on Ceilings */}
-            <div className="col-span-1 md:col-span-1 lg:col-span-3 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
-                    <span className="material-symbols-outlined text-xl">domain_verification</span>
-                  </div>
-                  <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
-                    01
-                  </span>
-                </div>
-                <span className="text-[10px] font-mono text-[#1F56A8] font-bold uppercase tracking-wider block mb-1">
-                  ENVELOPE ISOLATION
-                </span>
-                <h4 className="font-display font-bold text-lg text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
-                  Modular Wall &amp; Walk-on Ceilings
-                </h4>
-                <p className="text-xs text-[#5B6B82] leading-relaxed">
-                  50mm &amp; 80mm PUF/Rockwool panels, flush silicone joints, and antimicrobial PPGI skins.
-                </p>
-              </div>
-              <a
-                className="mt-6 inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
-                href="/divisions"
+            {CORE_DIVISIONS.map((div) => (
+              <div
+                key={div.id}
+                className="col-span-1 md:col-span-1 lg:col-span-3 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group"
               >
-                <span>View Panels</span>
-                <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
-                  arrow_forward
-                </span>
-              </a>
-            </div>
-
-            {/* Bento 4: Psychrometric AHU & HVAC */}
-            <div className="col-span-1 md:col-span-1 lg:col-span-3 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
-                    <span className="material-symbols-outlined text-xl">hvac</span>
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
+                      <span className="material-symbols-outlined text-xl">{div.icon}</span>
+                    </div>
+                    <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
+                      {div.id}
+                    </span>
                   </div>
-                  <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
-                    02
+                  <span className="text-[10px] font-mono text-[#1F56A8] font-bold uppercase tracking-wider block mb-1">
+                    {div.category}
                   </span>
+                  <h4 className="font-display font-bold text-lg text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
+                    {div.title}
+                  </h4>
+                  <p className="text-xs text-[#5B6B82] leading-relaxed">
+                    {div.desc}
+                  </p>
                 </div>
-                <span className="text-[10px] font-mono text-[#1F56A8] font-bold uppercase tracking-wider block mb-1">
-                  HVAC &amp; DEHUMIDIFICATION
-                </span>
-                <h4 className="font-display font-bold text-lg text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
-                  Psychrometric AHU Packages
-                </h4>
-                <p className="text-xs text-[#5B6B82] leading-relaxed">
-                  Thermal break double-skin air handlers, desiccant rotors, and 5K–45K CFM cascade ducting.
-                </p>
-              </div>
-              <a
-                className="mt-6 inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
-                href="/divisions"
-              >
-                <span>AHU Specs</span>
-                <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
-                  arrow_forward
-                </span>
-              </a>
-            </div>
-
-            {/* Bento 5: Sterile Passboxes & LAF */}
-            <div className="col-span-1 md:col-span-1 lg:col-span-3 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
-                    <span className="material-symbols-outlined text-xl">air</span>
-                  </div>
-                  <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
-                    03
+                <a
+                  className="mt-6 inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
+                  href={div.href}
+                >
+                  <span>{div.linkText}</span>
+                  <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
+                    arrow_forward
                   </span>
-                </div>
-                <span className="text-[10px] font-mono text-[#1F56A8] font-bold uppercase tracking-wider block mb-1">
-                  STERILE AIRFLOW
-                </span>
-                <h4 className="font-display font-bold text-lg text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
-                  Dynamic Pass Boxes &amp; LAF Units
-                </h4>
-                <p className="text-xs text-[#5B6B82] leading-relaxed">
-                  SS 304 interlocked chambers, laminar hoods, mist showers, and UV sterilization timers.
-                </p>
+                </a>
               </div>
-              <a
-                className="mt-6 inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
-                href="/products"
-              >
-                <span>View Equipment</span>
-                <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
-                  arrow_forward
-                </span>
-              </a>
-            </div>
-
-            {/* Bento 6: Full Turnkey Validation & Qualification Dossiers */}
-            <div className="col-span-1 md:col-span-1 lg:col-span-3 rounded-2xl p-6 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-white border border-[#E4E9F1] text-[#1F56A8] flex items-center justify-center group-hover:bg-[#1F56A8] group-hover:text-white transition-colors duration-300 shadow-xs">
-                    <span className="material-symbols-outlined text-xl">verified_user</span>
-                  </div>
-                  <span className="text-xs font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
-                    07
-                  </span>
-                </div>
-                <span className="text-[10px] font-mono text-[#1F56A8] font-bold uppercase tracking-wider block mb-1">
-                  REGULATORY COMPLIANCE
-                </span>
-                <h4 className="font-display font-bold text-lg text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
-                  DQ / IQ / OQ / PQ Validation Dossiers
-                </h4>
-                <p className="text-xs text-[#5B6B82] leading-relaxed">
-                  Full particle count mapping, recovery tests, and Schedule M validation packages for audits.
-                </p>
-              </div>
-              <a
-                className="mt-6 inline-flex items-center gap-1 text-xs font-semibold uppercase text-[#1F56A8] group-hover:text-[#16233F] transition-colors font-display"
-                href="#rfq-section"
-              >
-                <span>Audit Protocols</span>
-                <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1.5 transition-transform duration-200">
-                  arrow_forward
-                </span>
-              </a>
-            </div>
+            ))}
 
             {/* Bento Row 3: Turnkey Electrical & Chemical Process Contracts */}
-            {/* Bento 7: Turnkey Electrical Contracting & HT/LT Power Systems */}
             <div className="col-span-1 md:col-span-1 lg:col-span-6 rounded-2xl p-6 sm:p-7 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -807,7 +673,6 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
 
-            {/* Bento 8: Chemical Process Contracting & Specialized Industrial Piping */}
             <div className="col-span-1 md:col-span-1 lg:col-span-6 rounded-2xl p-6 sm:p-7 bg-[#F7F9FC] border border-[#E4E9F1] hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between shadow-sm group">
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -905,142 +770,42 @@ export const HomePage: React.FC = () => {
             className="flex gap-5 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory"
             id="equip-rail"
           >
-            {/* Item 1 */}
-            <div className="min-w-[280px] md:min-w-[320px] snap-start rounded-xl p-5 bg-white border border-[#E4E9F1] flex flex-col justify-between hover:border-[#1F56A8] hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300 shadow-sm group">
-              <div>
-                <div className="h-40 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] mb-4 overflow-hidden relative flex items-center justify-center">
-                  <img
-                    alt="Cleanroom Modular Panel"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg"
-                  />
-                  <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[9px] font-mono bg-white/90 text-[#1F56A8] font-bold border border-[#E4E9F1]">
-                    SKU-MP50
-                  </span>
-                </div>
-                <h3 className="font-display font-bold text-base text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
-                  cGMP Modular Wall Panels
-                </h3>
-                <div className="space-y-1.5 text-xs text-[#5B6B82] border-t border-[#E4E9F1] pt-3 mb-4">
-                  <div className="flex justify-between">
-                    <span>Core Density:</span>
-                    <span className="text-[#16233F] font-mono font-medium">40 kg/m³ PUF</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Thickness:</span>
-                    <span className="text-[#16233F] font-mono font-medium">50 / 80 / 100mm</span>
-                  </div>
-                </div>
-              </div>
-              <a
-                className="w-full py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-wider font-display bg-[#F7F9FC] hover:bg-[#1F56A8] hover:text-white text-[#1F56A8] border border-[#E4E9F1] hover:border-[#1F56A8] transition-all duration-200 active:scale-[0.99]"
-                href="#rfq-section"
+            {PRECISION_COMPONENTS.map((item) => (
+              <div
+                key={item.sku}
+                className="min-w-[280px] md:min-w-[320px] snap-start rounded-xl p-5 bg-white border border-[#E4E9F1] flex flex-col justify-between hover:border-[#1F56A8] hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300 shadow-sm group"
               >
-                View Specifications
-              </a>
-            </div>
-            {/* Item 2 */}
-            <div className="min-w-[280px] md:min-w-[320px] snap-start rounded-xl p-5 bg-white border border-[#E4E9F1] flex flex-col justify-between hover:border-[#1F56A8] hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300 shadow-sm group">
-              <div>
-                <div className="h-40 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] mb-4 overflow-hidden relative flex items-center justify-center">
-                  <img
-                    alt="Dynamic Pass Box System"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg"
-                  />
-                  <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[9px] font-mono bg-white/90 text-[#1F56A8] font-bold border border-[#E4E9F1]">
-                    SKU-DPB304
-                  </span>
-                </div>
-                <h3 className="font-display font-bold text-base text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
-                  Dynamic Pass Box Unit
-                </h3>
-                <div className="space-y-1.5 text-xs text-[#5B6B82] border-t border-[#E4E9F1] pt-3 mb-4">
-                  <div className="flex justify-between">
-                    <span>Filtration:</span>
-                    <span className="text-[#16233F] font-mono font-medium">0.3µm @ 99.997%</span>
+                <div>
+                  <div className="h-40 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] mb-4 overflow-hidden relative flex items-center justify-center">
+                    <img
+                      alt={item.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                      src={item.img}
+                    />
+                    <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[9px] font-mono bg-white/90 text-[#1F56A8] font-bold border border-[#E4E9F1]">
+                      {item.sku}
+                    </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Interlock:</span>
-                    <span className="text-[#16233F] font-mono font-medium">Electro-magnetic</span>
+                  <h3 className="font-display font-bold text-base text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
+                    {item.name}
+                  </h3>
+                  <div className="space-y-1.5 text-xs text-[#5B6B82] border-t border-[#E4E9F1] pt-3 mb-4">
+                    {item.specs.map(([label, val]) => (
+                      <div key={label} className="flex justify-between">
+                        <span>{label}</span>
+                        <span className="text-[#16233F] font-mono font-medium">{val}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
+                <a
+                  className="w-full py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-wider font-display bg-[#F7F9FC] hover:bg-[#1F56A8] hover:text-white text-[#1F56A8] border border-[#E4E9F1] hover:border-[#1F56A8] transition-all duration-200 active:scale-[0.99]"
+                  href="#rfq-section"
+                >
+                  View Specifications
+                </a>
               </div>
-              <a
-                className="w-full py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-wider font-display bg-[#F7F9FC] hover:bg-[#1F56A8] hover:text-white text-[#1F56A8] border border-[#E4E9F1] hover:border-[#1F56A8] transition-all duration-200 active:scale-[0.99]"
-                href="#rfq-section"
-              >
-                View Specifications
-              </a>
-            </div>
-            {/* Item 3 */}
-            <div className="min-w-[280px] md:min-w-[320px] snap-start rounded-xl p-5 bg-white border border-[#E4E9F1] flex flex-col justify-between hover:border-[#1F56A8] hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300 shadow-sm group">
-              <div>
-                <div className="h-40 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] mb-4 overflow-hidden relative flex items-center justify-center">
-                  <img
-                    alt="Double Skin AHU"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1XOvqqJ8HTv2N9XKsc8VYb_geMNA3y9faOJc6zXexUyt_JAVjDEHiewCQRhbtIszI85ekeG8Zwx_mrJeOcDuqDO93o5lG_ewiXDFZhWoD3bzyoexcf1Uhwsb5BqkIzP2yAFN2lvs8VstXAyV9PuKjIozdQq-avnaEjblZCpz0SVM60M9rNXWopmrk7UJXgU4qWxozVz5JUiimt7FfKM0pmOZy-_dE1CGUkouQ_w6emQxfapKvawn1zYbqE"
-                  />
-                  <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[9px] font-mono bg-white/90 text-[#1F56A8] font-bold border border-[#E4E9F1]">
-                    SKU-AHU45
-                  </span>
-                </div>
-                <h3 className="font-display font-bold text-base text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
-                  Double-Skin Air Handling Unit
-                </h3>
-                <div className="space-y-1.5 text-xs text-[#5B6B82] border-t border-[#E4E9F1] pt-3 mb-4">
-                  <div className="flex justify-between">
-                    <span>Air Volume:</span>
-                    <span className="text-[#16233F] font-mono font-medium">5,000–45,000 CFM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Thermal Break:</span>
-                    <span className="text-[#16233F] font-mono font-medium">TB2 Profile</span>
-                  </div>
-                </div>
-              </div>
-              <a
-                className="w-full py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-wider font-display bg-[#F7F9FC] hover:bg-[#1F56A8] hover:text-white text-[#1F56A8] border border-[#E4E9F1] hover:border-[#1F56A8] transition-all duration-200 active:scale-[0.99]"
-                href="#rfq-section"
-              >
-                View Specifications
-              </a>
-            </div>
-            {/* Item 4 */}
-            <div className="min-w-[280px] md:min-w-[320px] snap-start rounded-xl p-5 bg-white border border-[#E4E9F1] flex flex-col justify-between hover:border-[#1F56A8] hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300 shadow-sm group">
-              <div>
-                <div className="h-40 rounded-lg bg-[#F7F9FC] border border-[#E4E9F1] mb-4 overflow-hidden relative flex items-center justify-center">
-                  <img
-                    alt="Gel-Seal Terminal HEPA Filter Box"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE"
-                  />
-                  <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[9px] font-mono bg-white/90 text-[#1F56A8] font-bold border border-[#E4E9F1]">
-                    SKU-HEPA-H14
-                  </span>
-                </div>
-                <h3 className="font-display font-bold text-base text-[#16233F] mb-2 group-hover:text-[#1F56A8] transition-colors">
-                  Gel-Seal Terminal HEPA Box
-                </h3>
-                <div className="space-y-1.5 text-xs text-[#5B6B82] border-t border-[#E4E9F1] pt-3 mb-4">
-                  <div className="flex justify-between">
-                    <span>Efficiency:</span>
-                    <span className="text-[#16233F] font-mono font-medium">EN 1822 H14</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Seal Type:</span>
-                    <span className="text-[#16233F] font-mono font-medium">Knife-Edge Gel</span>
-                  </div>
-                </div>
-              </div>
-              <a
-                className="w-full py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-wider font-display bg-[#F7F9FC] hover:bg-[#1F56A8] hover:text-white text-[#1F56A8] border border-[#E4E9F1] hover:border-[#1F56A8] transition-all duration-200 active:scale-[0.99]"
-                href="#rfq-section"
-              >
-                View Specifications
-              </a>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1068,116 +833,46 @@ export const HomePage: React.FC = () => {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Case 1: Wallace Pharmaceuticals */}
-            <div className="rounded-xl overflow-hidden border border-[#E4E9F1] bg-white shadow-sm flex flex-col justify-between group hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-              <div>
-                <div className="h-48 overflow-hidden relative">
-                  <img
-                    alt="Wallace Pharmaceuticals Turnkey HVAC, Filters & Coils"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg"
-                  />
-                  <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-white/95 text-[10px] font-mono font-bold text-[#1F56A8] border border-[#E4E9F1]">
-                    NALAGARH, HP
+            {CASE_STUDIES.map((cs) => (
+              <div
+                key={cs.client}
+                className="rounded-xl overflow-hidden border border-[#E4E9F1] bg-white shadow-sm flex flex-col justify-between group hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
+              >
+                <div>
+                  <div className="h-48 overflow-hidden relative">
+                    <img
+                      alt={cs.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                      src={cs.img}
+                    />
+                    <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-white/95 text-[10px] font-mono font-bold text-[#1F56A8] border border-[#E4E9F1]">
+                      {cs.location}
+                    </div>
+                    <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/60 text-[10px] font-mono text-white">
+                      {cs.area}
+                    </div>
                   </div>
-                  <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/60 text-[10px] font-mono text-white">
-                    18,500 SQ.FT
+                  <div className="p-5">
+                    <h3 className="font-display font-bold text-lg text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
+                      {cs.title}
+                    </h3>
+                    <span className="text-xs font-mono text-[#1F56A8] block mb-2 font-medium">
+                      {cs.sub}
+                    </span>
+                    <p className="text-xs text-[#5B6B82] leading-relaxed">
+                      {cs.desc}
+                    </p>
                   </div>
                 </div>
-                <div className="p-5">
-                  <h3 className="font-display font-bold text-lg text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
-                    Wallace Pharmaceuticals Pvt. Ltd.
-                  </h3>
-                  <span className="text-xs font-mono text-[#1F56A8] block mb-2 font-medium">
-                    HVAC Turnkey, Filters &amp; Coils — Active AMC
+                <div className="px-5 pb-5 pt-2 border-t border-[#E4E9F1] flex items-center justify-between text-[11px] font-mono">
+                  <span className="text-[#5B6B82]">{cs.status}</span>
+                  <span className="text-emerald-700 font-semibold flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200">
+                    <span className="material-symbols-outlined text-emerald-600 text-xs font-bold">{cs.badgeIcon}</span>
+                    {cs.badge}
                   </span>
-                  <p className="text-xs text-[#5B6B82] leading-relaxed">
-                    24,000 CFM modular AHUs, cooling coil pressure testing, terminal HEPA filtration, and ongoing Annual Maintenance Contract (AMC).
-                  </p>
                 </div>
               </div>
-              <div className="px-5 pb-5 pt-2 border-t border-[#E4E9F1] flex items-center justify-between text-[11px] font-mono">
-                <span className="text-[#5B6B82]">Completed &amp; Active AMC</span>
-                <span className="text-emerald-700 font-semibold flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200">
-                  <span className="material-symbols-outlined text-emerald-600 text-xs font-bold">verified</span>
-                  Turnkey + AMC Active
-                </span>
-              </div>
-            </div>
-
-            {/* Case 2: Biodeal Pharmaceuticals */}
-            <div className="rounded-xl overflow-hidden border border-[#E4E9F1] bg-white shadow-sm flex flex-col justify-between group hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-              <div>
-                <div className="h-48 overflow-hidden relative">
-                  <img
-                    alt="Biodeal Pharmaceuticals Sterile Injectables Complex"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE"
-                  />
-                  <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-white/95 text-[10px] font-mono font-bold text-[#1F56A8] border border-[#E4E9F1]">
-                    NALAGARH, HP
-                  </div>
-                  <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/60 text-[10px] font-mono text-white">
-                    22,000 SQ.FT
-                  </div>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-display font-bold text-lg text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
-                    Biodeal Pharmaceuticals Pvt. Ltd.
-                  </h3>
-                  <span className="text-xs font-mono text-[#1F56A8] block mb-2 font-medium">
-                    Sterile Injectables Suite — Turnkey &amp; Routine AMC
-                  </span>
-                  <p className="text-xs text-[#5B6B82] leading-relaxed">
-                    Turnkey cleanroom execution and multi-year Annual Maintenance Contract (AMC). Quarterly PAO/DOP HEPA filter integrity scans and room balancing.
-                  </p>
-                </div>
-              </div>
-              <div className="px-5 pb-5 pt-2 border-t border-[#E4E9F1] flex items-center justify-between text-[11px] font-mono">
-                <span className="text-[#5B6B82]">2025 Active AMC</span>
-                <span className="text-emerald-700 font-semibold flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200">
-                  <span className="material-symbols-outlined text-emerald-600 text-xs font-bold">check_circle</span>
-                  Active AMC Contract
-                </span>
-              </div>
-            </div>
-
-            {/* Case 3: Rachil Remedies */}
-            <div className="rounded-xl overflow-hidden border border-[#E4E9F1] bg-white shadow-sm flex flex-col justify-between group hover:border-[#1F56A8] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-              <div>
-                <div className="h-48 overflow-hidden relative">
-                  <img
-                    alt="Rachil Remedies Modular Cleanroom Complex"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    src="https://lh3.googleusercontent.com/aida/AEtjO1XOvqqJ8HTv2N9XKsc8VYb_geMNA3y9faOJc6zXexUyt_JAVjDEHiewCQRhbtIszI85ekeG8Zwx_mrJeOcDuqDO93o5lG_ewiXDFZhWoD3bzyoexcf1Uhwsb5BqkIzP2yAFN2lvs8VstXAyV9PuKjIozdQq-avnaEjblZCpz0SVM60M9rNXWopmrk7UJXgU4qWxozVz5JUiimt7FfKM0pmOZy-_dE1CGUkouQ_w6emQxfapKvawn1zYbqE"
-                  />
-                  <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-white/95 text-[10px] font-mono font-bold text-[#1F56A8] border border-[#E4E9F1]">
-                    BADDI, HP
-                  </div>
-                  <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/60 text-[10px] font-mono text-white">
-                    16,500 SQ.FT
-                  </div>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-display font-bold text-lg text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
-                    Rachil Remedies Pvt. Ltd.
-                  </h3>
-                  <span className="text-xs font-mono text-[#1F56A8] block mb-2 font-medium">
-                    Solid Dosage &amp; Liquid Cleanroom Complex
-                  </span>
-                  <p className="text-xs text-[#5B6B82] leading-relaxed">
-                    Modular PUF wall envelope, double-skin thermal-break AHUs, dynamic pass boxes, flush cleanroom swing doors, and complete cGMP validation.
-                  </p>
-                </div>
-              </div>
-              <div className="px-5 pb-5 pt-2 border-t border-[#E4E9F1] flex items-center justify-between text-[11px] font-mono">
-                <span className="text-[#5B6B82]">Completed 2024</span>
-                <span className="text-[#16233F] font-semibold flex items-center gap-1 px-2 py-0.5 rounded bg-[#25D366]/10">
-                  <span className="material-symbols-outlined text-[#25D366] text-xs font-bold">check_circle</span>
-                  Schedule M Passed
-                </span>
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* AMC Lifecycle Support Announcement Banner */}
@@ -1216,7 +911,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 7. AIR FILTRATION CASCADE STRIP WITH PIPELINE ILLUMINATION */}
+      {/* 7. AIR FILTRATION CASCADE STRIP */}
       <section className="py-16 border-b border-[#E4E9F1] bg-[#F7F9FC]" id="filtration">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
@@ -1230,83 +925,44 @@ export const HomePage: React.FC = () => {
             </div>
             <span className="text-xs font-mono text-[#5B6B82]">EN 779 &amp; EN 1822 CERTIFIED</span>
           </div>
-          {/* 4-Stage Progressive Pipeline with Connecting Track */}
+
           <div className="relative">
-            {/* Hidden line on mobile, visible on desktop behind cards */}
             <div className="hidden lg:block absolute top-7 left-12 right-12 h-0.5 bg-[#E4E9F1] z-0"></div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
-              {/* Stage 01 */}
-              <div className="p-5 rounded-xl bg-white border border-[#E4E9F1] shadow-sm hover:-translate-y-1 hover:border-[#1F56A8] hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="w-5 h-5 rounded-full bg-[#F7F9FC] border-2 border-[#5B6B82] group-hover:border-[#1F56A8] group-hover:bg-[#1F56A8] transition-colors duration-300 flex items-center justify-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                  </span>
-                  <span className="text-[10px] font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
-                    STAGE 01 • PRE-FILTER
-                  </span>
-                </div>
-                <h4 className="font-display font-bold text-sm text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
-                  Primary Coarse G4
-                </h4>
-                <p className="text-xs text-[#5B6B82] mb-3">10µm - 20µm capture protecting AHU blowers.</p>
-                <span className="text-[10px] font-mono text-[#1F56A8] font-semibold block">
-                  EN 779 G4 (90% Arrestance)
-                </span>
-              </div>
-              {/* Stage 02 */}
-              <div className="p-5 rounded-xl bg-white border border-[#E4E9F1] shadow-sm hover:-translate-y-1 hover:border-[#1F56A8] hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="w-5 h-5 rounded-full bg-[#F7F9FC] border-2 border-[#5B6B82] group-hover:border-[#1F56A8] group-hover:bg-[#1F56A8] transition-colors duration-300 flex items-center justify-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                  </span>
-                  <span className="text-[10px] font-mono font-bold text-[#5B6B82] group-hover:text-[#1F56A8] transition-colors">
-                    STAGE 02 • INTERMEDIATE
-                  </span>
-                </div>
-                <h4 className="font-display font-bold text-sm text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
-                  Fine Bag Filters F7-F9
-                </h4>
-                <p className="text-xs text-[#5B6B82] mb-3">3µm - 5µm atmospheric dust pre-HEPA strip.</p>
-                <span className="text-[10px] font-mono text-[#1F56A8] font-semibold block">
-                  EN 779 F9 (85-95%)
-                </span>
-              </div>
-              {/* Stage 03 */}
-              <div className="p-5 rounded-xl bg-white border border-[#E4E9F1] shadow-sm hover:-translate-y-1 hover:border-[#1F56A8] hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="w-5 h-5 rounded-full bg-[#F7F9FC] border-2 border-[#1F56A8] group-hover:bg-[#1F56A8] transition-colors duration-300 flex items-center justify-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                  </span>
-                  <span className="text-[10px] font-mono font-bold text-[#1F56A8] transition-colors">
-                    STAGE 03 • TERMINAL HEPA
+              {FILTRATION_STAGES.map((s) => (
+                <div
+                  key={s.stage}
+                  className="p-5 rounded-xl bg-white border border-[#E4E9F1] shadow-sm hover:-translate-y-1 hover:border-[#1F56A8] hover:shadow-md transition-all duration-300 group"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span
+                      className={`w-5 h-5 rounded-full bg-[#F7F9FC] border-2 transition-colors duration-300 flex items-center justify-center ${
+                        s.isTerminal
+                          ? 'border-[#1F56A8] group-hover:bg-[#1F56A8]'
+                          : 'border-[#5B6B82] group-hover:border-[#1F56A8] group-hover:bg-[#1F56A8]'
+                      }`}
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    </span>
+                    <span
+                      className={`text-[10px] font-mono font-bold transition-colors ${
+                        s.isTerminal
+                          ? 'text-[#1F56A8]'
+                          : 'text-[#5B6B82] group-hover:text-[#1F56A8]'
+                      }`}
+                    >
+                      {s.stage}
+                    </span>
+                  </div>
+                  <h4 className="font-display font-bold text-sm text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
+                    {s.name}
+                  </h4>
+                  <p className="text-xs text-[#5B6B82] mb-3">{s.desc}</p>
+                  <span className="text-[10px] font-mono text-[#1F56A8] font-semibold block">
+                    {s.standard}
                   </span>
                 </div>
-                <h4 className="font-display font-bold text-sm text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
-                  Gel-Seal Mini-Pleat H14
-                </h4>
-                <p className="text-xs text-[#5B6B82] mb-3">0.3µm sterile core barrier with zero bypass.</p>
-                <span className="text-[10px] font-mono text-[#1F56A8] font-semibold block">
-                  EN 1822 H14 (99.997%)
-                </span>
-              </div>
-              {/* Stage 04 */}
-              <div className="p-5 rounded-xl bg-white border border-[#E4E9F1] shadow-sm hover:-translate-y-1 hover:border-[#1F56A8] hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="w-5 h-5 rounded-full bg-[#F7F9FC] border-2 border-[#1F56A8] group-hover:bg-[#1F56A8] transition-colors duration-300 flex items-center justify-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                  </span>
-                  <span className="text-[10px] font-mono font-bold text-[#1F56A8] transition-colors">
-                    STAGE 04 • STERILE CORE
-                  </span>
-                </div>
-                <h4 className="font-display font-bold text-sm text-[#16233F] mb-1 group-hover:text-[#1F56A8] transition-colors">
-                  Ultra-Low ULPA U15
-                </h4>
-                <p className="text-xs text-[#5B6B82] mb-3">0.12µm injectable filling line isolation.</p>
-                <span className="text-[10px] font-mono text-[#1F56A8] font-semibold block">
-                  EN 1822 U15 (99.9995%)
-                </span>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -1320,12 +976,9 @@ export const HomePage: React.FC = () => {
           </span>
         </div>
 
-        {/* Continuous Right-to-Left Infinite Scrolling Marquee */}
         <div className="relative w-full overflow-hidden py-2">
-          {/* Left Gradient Fade */}
           <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-white via-white/90 to-transparent z-10" />
 
-          {/* Marquee Track (Double Rendered for Seamless Infinite Right-to-Left Loop) */}
           <div className="animate-marquee-rtl flex items-center gap-4">
             {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((client, idx) => (
               <Link
@@ -1349,7 +1002,6 @@ export const HomePage: React.FC = () => {
             ))}
           </div>
 
-          {/* Right Gradient Fade */}
           <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-white via-white/90 to-transparent z-10" />
         </div>
 
@@ -1364,12 +1016,11 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 9. STREAMLINED RFQ CONVERSION SECTION WITH INTERACTIVE FORM & SIZING */}
+      {/* 9. STREAMLINED RFQ CONVERSION SECTION */}
       <section className="py-20 border-b border-[#E4E9F1] bg-white" id="rfq-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[#F7F9FC] border border-[#E4E9F1] rounded-2xl p-8 sm:p-12 shadow-sm">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-              {/* Left: Value Proposition & Direct Action CTAs */}
               <div className="lg:col-span-7 flex flex-col justify-between">
                 <div>
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E4E9F1] text-[#1F56A8] text-xs font-mono font-medium mb-4 shadow-2xs">
@@ -1385,7 +1036,6 @@ export const HomePage: React.FC = () => {
                   <p className="text-sm text-[#5B6B82] leading-relaxed mb-6 max-w-xl">
                     Connect with our senior MEP &amp; validation engineering team to schedule a technical discovery call, review room layout drawings, or obtain a comprehensive turnkey commercial proposal.
                   </p>
-                  {/* Highlights list */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-xs text-[#16233F]">
                     <div className="flex items-center gap-2 p-2 rounded-lg bg-white/70 border border-[#E4E9F1]">
                       <span className="material-symbols-outlined text-[#25D366] text-base font-bold shrink-0">
@@ -1413,7 +1063,7 @@ export const HomePage: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                {/* Quick Form */}
+
                 <form
                   className="space-y-3 bg-white p-6 rounded-xl border border-[#E4E9F1] shadow-xs"
                   id="rfq-form"
@@ -1527,7 +1177,7 @@ export const HomePage: React.FC = () => {
                   )}
                 </form>
               </div>
-              {/* Right: Technical Blueprint & Advisory Metric Cards */}
+
               <div className="lg:col-span-5 flex flex-col gap-4">
                 <div className="p-6 rounded-xl bg-white border border-[#E4E9F1] shadow-sm relative overflow-hidden hover:border-[#1F56A8]/40 transition-all duration-300">
                   <div className="flex items-start justify-between mb-4">
@@ -1555,6 +1205,7 @@ export const HomePage: React.FC = () => {
                     </div>
                   </div>
                 </div>
+
                 <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center justify-between text-xs hover:border-[#1F56A8]/40 transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-md bg-[#F7F9FC] border border-[#E4E9F1] flex items-center justify-center text-[#1F56A8]">
@@ -1571,7 +1222,7 @@ export const HomePage: React.FC = () => {
                     ACTIVE
                   </span>
                 </div>
-                {/* Call Direct Card */}
+
                 <div className="p-4 rounded-xl bg-white border border-[#E4E9F1] flex items-center justify-between text-xs hover:border-[#1F56A8]/40 transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-md bg-[#F7F9FC] border border-[#E4E9F1] flex items-center justify-center text-[#1F56A8]">

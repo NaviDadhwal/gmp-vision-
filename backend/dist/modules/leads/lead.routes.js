@@ -75,7 +75,7 @@ class LeadController {
             const updateData = { status };
             if (typeof notes === 'string')
                 updateData.notes = notes;
-            const lead = await lead_model_1.LeadModel.findByIdAndUpdate(req.params.id, updateData, { new: true });
+            const lead = await lead_model_1.LeadModel.findByIdAndUpdate(req.params.id, updateData, { returnDocument: 'after' });
             if (!lead) {
                 throw new errorHandler_1.AppError('Lead not found.', 404, 'NOT_FOUND');
             }

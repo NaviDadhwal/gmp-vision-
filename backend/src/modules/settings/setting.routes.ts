@@ -41,7 +41,7 @@ export class SettingController {
       const setting = await SettingModel.findOneAndUpdate(
         { key },
         { value, ...(description ? { description } : {}) },
-        { new: true, upsert: true }
+        { returnDocument: 'after', upsert: true }
       );
 
       res.status(200).json({

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Download,
   Phone,
@@ -60,22 +60,39 @@ export const AdminDashboard: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [exporting, setExporting] = useState(false);
 
-  async function loadLeads() {
+  const loadLeads = useCallback(async () => {
     try {
       const res = await ApiService.getLeads({
         status: selectedStatus === 'all' ? undefined : selectedStatus,
         limit: 50,
       });
-      if (res && res.data && res.data.length > 0) {
+      if (res && Array.isArray(res.data)) {
         setLeads(res.data);
       }
     } catch (err) {
       console.warn('Backend leads API offline, using cached dashboard leads:', err);
     }
-  }
+  }, [selectedStatus]);
 
   useEffect(() => {
-    loadLeads();
+    let isCurrent = true;
+    (async () => {
+      try {
+        const res = await ApiService.getLeads({
+          status: selectedStatus === 'all' ? undefined : selectedStatus,
+          limit: 50,
+        });
+        if (isCurrent && res && Array.isArray(res.data)) {
+          setLeads(res.data);
+        }
+      } catch (err) {
+        console.warn('Backend leads API offline, using cached dashboard leads:', err);
+      }
+    })();
+
+    return () => {
+      isCurrent = false;
+    };
   }, [selectedStatus]);
 
   const handleStatusChange = async (leadId: string, newStatus: string) => {

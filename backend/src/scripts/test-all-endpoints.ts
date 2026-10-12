@@ -127,8 +127,18 @@ async function runTestSuite() {
   await connectDB();
   console.log(`   Connected to MongoDB: ${mongoose.connection.host}/${mongoose.connection.name}`);
 
-  // 2. Connect to live server at http://localhost:5000
-  baseUrl = process.env.API_URL || 'http://localhost:5000';
+  // 2. Start test server dynamically if API_URL is not provided
+  if (process.env.API_URL) {
+    baseUrl = process.env.API_URL;
+  } else {
+    await new Promise<void>((resolve) => {
+      server = app.listen(0, () => {
+        const addr = server!.address() as any;
+        baseUrl = `http://localhost:${addr.port}`;
+        resolve();
+      });
+    });
+  }
   console.log(`   Target API Base URL: ${baseUrl}`);
 
   try {
@@ -744,8 +754,10 @@ async function runTestSuite() {
       }
 
       // Cleanup test division from DB
-      await DivisionModel.findByIdAndDelete(createdDivisionId);
-      console.log(`   🧹 [Cleanup] Permanently purged test division ${createdDivisionId} from MongoDB`);
+      if (createdDivisionId) {
+        await DivisionModel.findByIdAndDelete(createdDivisionId);
+        console.log(`   🧹 [Cleanup] Permanently purged test division ${createdDivisionId} from MongoDB`);
+      }
     }
 
     // ======================================================================
@@ -979,8 +991,10 @@ async function runTestSuite() {
       }
 
       // Cleanup
-      await ProductModel.findByIdAndDelete(createdProductId);
-      console.log(`   🧹 [Cleanup] Permanently purged test product ${createdProductId} from MongoDB`);
+      if (createdProductId) {
+        await ProductModel.findByIdAndDelete(createdProductId);
+        console.log(`   🧹 [Cleanup] Permanently purged test product ${createdProductId} from MongoDB`);
+      }
     }
 
     // ======================================================================
@@ -1151,8 +1165,10 @@ async function runTestSuite() {
       }
 
       // Cleanup
-      await FilterModel.findByIdAndDelete(createdFilterId);
-      console.log(`   🧹 [Cleanup] Permanently purged test filter ${createdFilterId} from MongoDB`);
+      if (createdFilterId) {
+        await FilterModel.findByIdAndDelete(createdFilterId);
+        console.log(`   🧹 [Cleanup] Permanently purged test filter ${createdFilterId} from MongoDB`);
+      }
     }
 
     // ======================================================================
@@ -1331,8 +1347,10 @@ async function runTestSuite() {
       }
 
       // Cleanup
-      await ProjectModel.findByIdAndDelete(createdProjectId);
-      console.log(`   🧹 [Cleanup] Permanently purged test project ${createdProjectId} from MongoDB`);
+      if (createdProjectId) {
+        await ProjectModel.findByIdAndDelete(createdProjectId);
+        console.log(`   🧹 [Cleanup] Permanently purged test project ${createdProjectId} from MongoDB`);
+      }
     }
 
     // ======================================================================
@@ -1475,8 +1493,10 @@ async function runTestSuite() {
       }
 
       // Cleanup
-      await ClientModel.findByIdAndDelete(createdClientId);
-      console.log(`   🧹 [Cleanup] Permanently purged test client ${createdClientId} from MongoDB`);
+      if (createdClientId) {
+        await ClientModel.findByIdAndDelete(createdClientId);
+        console.log(`   🧹 [Cleanup] Permanently purged test client ${createdClientId} from MongoDB`);
+      }
     }
 
     // ======================================================================
@@ -1729,8 +1749,10 @@ async function runTestSuite() {
       }
 
       // Cleanup
-      await LeadModel.findByIdAndDelete(createdLeadId);
-      console.log(`   🧹 [Cleanup] Permanently purged test lead ${createdLeadId} from MongoDB`);
+      if (createdLeadId) {
+        await LeadModel.findByIdAndDelete(createdLeadId);
+        console.log(`   🧹 [Cleanup] Permanently purged test lead ${createdLeadId} from MongoDB`);
+      }
     }
 
     // ======================================================================
@@ -1912,7 +1934,8 @@ async function runTestSuite() {
   } finally {
     // Graceful teardown
     if (server) {
-      await new Promise<void>((resolve) => server.close(() => resolve()));
+      const activeServer = server;
+      await new Promise<void>((resolve) => activeServer.close(() => resolve()));
       console.log('\n🔒 [HTTP] Test server closed gracefully.');
     }
     await disconnectDB();

@@ -83,7 +83,7 @@ export class LeadController {
       const updateData: Record<string, any> = { status };
       if (typeof notes === 'string') updateData.notes = notes;
 
-      const lead = await LeadModel.findByIdAndUpdate(req.params.id, updateData, { new: true });
+      const lead = await LeadModel.findByIdAndUpdate(req.params.id, updateData, { returnDocument: 'after' });
       if (!lead) {
         throw new AppError('Lead not found.', 404, 'NOT_FOUND');
       }

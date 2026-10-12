@@ -88,7 +88,7 @@ export class ProductController {
 
   static async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const product = await ProductModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      const product = await ProductModel.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
       if (!product) {
         throw new AppError('Product not found.', 404, 'NOT_FOUND');
       }
@@ -103,7 +103,7 @@ export class ProductController {
 
   static async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const product = await ProductModel.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
+      const product = await ProductModel.findByIdAndUpdate(req.params.id, { isActive: false }, { returnDocument: 'after' });
       if (!product) {
         throw new AppError('Product not found.', 404, 'NOT_FOUND');
       }
