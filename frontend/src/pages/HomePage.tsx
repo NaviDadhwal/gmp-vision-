@@ -77,7 +77,7 @@ const PRECISION_COMPONENTS: HardwareComponent[] = [
   {
     sku: 'SKU-MP50',
     name: 'cGMP Modular Wall Panels',
-    img: 'https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg',
+    img: '/images/modular-cleanroom-interior.jpg',
     specs: [
       ['Core Density:', '40 kg/m³ PUF'],
       ['Thickness:', '50 / 80 / 100mm'],
@@ -86,7 +86,7 @@ const PRECISION_COMPONENTS: HardwareComponent[] = [
   {
     sku: 'SKU-DPB304',
     name: 'Dynamic Pass Box Unit',
-    img: 'https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg',
+    img: '/images/aseptic-filling-suite.jpg',
     specs: [
       ['Filtration:', '0.3µm @ 99.997%'],
       ['Interlock:', 'Electro-magnetic'],
@@ -95,7 +95,7 @@ const PRECISION_COMPONENTS: HardwareComponent[] = [
   {
     sku: 'SKU-AHU45',
     name: 'Double-Skin Air Handling Unit',
-    img: 'https://lh3.googleusercontent.com/aida/AEtjO1XOvqqJ8HTv2N9XKsc8VYb_geMNA3y9faOJc6zXexUyt_JAVjDEHiewCQRhbtIszI85ekeG8Zwx_mrJeOcDuqDO93o5lG_ewiXDFZhWoD3bzyoexcf1Uhwsb5BqkIzP2yAFN2lvs8VstXAyV9PuKjIozdQq-avnaEjblZCpz0SVM60M9rNXWopmrk7UJXgU4qWxozVz5JUiimt7FfKM0pmOZy-_dE1CGUkouQ_w6emQxfapKvawn1zYbqE',
+    img: '/images/hvac-ahu-plant.jpg',
     specs: [
       ['Air Volume:', '5,000–45,000 CFM'],
       ['Thermal Break:', 'TB2 Profile'],
@@ -104,7 +104,7 @@ const PRECISION_COMPONENTS: HardwareComponent[] = [
   {
     sku: 'SKU-HEPA-H14',
     name: 'Gel-Seal Terminal HEPA Box',
-    img: 'https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE',
+    img: '/images/terminal-hepa-module.jpg',
     specs: [
       ['Efficiency:', 'EN 1822 H14'],
       ['Seal Type:', 'Knife-Edge Gel'],
@@ -133,7 +133,7 @@ const CASE_STUDIES: CaseStudy[] = [
     title: 'Wallace Pharmaceuticals Pvt. Ltd.',
     sub: 'HVAC Turnkey, Filters & Coils — Active AMC',
     desc: '24,000 CFM modular AHUs, cooling coil pressure testing, terminal HEPA filtration, and ongoing Annual Maintenance Contract (AMC).',
-    img: 'https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg',
+    img: '/images/hvac-ahu-plant.jpg',
     badge: 'Turnkey + AMC Active',
     badgeIcon: 'verified',
     status: 'Completed & Active AMC',
@@ -145,7 +145,7 @@ const CASE_STUDIES: CaseStudy[] = [
     title: 'Biodeal Pharmaceuticals Pvt. Ltd.',
     sub: 'Sterile Injectables Suite — Turnkey & Routine AMC',
     desc: 'Turnkey cleanroom execution and multi-year Annual Maintenance Contract (AMC). Quarterly PAO/DOP HEPA filter integrity scans and room balancing.',
-    img: 'https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE',
+    img: '/images/aseptic-filling-suite.jpg',
     badge: 'Active AMC Contract',
     badgeIcon: 'check_circle',
     status: '2025 Active AMC',
@@ -157,7 +157,7 @@ const CASE_STUDIES: CaseStudy[] = [
     title: 'Rachil Remedies Pvt. Ltd.',
     sub: 'Solid Dosage & Liquid Cleanroom Complex',
     desc: 'Modular PUF wall envelope, double-skin thermal-break AHUs, dynamic pass boxes, flush cleanroom swing doors, and complete cGMP validation.',
-    img: 'https://lh3.googleusercontent.com/aida/AEtjO1XOvqqJ8HTv2N9XKsc8VYb_geMNA3y9faOJc6zXexUyt_JAVjDEHiewCQRhbtIszI85ekeG8Zwx_mrJeOcDuqDO93o5lG_ewiXDFZhWoD3bzyoexcf1Uhwsb5BqkIzP2yAFN2lvs8VstXAyV9PuKjIozdQq-avnaEjblZCpz0SVM60M9rNXWopmrk7UJXgU4qWxozVz5JUiimt7FfKM0pmOZy-_dE1CGUkouQ_w6emQxfapKvawn1zYbqE',
+    img: '/images/modular-cleanroom-interior.jpg',
     badge: 'Schedule M Passed',
     badgeIcon: 'check_circle',
     status: 'Completed 2024',
@@ -307,7 +307,7 @@ export const HomePage: React.FC = () => {
                 <img
                   alt="Modern sterile cleanroom interior with modular panels and dynamic pass box"
                   className="w-full h-[420px] sm:h-[480px] object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  src="https://lh3.googleusercontent.com/aida/AEtjO1XdURrdj6prvMwnkwlRuTHrWCr11bq1EpipzHXcNNavFkAanEickAUuSVRfTcx3N6TddIJt6G2WkVjj9b0Rg9qeF6kuqLRl7vkXZRSe9Rh1XkJRDeUdnYPuq8BbxvjizLl9JqIY4tBMuwnNdFvyF63LEEqZBtF0vyn6NiI2LTWrhfVHtR0vADMKdL0pNsa-e585eGE-DlqH64uzSr5NndOUzCGNjQ8cyewCDit5oF8fISysu66IPR22ICg"
+                  src="/images/modular-cleanroom-interior.jpg"
                 />
                 {/* Top Overlay Bar with Telemetry Status Badges */}
                 <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
@@ -499,7 +499,7 @@ export const HomePage: React.FC = () => {
               <img
                 alt="Terminal HEPA filter gel seal installation and particle counter probe testing"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                src="https://lh3.googleusercontent.com/aida/AEtjO1WK8SewdkyOY_GEaOtKIQTInFb1XOUmx9IEjsXL06xvv_j29040-7fYHxFfqHLOa2XjuDGGEawV8H6Y7AUNKCq97uSGRRdKWXG5UudlGuilanePsOdKaKiqQ3c5VJWOBxeHs7dmF8bKZzHR5vGD4m-7GSOVRoZ_ciEKlH2CI0KHapmJ8VgfR-8RbbJ98k_c5PVgOd72xE4ehlQk3XUVWsUCOwdC93VIpvgOHsNYljTqPKlanJADA1FafkE"
+                src="/images/terminal-hepa-module.jpg"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#16233F] via-[#16233F]/75 to-[#16233F]/40 pointer-events-none"></div>
 
