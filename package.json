@@ -4,12 +4,13 @@
   "description": "GMP VISION — Turnkey Cleanroom, HVAC & MEP Engineering Monorepo",
   "private": true,
   "scripts": {
-    "dev": "npm run dev --prefix frontend",
+    "dev": "npm run dev --prefix backend",
     "dev:frontend": "npm run dev --prefix frontend",
     "dev:backend": "npm run dev --prefix backend",
-    "build": "npm run build --prefix frontend && npm run build --prefix backend",
-    "build:frontend": "npm run build --prefix frontend",
-    "build:backend": "npm run build --prefix backend",
+    "build": "npm --prefix backend install && npm --prefix backend run build",
+    "build:frontend": "npm --prefix frontend install && npm --prefix frontend run build",
+    "build:backend": "npm --prefix backend install && npm --prefix backend run build",
+    "start": "npm --prefix backend start",
     "test": "npm run test --prefix backend"
   }
 }
