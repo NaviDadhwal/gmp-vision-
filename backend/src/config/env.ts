@@ -14,7 +14,7 @@ const envSchema = z.object({
   JWT_REFRESH_SECRET: z.string().min(32, 'JWT_REFRESH_SECRET must be at least 32 characters').default('FKFhwmxERdvOFVP6tt9IZ4jc8QlQ781ovcFCug4ej0w'),
   JWT_ACCESS_EXPIRES_IN: z.string().default('15m'),
   JWT_REFRESH_EXPIRES_IN: z.string().default('7d'),
-  CORS_ORIGINS: z.string().default('http://localhost:5173,http://localhost:3000'),
+  CORS_ORIGINS: z.string().default('https://gmpvision.com,https://www.gmpvision.com,http://localhost:5173,http://localhost:3000'),
   CLOUDINARY_CLOUD_NAME: z.string().optional().default(''),
   CLOUDINARY_API_KEY: z.string().optional().default(''),
   CLOUDINARY_API_SECRET: z.string().optional().default(''),

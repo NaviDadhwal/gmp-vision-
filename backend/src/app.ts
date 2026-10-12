@@ -77,6 +77,8 @@ const allowedOrigins = env.CORS_ORIGINS.split(',').map((origin) => origin.trim()
 const isAllowedOrigin = (origin: string | undefined): boolean => {
   if (!origin) return true; // Direct API clients (curl, Postman, server-to-server)
   if (allowedOrigins.includes(origin)) return true;
+  // Support production GMP Vision domains
+  if (/^https?:\/\/(www\.)?gmpvision\.com$/.test(origin)) return true;
   // Support Vercel production and preview deployment URLs
   if (/^https:\/\/[a-zA-Z0-9_\-]+\.vercel\.app$/.test(origin)) return true;
   return false;
