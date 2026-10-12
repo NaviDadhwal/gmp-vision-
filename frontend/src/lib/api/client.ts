@@ -9,8 +9,12 @@ export const tokenStore = {
   clear: (): void => localStorage.removeItem(TOKEN_KEY),
 };
 
+const rawBaseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
+const cleanBaseURL = rawBaseURL.replace(/\/+$/, '');
+const baseURL = cleanBaseURL.endsWith('/api/v1') ? cleanBaseURL : `${cleanBaseURL}/api/v1`;
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1',
+  baseURL,
   withCredentials: true, // Sends HTTP-only refreshToken cookie
   headers: {
     'Content-Type': 'application/json',
